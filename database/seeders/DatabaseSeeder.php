@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 //use Illuminate\Support;
 class DatabaseSeeder extends Seeder
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Model::unguard();
-        \DB::table('products')->truncate();
+        DB::table('products')->truncate();
         $options = [
             'Colour' => [
                 'Blue',

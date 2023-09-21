@@ -2,16 +2,15 @@
 
 namespace App\Repositories;
 
+use App\Models\Product;
+
 class ProductRepository
 {
-    public function fill()
+    public function save(array $data, Product $product) : ?Product
     {
-
-    }
-
-    public function save()
-    {
-        
+        $product->fill($data);
+        $product->save();
+        return $product;
     }
 
 }

@@ -8,6 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'sku',
+        'barcode',
+        'description',
+        'published_at',       
+        'status',
+        'price',
+        'quantity',
+        'options',   
+        'option_values'
+    ];
+    
     protected $casts = [
         'status' => 'bool',
         'options' => 'json',

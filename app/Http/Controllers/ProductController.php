@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
+use App\Factories\ProductFactory;
+use App\Http\Requests\ProductStoreRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    protected ProductRepository $product_repository;
+
+    public function __construct(ProductRepository $product_repository)
+    {
+        $this->product_repository = $product_repository;
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -25,36 +33,16 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductRequest $request)
+    public function store(ProductStoreRequest $request)
     {
-        $product = new Product();
-        $product->name = $request->name;
-        $product->sku = $request->sku;
-        $product->barcode = $request->barcode;
-        $product->options = $request->options;
-        $product->published_at = $request->published_at;
-        $product->status = $request->status;
-        $product->quantity = $request->quantity;
-        $product->price = $request->price;
-        $product->save();
+        $product = $this->product_repository->save($request->all(), ProductFactory::create());
         return  new ProductResource($product);
     }
 
     public function create_variant(Request $request, Product $product)
     {
-        $varient_product = new Product();
-        $varient_product->name = $request->name;
-        $varient_product->sku = $request->sku;
-        $varient_product->barcode = $request->barcode;
-        $varient_product->options = $request->options;
-        $varient_product->option_values = $request->option_values;
-        $varient_product->published_at = $request->published_at;
-        $varient_product->status = $request->status;
-        $varient_product->quantity = $request->quantity;
-        $varient_product->price = $request->price;
-        
-        $product->variants()->save($varient_product);
-        return  (new ProductResource($varient_product))->response()->setStatusCode(201);
+        $product = $this->product_repository->save($request->all(), ProductFactory::create($product->id));
+        return  (new ProductResource($product))->response()->setStatusCode(201);
     }
 
     /**

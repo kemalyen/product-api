@@ -3,11 +3,12 @@
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Support\Arr;
+
 use function Pest\Laravel\{get};
 use Laravel\Sanctum\Sanctum;
 
 beforeEach(function () {
-
     Sanctum::actingAs(
         User::factory()->create()
     );
@@ -121,7 +122,6 @@ it('creates a new variant product', function () {
     
         'Size' => ['Small', 'Medium', 'Large', 'X Large', 'XX Large']
     ];
-
 
     $size = Arr::random($options['Size'], 1);
     $colour = Arr::random($options['Colour'], 1);
