@@ -22,10 +22,13 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $name = $this->faker->unique()->catchPhrase(),
-            'slug' => Str::slug($name),
             'sku' => $this->faker->unique()->ean8(),
             'barcode' => $this->faker->ean13(),
             'status' => $this->faker->boolean(),
+            'price' => $this->faker->randomFloat(2,1,1000),
+            'quantity' => $this->faker->randomNumber(2),
+            'options' => ['Colour', 'Size'],
+            'option_values' => null,
             'description' => $this->faker->realText(),
             'published_at' => $this->faker->dateTimeBetween('-1 year', '+1 year'),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
