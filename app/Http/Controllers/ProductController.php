@@ -19,9 +19,6 @@ class ProductController extends Controller
         $this->product_repository = $product_repository;
     }
     
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return  new ProductCollection(
@@ -46,7 +43,43 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *      path="/api/products/{id}",
+     *      tags={"products"},
+     *      operationId="getProductById",
+     *      summary="get a single product",
+     *      description="",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="product id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),     
+     *      @OA\Response(
+     *          response=200,
+     *          description="Listing of the  products",
+     *          @OA\JsonContent(ref="#/components/schemas/ProductResource"),
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *      )
+     * )
      */
     public function show(Product $product)
     {

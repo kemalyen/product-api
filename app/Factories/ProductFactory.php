@@ -16,6 +16,7 @@ class ProductFactory
         $product->options = [];
         $product->option_values = [];
         $product->published_at = '';
+        $product->description = '';
         $product->status = '';
         $product->quantity = '';
         $product->price = '';

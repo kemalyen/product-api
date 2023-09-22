@@ -1,0 +1,164 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel OpenApi Demo Documentation",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "admin@admin.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Demo API Server"
+        }
+    ],
+    "paths": {
+        "/api": {},
+        "/api/products/{id}": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "get a single product",
+                "description": "",
+                "operationId": "getProductById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Listing of the  products",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ProductResource": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UserResource"
+                }
+            },
+            "Product": {
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "format": "int64",
+                        "default": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "Name",
+                        "format": "string",
+                        "default": "Js Originals relaxed t-shirt with globe back"
+                    },
+                    "sku": {
+                        "title": "sku",
+                        "description": "Sku",
+                        "format": "string",
+                        "default": "204645590"
+                    },
+                    "barcode": {
+                        "title": "barcode",
+                        "description": "",
+                        "format": "string",
+                        "default": "00123456789012"
+                    },
+                    "options": {
+                        "title": "options",
+                        "description": "",
+                        "format": "json",
+                        "default": "{'Size}"
+                    },
+                    "option_values": {
+                        "title": "option_values",
+                        "description": "",
+                        "format": "json",
+                        "default": "{'Size' => 'SMall'}"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Product description",
+                        "format": "string",
+                        "default": "Js Originals relaxed t-shirt with globe back, 2023 new style!"
+                    },
+                    "quantity": {
+                        "title": "quantity",
+                        "description": "quantity",
+                        "format": "int",
+                        "default": "48"
+                    },
+                    "price": {
+                        "title": "price",
+                        "description": "Name",
+                        "format": "float",
+                        "default": "13.50"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Projects",
+            "description": "API Endpoints of Projects"
+        }
+    ]
+}
