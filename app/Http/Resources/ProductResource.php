@@ -8,7 +8,7 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
- *   @OA\Xml(name="UserResource"),
+ *   @OA\Xml(name="ProductResource"),
  *   @OA\Property(property="data", type="array",
  *      @OA\Items(ref="#/components/schemas/Product"))
  *   ),

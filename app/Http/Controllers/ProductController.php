@@ -18,7 +18,29 @@ class ProductController extends Controller
     {
         $this->product_repository = $product_repository;
     }
-    
+
+    /**
+     * @OA\Get(
+     *      path="/products",
+     *      operationId="getProductsList",
+     *      tags={"products"},
+     *      summary="Get list of products",
+     *      description="Returns list of products",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/ProductResource")
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */    
     public function index()
     {
         return  new ProductCollection(
@@ -60,7 +82,7 @@ class ProductController extends Controller
      *      ),     
      *      @OA\Response(
      *          response=200,
-     *          description="Listing of the  products",
+     *          description="Listing of the products",
      *          @OA\JsonContent(ref="#/components/schemas/ProductResource"),
      *       ),
      *      @OA\Response(
@@ -111,6 +133,45 @@ class ProductController extends Controller
 
     }
 
+        /**
+     * @OA\Get(
+     *      path="/api/products/{id}/variants",
+     *      tags={"products"},
+     *      operationId="getProductWithLoadingVariantsById",
+     *      summary="get a single product with variants",
+     *      description="",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="product id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),     
+     *      @OA\Response(
+     *          response=200,
+     *          description="get a single product with variants",
+     *          @OA\JsonContent(ref="#/components/schemas/ProductWithVariants"),
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Resource Not Found"
+     *      )
+     * )
+     */
     public function variants(Product $product)
     {
         return  new ProductResource(

@@ -20,6 +20,34 @@
     ],
     "paths": {
         "/api": {},
+        "/products": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Get list of products",
+                "description": "Returns list of products",
+                "operationId": "getProductsList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
         "/api/products/{id}": {
             "get": {
                 "tags": [
@@ -41,11 +69,56 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Listing of the  products",
+                        "description": "Listing of the products",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ProductResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/products/{id}/variants": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "get a single product with variants",
+                "description": "",
+                "operationId": "getProductWithLoadingVariantsById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get a single product with variants",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductWithVariants"
                                 }
                             }
                         }
@@ -79,7 +152,7 @@
                 },
                 "type": "object",
                 "xml": {
-                    "name": "UserResource"
+                    "name": "ProductResource"
                 }
             },
             "Product": {
@@ -134,14 +207,78 @@
                     },
                     "price": {
                         "title": "price",
-                        "description": "Name",
+                        "description": "Product price",
                         "format": "float",
                         "default": "13.50"
                     }
                 },
                 "type": "object",
                 "xml": {
-                    "name": "User"
+                    "name": "Product"
+                }
+            },
+            "ProductWithVariants": {
+                "title": "ProductWithVariants",
+                "description": "Project model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new project",
+                        "type": "string",
+                        "example": "A nice project"
+                    },
+                    "variants": {
+                        "$ref": "#/components/schemas/ProductResource"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the new project",
+                        "type": "string",
+                        "example": "This is new project's description"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "deleted_at": {
+                        "title": "Deleted at",
+                        "description": "Deleted at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "author_id": {
+                        "title": "Author ID",
+                        "description": "Author's id of the new project",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "author": {
+                        "title": "Author",
+                        "description": "Project author's user model"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ProductWithVariants"
                 }
             }
         },
