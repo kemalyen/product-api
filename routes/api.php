@@ -19,8 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-#Route::middleware(['auth:sanctum'])->group(function () {
-Route::middleware([])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/products/{product}/variants', [ProductController::class, 'variants'])->name('product.variants');
     Route::post('/products/{product}/variants', [ProductController::class, 'create_variant'])->name('product.create_variant');
 
