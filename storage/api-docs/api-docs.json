@@ -185,13 +185,13 @@
                         "title": "options",
                         "description": "",
                         "format": "json",
-                        "default": "{'Size}"
+                        "default": "['Size']"
                     },
                     "option_values": {
                         "title": "option_values",
                         "description": "",
                         "format": "json",
-                        "default": "{'Size' => 'SMall'}"
+                        "default": ""
                     },
                     "description": {
                         "title": "description",
@@ -217,63 +217,193 @@
                     "name": "Product"
                 }
             },
-            "ProductWithVariants": {
-                "title": "ProductWithVariants",
-                "description": "Project model",
+            "ProductVariant": {
                 "properties": {
                     "id": {
                         "title": "ID",
                         "description": "ID",
-                        "type": "integer",
                         "format": "int64",
-                        "example": 1
+                        "default": 333
                     },
                     "name": {
-                        "title": "Name",
-                        "description": "Name of the new project",
-                        "type": "string",
-                        "example": "A nice project"
+                        "title": "name",
+                        "description": "Name",
+                        "format": "string",
+                        "default": "Js Originals relaxed t-shirt with globe back"
                     },
-                    "variants": {
-                        "$ref": "#/components/schemas/ProductResource"
+                    "sku": {
+                        "title": "sku",
+                        "description": "Sku",
+                        "format": "string",
+                        "default": "204645590"
+                    },
+                    "barcode": {
+                        "title": "barcode",
+                        "description": "",
+                        "format": "string",
+                        "default": "00123456789012"
+                    },
+                    "options": {
+                        "title": "options",
+                        "description": "",
+                        "format": "json",
+                        "default": "['Size']}"
+                    },
+                    "option_values": {
+                        "title": "option_values",
+                        "description": "",
+                        "format": "json",
+                        "default": "['Size' => 'Small']"
                     },
                     "description": {
-                        "title": "Description",
-                        "description": "Description of the new project",
-                        "type": "string",
-                        "example": "This is new project's description"
+                        "title": "description",
+                        "description": "Product description",
+                        "format": "string",
+                        "default": "Js Originals relaxed t-shirt with globe back, 2023 new style!"
                     },
-                    "created_at": {
-                        "title": "Created at",
-                        "description": "Created at",
-                        "type": "string",
-                        "format": "datetime",
-                        "example": "2020-01-27 17:50:45"
+                    "quantity": {
+                        "title": "quantity",
+                        "description": "quantity",
+                        "format": "int",
+                        "default": "48"
                     },
-                    "updated_at": {
-                        "title": "Updated at",
-                        "description": "Updated at",
-                        "type": "string",
-                        "format": "datetime",
-                        "example": "2020-01-27 17:50:45"
-                    },
-                    "deleted_at": {
-                        "title": "Deleted at",
-                        "description": "Deleted at",
-                        "type": "string",
-                        "format": "datetime",
-                        "example": "2020-01-27 17:50:45"
-                    },
-                    "author_id": {
-                        "title": "Author ID",
-                        "description": "Author's id of the new project",
-                        "type": "integer",
+                    "price": {
+                        "title": "price",
+                        "description": "Product price",
+                        "format": "float",
+                        "default": "13.50"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ProductVariant"
+                }
+            },
+            "ProductVariant2": {
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
                         "format": "int64",
-                        "example": 1
+                        "default": 333
                     },
-                    "author": {
-                        "title": "Author",
-                        "description": "Project author's user model"
+                    "name": {
+                        "title": "name",
+                        "description": "Name",
+                        "format": "string",
+                        "default": "Js Originals relaxed t-shirt with globe back"
+                    },
+                    "sku": {
+                        "title": "sku",
+                        "description": "Sku",
+                        "format": "string",
+                        "default": "204645590"
+                    },
+                    "barcode": {
+                        "title": "barcode",
+                        "description": "",
+                        "format": "string",
+                        "default": "00123456789012"
+                    },
+                    "options": {
+                        "title": "options",
+                        "description": "",
+                        "format": "json",
+                        "default": "['Size']}"
+                    },
+                    "option_values": {
+                        "title": "option_values",
+                        "description": "",
+                        "format": "json",
+                        "default": "['Size' => 'Small']"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Product description",
+                        "format": "string",
+                        "default": "Js Originals relaxed t-shirt with globe back, 2023 new style!"
+                    },
+                    "quantity": {
+                        "title": "quantity",
+                        "description": "quantity",
+                        "format": "int",
+                        "default": "48"
+                    },
+                    "price": {
+                        "title": "price",
+                        "description": "Product price",
+                        "format": "float",
+                        "default": "13.50"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ProductVariant2"
+                }
+            },
+            "ProductWithVariants": {
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "format": "int64",
+                        "default": 22
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "Name",
+                        "format": "string",
+                        "default": "Js Originals relaxed t-shirt with globe back"
+                    },
+                    "sku": {
+                        "title": "sku",
+                        "description": "Sku",
+                        "format": "string",
+                        "default": "204645590"
+                    },
+                    "barcode": {
+                        "title": "barcode",
+                        "description": "",
+                        "format": "string",
+                        "default": "00123456789012"
+                    },
+                    "options": {
+                        "title": "options",
+                        "description": "",
+                        "format": "json",
+                        "default": "['Size']}"
+                    },
+                    "option_values": {
+                        "title": "option_values",
+                        "description": "",
+                        "format": "json",
+                        "default": ""
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Product description",
+                        "format": "string",
+                        "default": "Js Originals relaxed t-shirt with globe back, 2023 new style!"
+                    },
+                    "quantity": {
+                        "title": "quantity",
+                        "description": "quantity",
+                        "format": "int",
+                        "default": "23"
+                    },
+                    "price": {
+                        "title": "price",
+                        "description": "Product price",
+                        "format": "float",
+                        "default": "13.50"
+                    },
+                    "variants": {
+                        "title": "variants",
+                        "description": "Product variants",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProductVariant"
+                        }
                     }
                 },
                 "type": "object",
