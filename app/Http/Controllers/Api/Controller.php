@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 /**
  * @OA\Info(
  *      version="1.0.0",
- *      title="Laravel OpenApi Demo Documentation",
- *      description="L5 Swagger OpenApi description",
+ *      title="Product API",
+ *      description="A sample product API application with L5 Swagger OpenApi, PHP Pest and Authentication",
  *      @OA\Contact(
- *          email="admin@admin.com"
+ *          email=""
  *      ),
  *      @OA\License(
  *          name="Apache 2.0",

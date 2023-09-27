@@ -13,7 +13,7 @@ it('logins as a user', function () {
         ]
     );
 
-    $response = $this->postJson('/login', ['email' => $user->email, 'password' => 'password']);
+    $response = $this->postJson('/api/login', ['email' => $user->email, 'password' => 'password']);
     $response->assertStatus(200);
 });
 
@@ -27,7 +27,7 @@ it('tries to login with invalid email', function () {
         ]
     );
 
-    $response = $this->postJson('/login', ['email' => 'john@example.org', 'password' => 'password']);
+    $response = $this->postJson('/api/login', ['email' => 'john@example.org', 'password' => 'password']);
     $response->assertStatus(422)
         ->assertJson([
             'message' => 'These credentials do not match our records.',
@@ -50,7 +50,7 @@ it('tries to login with invalid password', function () {
         ]
     );
 
-    $response = $this->postJson('/login', ['email' => $user->email, 'password' => 'password**']);
+    $response = $this->postJson('/api/login', ['email' => $user->email, 'password' => 'password**']);
     $response->assertStatus(422)
         ->assertJson([
             'message' => 'These credentials do not match our records.'

@@ -11,7 +11,7 @@ it('registers a user', function () {
         'password' => 'password',
         'password_confirmation' => 'password',
     ];
-    $response = $this->postJson('/register', $user);
+    $response = $this->postJson('/api/register', $user);
     $response->assertStatus(201);
 
     expect(User::latest()->first())
