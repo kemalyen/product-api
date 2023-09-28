@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Actions\Fortify;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Laravel\Fortify\Contracts\CreatesNewUsers;
 
-class CreateNewUser implements CreatesNewUsers
+class RegisterController extends Controller
 {
-    use PasswordValidationRules;
-
     /**
      * Validate and create a newly registered user.
      *
@@ -36,5 +35,15 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+    }
+
+        /**
+     * Get the validation rules used to validate passwords.
+     *
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array|string>
+     */
+    protected function passwordRules(): array
+    {
+        return ['required', 'string', new Password, 'confirmed'];
     }
 }
