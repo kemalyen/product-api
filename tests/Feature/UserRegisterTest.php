@@ -8,8 +8,7 @@ it('registers a user', function () {
     $user = [
         'name' => fake()->name(),
         'email' => fake()->unique()->safeEmail(),
-        'password' => 'password',
-        'password_confirmation' => 'password',
+        'password' => 'password'
     ];
     $response = $this->postJson('/api/register', $user);
     $response->assertStatus(201);

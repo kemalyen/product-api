@@ -6,37 +6,32 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Models\User; 
+use Illuminate\Support\Facades\Auth; 
 
-
-class LoginController extends Controller
+class TokenController extends Controller
 {
+    public $successStatus = 200;
+
     public function create(Request $request)
     {
-        $rules = [
-            'email' => 'required|email',
-            'password' => 'required|alphaNum|min:8'
-        ];
+        $input = $request->only('email', 'password');
+        Validator::make($input, [
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255'
+            ],
+            'password' => ['required', 'string', 'min:6', 'max:255'],
+        ])->validate();
 
-
-        $validator = Validator::make($request->all(), $rules);
-        // if the validator fails, redirect back to the form
-        if ($validator->fails()) {
-            return Redirect::to('login')->withErrors($validator) // send back all errors to the login form
-                ->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
+        if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+            $user = Auth::user();
+            $success['token'] =  $user->createToken('api-token')->accessToken;
+            return response()->json(['success' => $success], $this->successStatus);
         } else {
-            // create our user data for the authentication
-            $userdata = array(
-                'email' => Input::get('email'),
-                'password' => Input::get('password')
-            );
-            // attempt to do the login
-            if (Auth::attempt($userdata)) {
-                // validation successful
-                // do whatever you want on success
-            } else {
-                // validation not successful, send back to form
-                return Redirect::to('checklogin');
-            }
+            return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
 }

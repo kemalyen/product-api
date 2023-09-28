@@ -16,8 +16,9 @@ class RegisterController extends Controller
      *
      * @param  array<string, string>  $input
      */
-    public function create(array $input): User
+    public function create(Request $request): User
     {
+        $input = $request->only('name', 'email', 'password');
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -44,6 +45,6 @@ class RegisterController extends Controller
      */
     protected function passwordRules(): array
     {
-        return ['required', 'string', new Password, 'confirmed'];
+        return ['required', 'string'];
     }
 }

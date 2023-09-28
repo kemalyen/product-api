@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\TokenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
+Route::post('/token', [TokenController::class, 'create'])->name('token');
