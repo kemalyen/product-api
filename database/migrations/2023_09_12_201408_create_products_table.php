@@ -19,11 +19,9 @@ return new class extends Migration
             $table->string('barcode')->unique()->nullable();
             $table->longText('description')->nullable();
             $table->date('published_at')->nullable();       
-            $table->boolean('status')->default(false);  
+            $table->string('status')->default(false);  
             $table->double('price')->default(0);
             $table->unsignedInteger('quantity')->default(0);
-            $table->json('options')->nullable();   
-            $table->json('option_values')->nullable();   
             $table->timestamps();
         });
     }

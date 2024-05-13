@@ -13,4 +13,10 @@ class ProductRepository
         return $product;
     }
 
+    
+    public function update(array $data, Product $product) : ?Product
+    {
+        $product->update($data);
+        return $product;
+    }
 }

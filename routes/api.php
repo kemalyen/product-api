@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\TokenController;
 use Illuminate\Http\Request;
@@ -21,14 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/products/{product}/variants', [ProductController::class, 'variants'])->name('product.variants');
-    Route::post('/products/{product}/variants', [ProductController::class, 'create_variant'])->name('product.create_variant');
+Route::apiResources([
+    'products' => ProductController::class,
+]);
 
+/* Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResources([
         'products' => ProductController::class,
     ]);
-});
+}); */
 
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 Route::post('/token', [TokenController::class, 'create'])->name('token');

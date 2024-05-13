@@ -25,12 +25,11 @@ class ProductStoreRequest extends FormRequest
             'name' =>  'required|max:255',
             'sku' =>  'required|unique:products|max:25',
             'barcode' => 'required|unique:products|max:25',
-            'options' => 'array',
-            'option_values' => 'array',
-            'published_at' => 'required|date',
-            'status' =>  'required|boolean',
+            'publishedAt' => 'required|date',
+            'status' =>  'required|string|in:A,P,X',
             'quantity' => 'integer',
             'price' => 'numeric'
         ];
     }
+ 
 }

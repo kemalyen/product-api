@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Factories\ProductFactory;
+use App\Http\Filters\ProductFilter;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -40,13 +42,12 @@ class ProductController extends Controller
      *          description="Forbidden"
      *      )
      *     )
-     */    
-    public function index()
+     */
+    public function index(ProductFilter $filter)
     {
-        return  new ProductCollection(
-            Product::select(['id', 'name', 'sku', 'barcode', 'published_at', 'status'])
-            ->paginate()
-        );        
+        return ProductResource::collection(
+            Product::filter($filter)->paginate()
+        );
     }
 
     /**
@@ -55,13 +56,7 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
         $product = $this->product_repository->save($request->all(), ProductFactory::create());
-        return  new ProductResource($product);
-    }
-
-    public function create_variant(Request $request, Product $product)
-    {
-        $product = $this->product_repository->save($request->all(), ProductFactory::create($product->id));
-        return  (new ProductResource($product))->response()->setStatusCode(201);
+        return new ProductResource($product);
     }
 
     /**
@@ -105,7 +100,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return  new ProductResource($product);        
+        return new ProductResource($product);
     }
 
     /**
@@ -113,15 +108,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $product->name = $request->name;
-        $product->sku = $request->sku;
-        $product->barcode = $request->barcode;
-        $product->options = $request->options;
-        $product->published_at = $request->published_at;
-        $product->status = $request->status;
-        $product->quantity = $request->quantity;
-        $product->price = $request->price;
-        $product->save();
+        $product = $this->product_repository->update($request->all(), $product);
         return new ProductResource($product);
     }
 
@@ -130,53 +117,6 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-
-    }
-
-        /**
-     * @OA\Get(
-     *      path="/api/products/{id}/variants",
-     *      tags={"products"},
-     *      operationId="getProductWithLoadingVariantsById",
-     *      summary="get a single product with variants",
-     *      description="",
-     *      @OA\Parameter(
-     *          name="id",
-     *          description="product id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),     
-     *      @OA\Response(
-     *          response=200,
-     *          description="get a single product with variants",
-     *          @OA\JsonContent(ref="#/components/schemas/ProductWithVariants"),
-     *       ),
-     *      @OA\Response(
-     *          response=400,
-     *          description="Bad Request"
-     *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated",
-     *      ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Resource Not Found"
-     *      )
-     * )
-     */
-    public function variants(Product $product)
-    {
-        return  new ProductResource(
-            $product->load('variants')
-        );        
 
     }
 }
