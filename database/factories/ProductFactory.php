@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Product;
@@ -22,6 +23,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $name = $this->faker->unique()->catchPhrase(),
+            'category_id' => Category::factory(),
             'sku' => $this->faker->unique()->ean8(),
             'barcode' => $this->faker->ean13(),
             'status' => fake()->randomElement(['A', 'P', 'X']),

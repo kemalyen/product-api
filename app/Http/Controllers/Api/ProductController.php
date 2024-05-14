@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Factories\ProductFactory;
+use App\Http\Controllers\ApiController;
 use App\Http\Filters\ProductFilter;
 use App\Http\Requests\ProductStoreRequest;
-use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ProductController extends Controller
+class ProductController extends ApiController
 {
     protected ProductRepository $product_repository;
 
@@ -100,6 +100,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if ($this->include('category')) {
+            return new ProductResource($product->load('category'));
+        }
+
         return new ProductResource($product);
     }
 

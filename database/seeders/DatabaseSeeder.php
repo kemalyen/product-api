@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory(10)->create();
+        $categories = Category::factory(3)->create();
+        Product::factory(10)
+            ->recycle($categories)
+            ->create();
 
         Model::reguard();
         // \App\Models\User::factory()->create([
