@@ -1,0 +1,1051 @@
+openapi: 3.0.3
+info:
+  title: ProductApi
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://api.test'
+paths:
+  /api/user:
+    get:
+      summary: ''
+      operationId: getApiUser
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  /api/products:
+    get:
+      summary: ''
+      operationId: getApiProducts
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      type: product
+                      id: 1
+                      attributes:
+                        name: 'Phased fault-tolerant complexity'
+                        sku: '54285514'
+                        barcode: '0940720668312'
+                        publishedAt: '2024-04-14T01:29:30.000000Z'
+                        status: P
+                        quantity: 99
+                        price: 469.23
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 2
+                          links:
+                            self: 'http://api.test/api/categories/2'
+                      links:
+                        self: 'http://api.test/api/products/1'
+                    -
+                      type: product
+                      id: 2
+                      attributes:
+                        name: 'Multi-lateral cohesive neural-net'
+                        sku: '37776749'
+                        barcode: '1237043996673'
+                        publishedAt: '2024-12-04T04:23:05.000000Z'
+                        status: X
+                        quantity: 32
+                        price: 465.09
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 3
+                          links:
+                            self: 'http://api.test/api/categories/3'
+                      links:
+                        self: 'http://api.test/api/products/2'
+                    -
+                      type: product
+                      id: 3
+                      attributes:
+                        name: 'Phased impactful customerloyalty'
+                        sku: '95026114'
+                        barcode: '0954481791493'
+                        publishedAt: '2023-10-07T15:12:28.000000Z'
+                        status: X
+                        quantity: 33
+                        price: 70.06
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 3
+                          links:
+                            self: 'http://api.test/api/categories/3'
+                      links:
+                        self: 'http://api.test/api/products/3'
+                    -
+                      type: product
+                      id: 4
+                      attributes:
+                        name: 'Re-engineered tangible task-force'
+                        sku: '08509178'
+                        barcode: '7065175733354'
+                        publishedAt: '2024-11-28T17:29:41.000000Z'
+                        status: A
+                        quantity: 20
+                        price: 984.64
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 2
+                          links:
+                            self: 'http://api.test/api/categories/2'
+                      links:
+                        self: 'http://api.test/api/products/4'
+                    -
+                      type: product
+                      id: 5
+                      attributes:
+                        name: 'Diverse multi-tasking functionalities'
+                        sku: '80773535'
+                        barcode: '8508229750758'
+                        publishedAt: '2024-03-04T15:48:31.000000Z'
+                        status: P
+                        quantity: 29
+                        price: 947.84
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 2
+                          links:
+                            self: 'http://api.test/api/categories/2'
+                      links:
+                        self: 'http://api.test/api/products/5'
+                    -
+                      type: product
+                      id: 6
+                      attributes:
+                        name: 'Synchronised systemic middleware'
+                        sku: '39331380'
+                        barcode: '9232689401828'
+                        publishedAt: '2024-08-17T20:56:02.000000Z'
+                        status: X
+                        quantity: 75
+                        price: 557.01
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 3
+                          links:
+                            self: 'http://api.test/api/categories/3'
+                      links:
+                        self: 'http://api.test/api/products/6'
+                    -
+                      type: product
+                      id: 7
+                      attributes:
+                        name: 'Persevering human-resource project'
+                        sku: '06245481'
+                        barcode: '4893168245644'
+                        publishedAt: '2025-01-12T07:11:27.000000Z'
+                        status: P
+                        quantity: 94
+                        price: 543
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 1
+                          links:
+                            self: 'http://api.test/api/categories/1'
+                      links:
+                        self: 'http://api.test/api/products/7'
+                    -
+                      type: product
+                      id: 8
+                      attributes:
+                        name: 'Open-source coherent product'
+                        sku: '82886172'
+                        barcode: '0113822420090'
+                        publishedAt: '2024-05-26T01:17:17.000000Z'
+                        status: P
+                        quantity: 10
+                        price: 931.05
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 1
+                          links:
+                            self: 'http://api.test/api/categories/1'
+                      links:
+                        self: 'http://api.test/api/products/8'
+                    -
+                      type: product
+                      id: 9
+                      attributes:
+                        name: 'Upgradable reciprocal complexity'
+                        sku: '17884310'
+                        barcode: '3870402721233'
+                        publishedAt: '2025-02-16T13:20:59.000000Z'
+                        status: A
+                        quantity: 33
+                        price: 783.51
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 1
+                          links:
+                            self: 'http://api.test/api/categories/1'
+                      links:
+                        self: 'http://api.test/api/products/9'
+                    -
+                      type: product
+                      id: 10
+                      attributes:
+                        name: 'Virtual web-enabled archive'
+                        sku: '49931655'
+                        barcode: '4946978158427'
+                        publishedAt: '2024-02-13T00:37:29.000000Z'
+                        status: A
+                        quantity: 48
+                        price: 953.31
+                      relationships:
+                        category:
+                          data:
+                            type: category
+                            id: 3
+                          links:
+                            self: 'http://api.test/api/categories/3'
+                      links:
+                        self: 'http://api.test/api/products/10'
+                  links:
+                    first: 'http://api.test/api/products?page=1'
+                    last: 'http://api.test/api/products?page=1'
+                    prev: null
+                    next: null
+                  meta:
+                    current_page: 1
+                    from: 1
+                    last_page: 1
+                    links:
+                      -
+                        url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://api.test/api/products?page=1'
+                        label: '1'
+                        active: true
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    path: 'http://api.test/api/products'
+                    per_page: 15
+                    to: 10
+                    total: 10
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        type: product
+                        id: 1
+                        attributes:
+                          name: 'Phased fault-tolerant complexity'
+                          sku: '54285514'
+                          barcode: '0940720668312'
+                          publishedAt: '2024-04-14T01:29:30.000000Z'
+                          status: P
+                          quantity: 99
+                          price: 469.23
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 2
+                            links:
+                              self: 'http://api.test/api/categories/2'
+                        links:
+                          self: 'http://api.test/api/products/1'
+                      -
+                        type: product
+                        id: 2
+                        attributes:
+                          name: 'Multi-lateral cohesive neural-net'
+                          sku: '37776749'
+                          barcode: '1237043996673'
+                          publishedAt: '2024-12-04T04:23:05.000000Z'
+                          status: X
+                          quantity: 32
+                          price: 465.09
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 3
+                            links:
+                              self: 'http://api.test/api/categories/3'
+                        links:
+                          self: 'http://api.test/api/products/2'
+                      -
+                        type: product
+                        id: 3
+                        attributes:
+                          name: 'Phased impactful customerloyalty'
+                          sku: '95026114'
+                          barcode: '0954481791493'
+                          publishedAt: '2023-10-07T15:12:28.000000Z'
+                          status: X
+                          quantity: 33
+                          price: 70.06
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 3
+                            links:
+                              self: 'http://api.test/api/categories/3'
+                        links:
+                          self: 'http://api.test/api/products/3'
+                      -
+                        type: product
+                        id: 4
+                        attributes:
+                          name: 'Re-engineered tangible task-force'
+                          sku: '08509178'
+                          barcode: '7065175733354'
+                          publishedAt: '2024-11-28T17:29:41.000000Z'
+                          status: A
+                          quantity: 20
+                          price: 984.64
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 2
+                            links:
+                              self: 'http://api.test/api/categories/2'
+                        links:
+                          self: 'http://api.test/api/products/4'
+                      -
+                        type: product
+                        id: 5
+                        attributes:
+                          name: 'Diverse multi-tasking functionalities'
+                          sku: '80773535'
+                          barcode: '8508229750758'
+                          publishedAt: '2024-03-04T15:48:31.000000Z'
+                          status: P
+                          quantity: 29
+                          price: 947.84
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 2
+                            links:
+                              self: 'http://api.test/api/categories/2'
+                        links:
+                          self: 'http://api.test/api/products/5'
+                      -
+                        type: product
+                        id: 6
+                        attributes:
+                          name: 'Synchronised systemic middleware'
+                          sku: '39331380'
+                          barcode: '9232689401828'
+                          publishedAt: '2024-08-17T20:56:02.000000Z'
+                          status: X
+                          quantity: 75
+                          price: 557.01
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 3
+                            links:
+                              self: 'http://api.test/api/categories/3'
+                        links:
+                          self: 'http://api.test/api/products/6'
+                      -
+                        type: product
+                        id: 7
+                        attributes:
+                          name: 'Persevering human-resource project'
+                          sku: '06245481'
+                          barcode: '4893168245644'
+                          publishedAt: '2025-01-12T07:11:27.000000Z'
+                          status: P
+                          quantity: 94
+                          price: 543
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 1
+                            links:
+                              self: 'http://api.test/api/categories/1'
+                        links:
+                          self: 'http://api.test/api/products/7'
+                      -
+                        type: product
+                        id: 8
+                        attributes:
+                          name: 'Open-source coherent product'
+                          sku: '82886172'
+                          barcode: '0113822420090'
+                          publishedAt: '2024-05-26T01:17:17.000000Z'
+                          status: P
+                          quantity: 10
+                          price: 931.05
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 1
+                            links:
+                              self: 'http://api.test/api/categories/1'
+                        links:
+                          self: 'http://api.test/api/products/8'
+                      -
+                        type: product
+                        id: 9
+                        attributes:
+                          name: 'Upgradable reciprocal complexity'
+                          sku: '17884310'
+                          barcode: '3870402721233'
+                          publishedAt: '2025-02-16T13:20:59.000000Z'
+                          status: A
+                          quantity: 33
+                          price: 783.51
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 1
+                            links:
+                              self: 'http://api.test/api/categories/1'
+                        links:
+                          self: 'http://api.test/api/products/9'
+                      -
+                        type: product
+                        id: 10
+                        attributes:
+                          name: 'Virtual web-enabled archive'
+                          sku: '49931655'
+                          barcode: '4946978158427'
+                          publishedAt: '2024-02-13T00:37:29.000000Z'
+                          status: A
+                          quantity: 48
+                          price: 953.31
+                        relationships:
+                          category:
+                            data:
+                              type: category
+                              id: 3
+                            links:
+                              self: 'http://api.test/api/categories/3'
+                        links:
+                          self: 'http://api.test/api/products/10'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: product
+                        id:
+                          type: integer
+                          example: 1
+                        attributes:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              example: 'Phased fault-tolerant complexity'
+                            sku:
+                              type: string
+                              example: '54285514'
+                            barcode:
+                              type: string
+                              example: '0940720668312'
+                            publishedAt:
+                              type: string
+                              example: '2024-04-14T01:29:30.000000Z'
+                            status:
+                              type: string
+                              example: P
+                            quantity:
+                              type: integer
+                              example: 99
+                            price:
+                              type: number
+                              example: 469.23
+                        relationships:
+                          type: object
+                          properties:
+                            category:
+                              type: object
+                              properties:
+                                data:
+                                  type: object
+                                  properties:
+                                    type:
+                                      type: string
+                                      example: category
+                                    id:
+                                      type: integer
+                                      example: 2
+                                links:
+                                  type: object
+                                  properties:
+                                    self:
+                                      type: string
+                                      example: 'http://api.test/api/categories/2'
+                        links:
+                          type: object
+                          properties:
+                            self:
+                              type: string
+                              example: 'http://api.test/api/products/1'
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type: string
+                        example: 'http://api.test/api/products?page=1'
+                      last:
+                        type: string
+                        example: 'http://api.test/api/products?page=1'
+                      prev:
+                        type: string
+                        example: null
+                      next:
+                        type: string
+                        example: null
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      from:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      links:
+                        type: array
+                        example:
+                          -
+                            url: null
+                            label: '&laquo; Previous'
+                            active: false
+                          -
+                            url: 'http://api.test/api/products?page=1'
+                            label: '1'
+                            active: true
+                          -
+                            url: null
+                            label: 'Next &raquo;'
+                            active: false
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type: string
+                              example: null
+                            label:
+                              type: string
+                              example: '&laquo; Previous'
+                            active:
+                              type: boolean
+                              example: false
+                      path:
+                        type: string
+                        example: 'http://api.test/api/products'
+                      per_page:
+                        type: integer
+                        example: 15
+                      to:
+                        type: integer
+                        example: 10
+                      total:
+                        type: integer
+                        example: 10
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: cqghuaxiiqnzgnvulto
+                sku:
+                  type: string
+                  description: 'Must not be greater than 25 characters.'
+                  example: cqkgsckblmtlkmvvohjbh
+                barcode:
+                  type: string
+                  description: 'Must not be greater than 25 characters.'
+                  example: sd
+                publishedAt:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2024-05-15T20:55:10'
+                status:
+                  type: string
+                  description: ''
+                  example: P
+                  enum:
+                    - A
+                    - P
+                    - X
+                quantity:
+                  type: integer
+                  description: ''
+                  example: 7
+                price:
+                  type: number
+                  description: ''
+                  example: 417.6
+              required:
+                - name
+                - sku
+                - barcode
+                - publishedAt
+                - status
+      security: []
+  '/api/products/{id}':
+    get:
+      summary: ''
+      operationId: getApiProductsId
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    type: product
+                    id: 1
+                    attributes:
+                      name: 'Phased fault-tolerant complexity'
+                      sku: '54285514'
+                      barcode: '0940720668312'
+                      publishedAt: '2024-04-14T01:29:30.000000Z'
+                      status: P
+                      quantity: 99
+                      price: 469.23
+                    relationships:
+                      category:
+                        data:
+                          type: category
+                          id: 2
+                        links:
+                          self: 'http://api.test/api/categories/2'
+                    links:
+                      self: 'http://api.test/api/products/1'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: product
+                      id:
+                        type: integer
+                        example: 1
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'Phased fault-tolerant complexity'
+                          sku:
+                            type: string
+                            example: '54285514'
+                          barcode:
+                            type: string
+                            example: '0940720668312'
+                          publishedAt:
+                            type: string
+                            example: '2024-04-14T01:29:30.000000Z'
+                          status:
+                            type: string
+                            example: P
+                          quantity:
+                            type: integer
+                            example: 99
+                          price:
+                            type: number
+                            example: 469.23
+                      relationships:
+                        type: object
+                        properties:
+                          category:
+                            type: object
+                            properties:
+                              data:
+                                type: object
+                                properties:
+                                  type:
+                                    type: string
+                                    example: category
+                                  id:
+                                    type: integer
+                                    example: 2
+                              links:
+                                type: object
+                                properties:
+                                  self:
+                                    type: string
+                                    example: 'http://api.test/api/categories/2'
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                            example: 'http://api.test/api/products/1'
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Update the specified resource in storage.'
+      operationId: updateTheSpecifiedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      operationId: removeTheSpecifiedResourceFromStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the product.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/categories:
+    get:
+      summary: ''
+      operationId: getApiCategories
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      type: category
+                      id: 1
+                      attributes:
+                        name: 'Automated secondary firmware'
+                    -
+                      type: category
+                      id: 2
+                      attributes:
+                        name: 'Customizable explicit implementation'
+                    -
+                      type: category
+                      id: 3
+                      attributes:
+                        name: 'Right-sized eco-centric projection'
+                    -
+                      type: category
+                      id: 4
+                      attributes:
+                        name: 'A test category 4'
+                  links:
+                    first: 'http://api.test/api/categories?page=1'
+                    last: 'http://api.test/api/categories?page=1'
+                    prev: null
+                    next: null
+                  meta:
+                    current_page: 1
+                    from: 1
+                    last_page: 1
+                    links:
+                      -
+                        url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://api.test/api/categories?page=1'
+                        label: '1'
+                        active: true
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    path: 'http://api.test/api/categories'
+                    per_page: 15
+                    to: 4
+                    total: 4
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        type: category
+                        id: 1
+                        attributes:
+                          name: 'Automated secondary firmware'
+                      -
+                        type: category
+                        id: 2
+                        attributes:
+                          name: 'Customizable explicit implementation'
+                      -
+                        type: category
+                        id: 3
+                        attributes:
+                          name: 'Right-sized eco-centric projection'
+                      -
+                        type: category
+                        id: 4
+                        attributes:
+                          name: 'A test category 4'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: category
+                        id:
+                          type: integer
+                          example: 1
+                        attributes:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              example: 'Automated secondary firmware'
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type: string
+                        example: 'http://api.test/api/categories?page=1'
+                      last:
+                        type: string
+                        example: 'http://api.test/api/categories?page=1'
+                      prev:
+                        type: string
+                        example: null
+                      next:
+                        type: string
+                        example: null
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      from:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      links:
+                        type: array
+                        example:
+                          -
+                            url: null
+                            label: '&laquo; Previous'
+                            active: false
+                          -
+                            url: 'http://api.test/api/categories?page=1'
+                            label: '1'
+                            active: true
+                          -
+                            url: null
+                            label: 'Next &raquo;'
+                            active: false
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type: string
+                              example: null
+                            label:
+                              type: string
+                              example: '&laquo; Previous'
+                            active:
+                              type: boolean
+                              example: false
+                      path:
+                        type: string
+                        example: 'http://api.test/api/categories'
+                      per_page:
+                        type: integer
+                        example: 15
+                      to:
+                        type: integer
+                        example: 4
+                      total:
+                        type: integer
+                        example: 4
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/categories/{id}':
+    get:
+      summary: ''
+      operationId: getApiCategoriesId
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    type: category
+                    id: 1
+                    attributes:
+                      name: 'Automated secondary firmware'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: category
+                      id:
+                        type: integer
+                        example: 1
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'Automated secondary firmware'
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Update the specified resource in storage.'
+      operationId: updateTheSpecifiedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      operationId: removeTheSpecifiedResourceFromStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the category.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/register:
+    post:
+      summary: 'Validate and create a newly registered user.'
+      operationId: validateAndCreateANewlyRegisteredUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/token:
+    post:
+      summary: ''
+      operationId: postApiToken
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+tags:
+  -
+    name: Endpoints
+    description: ''
