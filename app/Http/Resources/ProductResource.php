@@ -4,16 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use OpenApi\Annotations as OA;
 
-/**
- * @OA\Schema(
- *   @OA\Xml(name="ProductResource"),
- *   @OA\Property(property="data", type="array",
- *      @OA\Items(ref="#/components/schemas/Product"))
- *   ),
- * )
- */
+ 
 class ProductResource extends JsonResource
 {
     /**

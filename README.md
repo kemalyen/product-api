@@ -26,14 +26,8 @@ You may run the test using the following command. THe tests are written using PE
 
 ```
 php artisan test
-```
+``` 
 
-### Updating or regenerating the API documentation
-I use Open API / Swagger to generate the API docs. 
-
-```
-php artisan l5-swagger:generate
-```
 
 ## License
 

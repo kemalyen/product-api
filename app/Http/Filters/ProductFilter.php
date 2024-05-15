@@ -35,6 +35,10 @@ class ProductFilter extends QueryFilter {
         return $this->builder->where('name', 'like', $likeStr);
     }
 
+    public function category($value) {
+        return $this->builder->where('category_id', $value);
+    }
+
     public function updatedAt($value) {
         $dates = explode(',', $value);
 

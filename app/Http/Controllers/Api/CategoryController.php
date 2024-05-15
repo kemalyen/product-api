@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Filters\CategoryFilter;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(CategoryFilter $filter)
     {
-        //
+        return CategoryResource::collection(
+            Category::filter($filter)->paginate()
+        );
     }
 
     /**
@@ -22,12 +22,11 @@ class CategoryController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        $category = Category::create($request->all());
+        return new CategoryResource($category);
     }
 
-    /**
-     * Display the specified resource.
-     */
+  
     public function show(Category $category)
     {
         return new CategoryResource($category);
@@ -38,7 +37,8 @@ class CategoryController extends ApiController
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->update($request->all());
+        return new CategoryResource($category);
     }
 
     /**
@@ -46,6 +46,6 @@ class CategoryController extends ApiController
      */
     public function destroy(Category $category)
     {
-        //
+        $category->deleteOrFail();
     }
 }
