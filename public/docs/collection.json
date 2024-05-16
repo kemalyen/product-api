@@ -10,23 +10,36 @@
     ],
     "info": {
         "name": "ProductApi",
-        "_postman_id": "d1595b02-3c9a-4a83-9382-cd56091ca33e",
+        "_postman_id": "0a6d00a0-14fe-4f1a-9bc1-2e62552d8fa1",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
         {
-            "name": "Endpoints",
+            "name": "Category API Resource",
             "description": "",
             "item": [
                 {
-                    "name": "GET api\/user",
+                    "name": "List all categories",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/user",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/user"
+                            "path": "api\/categories",
+                            "query": [
+                                {
+                                    "key": "sort",
+                                    "value": "tenetur",
+                                    "description": "by category name",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Btitle%5D",
+                                    "value": "%2Afix%2A",
+                                    "description": "Filter by name. Wildcards are supported.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/categories?sort=tenetur&filter%5Btitle%5D=%2Afix%2A"
                         },
                         "method": "GET",
                         "header": [
@@ -57,24 +70,231 @@
                                     "value": "application\/json"
                                 },
                                 {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "57"
+                                },
+                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "code": 200,
+                            "body": "{\"data\":[{\"type\":\"category\",\"id\":1,\"attributes\":{\"name\":\"Automated secondary firmware\"}},{\"type\":\"category\",\"id\":2,\"attributes\":{\"name\":\"Customizable explicit implementation\"}},{\"type\":\"category\",\"id\":3,\"attributes\":{\"name\":\"Right-sized eco-centric projection\"}},{\"type\":\"category\",\"id\":4,\"attributes\":{\"name\":\"A test category 4\"}},{\"type\":\"category\",\"id\":5,\"attributes\":{\"name\":\"A test category\"}}],\"links\":{\"first\":\"http:\\\/\\\/api.test\\\/api\\\/categories?page=1\",\"last\":\"http:\\\/\\\/api.test\\\/api\\\/categories?page=1\",\"prev\":null,\"next\":null},\"meta\":{\"current_page\":1,\"from\":1,\"last_page\":1,\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"active\":false},{\"url\":\"http:\\\/\\\/api.test\\\/api\\\/categories?page=1\",\"label\":\"1\",\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"active\":false}],\"path\":\"http:\\\/\\\/api.test\\\/api\\\/categories\",\"per_page\":15,\"to\":5,\"total\":5}}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/products",
+                    "name": "Create a new category",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"jrf\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{ {\n\"data\": {\n\"type\": \"category\",\n\"id\": 5,\n\"attributes\": {\n\"name\": \"A test category\"\n}\n}\n}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "View a category",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the category."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Display a individual category data.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "56"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"data\":{\"type\":\"category\",\"id\":1,\"attributes\":{\"name\":\"Automated secondary firmware\"}}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update a category",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the category."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Update the specified category",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete a category.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the category."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Remove the category resource",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Product API Resource",
+            "description": "",
+            "item": [
+                {
+                    "name": "List all products",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/products",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/products"
+                            "query": [
+                                {
+                                    "key": "sort",
+                                    "value": "sed",
+                                    "description": "by product name, status, published date, created date and updated date",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bstatus%5D",
+                                    "value": "nesciunt",
+                                    "description": "Filter by status: A,P,X",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Btitle%5D",
+                                    "value": "%2Afix%2A",
+                                    "description": "Filter by name. Wildcards are supported.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/products?sort=sed&filter%5Bstatus%5D=nesciunt&filter%5Btitle%5D=%2Afix%2A"
                         },
                         "method": "GET",
                         "header": [
@@ -124,7 +344,7 @@
                     ]
                 },
                 {
-                    "name": "Store a newly created resource in storage.",
+                    "name": "Create a new product",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -145,7 +365,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"cqghuaxiiqnzgnvulto\",\"sku\":\"cqkgsckblmtlkmvvohjbh\",\"barcode\":\"sd\",\"publishedAt\":\"2024-05-15T20:55:10\",\"status\":\"P\",\"quantity\":7,\"price\":417.6}"
+                            "raw": "{\"name\":\"nnukftbrfdxjpjachkhc\",\"sku\":\"fuocsigiiinznwlybm\",\"barcode\":\"uydyyfgfaqvqcpkz\",\"publishedAt\":\"2024-05-16T21:26:22\",\"status\":\"A\",\"quantity\":3,\"price\":4763.4279}"
                         },
                         "description": "",
                         "auth": {
@@ -155,7 +375,7 @@
                     "response": []
                 },
                 {
-                    "name": "GET api\/products\/{id}",
+                    "name": "View a product",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -183,7 +403,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
+                        "description": "Display a individual product data.",
                         "auth": {
                             "type": "noauth"
                         }
@@ -219,7 +439,7 @@
                     ]
                 },
                 {
-                    "name": "Update the specified resource in storage.",
+                    "name": "Update a product",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -247,7 +467,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
+                        "description": "Update the specified product",
                         "auth": {
                             "type": "noauth"
                         }
@@ -255,7 +475,7 @@
                     "response": []
                 },
                 {
-                    "name": "Remove the specified resource from storage.",
+                    "name": "Delete a product.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -283,283 +503,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "GET api\/categories",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/categories"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "60"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "57"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 200,
-                            "body": "{\"data\":[{\"type\":\"category\",\"id\":1,\"attributes\":{\"name\":\"Automated secondary firmware\"}},{\"type\":\"category\",\"id\":2,\"attributes\":{\"name\":\"Customizable explicit implementation\"}},{\"type\":\"category\",\"id\":3,\"attributes\":{\"name\":\"Right-sized eco-centric projection\"}},{\"type\":\"category\",\"id\":4,\"attributes\":{\"name\":\"A test category 4\"}}],\"links\":{\"first\":\"http:\\\/\\\/api.test\\\/api\\\/categories?page=1\",\"last\":\"http:\\\/\\\/api.test\\\/api\\\/categories?page=1\",\"prev\":null,\"next\":null},\"meta\":{\"current_page\":1,\"from\":1,\"last_page\":1,\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"active\":false},{\"url\":\"http:\\\/\\\/api.test\\\/api\\\/categories?page=1\",\"label\":\"1\",\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"active\":false}],\"path\":\"http:\\\/\\\/api.test\\\/api\\\/categories\",\"per_page\":15,\"to\":4,\"total\":4}}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "Store a newly created resource in storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/categories"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "GET api\/categories\/{id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/categories\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the category."
-                                }
-                            ]
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "60"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "56"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 200,
-                            "body": "{\"data\":{\"type\":\"category\",\"id\":1,\"attributes\":{\"name\":\"Automated secondary firmware\"}}}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "Update the specified resource in storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/categories\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the category."
-                                }
-                            ]
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Remove the specified resource from storage.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/categories\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the category."
-                                }
-                            ]
-                        },
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Validate and create a newly registered user.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/register",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/register"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "POST api\/token",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/token",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/token"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
+                        "description": "Remove the product resource",
                         "auth": {
                             "type": "noauth"
                         }

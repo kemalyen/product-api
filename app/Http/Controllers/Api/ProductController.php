@@ -21,6 +21,14 @@ class ProductController extends ApiController
         $this->product_repository = $product_repository;
     }
 
+    /**
+     * List all products
+     * 
+     * @group Product API Resource
+     * @queryParam sort by product name, status, published date, created date and updated date
+     * @queryParam filter[status] Filter by status: A,P,X
+     * @queryParam filter[title] Filter by name. Wildcards are supported. Example: *fix*
+     */
     public function index(ProductFilter $filter)
     {
         return ProductResource::collection(
@@ -29,14 +37,25 @@ class ProductController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new product
+     * 
+     * @group Product API Resource
+     *
      */
     public function store(ProductStoreRequest $request)
     {
         $product = $this->product_repository->save($request->all(), ProductFactory::create());
         return new ProductResource($product);
     }
- 
+
+    /**
+     * View a product
+     * 
+     * Display a individual product data.
+     * 
+     * @group Product API Resource
+     * 
+     */
     public function show(Product $product)
     {
         if ($this->include('category')) {
@@ -47,7 +66,12 @@ class ProductController extends ApiController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a product
+     * 
+     * Update the specified product
+     * 
+     * @group Product API Resource
+     * 
      */
     public function update(Request $request, Product $product)
     {
@@ -56,7 +80,12 @@ class ProductController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a product.
+     * 
+     * Remove the product resource
+     * 
+     * @group Product API Resource
+     * 
      */
     public function destroy(Product $product)
     {

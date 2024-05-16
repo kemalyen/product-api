@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\Models\User; 
-use Illuminate\Support\Facades\Auth; 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TokenController extends Controller
 {
     public $successStatus = 200;
+    /**
+     * @hideFromAPIDocumentation
+     */
 
     public function create(Request $request)
     {
@@ -28,7 +31,7 @@ class TokenController extends Controller
 
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            $success['token'] =  $user->createToken('api-token')->accessToken;
+            $success['token'] = $user->createToken('api-token')->accessToken;
             return response()->json(['success' => $success], $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);

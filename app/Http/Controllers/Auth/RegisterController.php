@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 class RegisterController extends Controller
 {
     /**
+     * @hideFromAPIDocumentation
      * Validate and create a newly registered user.
      *
      * @param  array<string, string>  $input
@@ -39,6 +40,7 @@ class RegisterController extends Controller
     }
 
         /**
+         * @hideFromAPIDocumentation
      * Get the validation rules used to validate passwords.
      *
      * @return array<int, \Illuminate\Contracts\Validation\Rule|array|string>

@@ -7,34 +7,335 @@ servers:
   -
     url: 'http://api.test'
 paths:
-  /api/user:
+  /api/categories:
     get:
-      summary: ''
-      operationId: getApiUser
+      summary: 'List all categories'
+      operationId: listAllCategories
       description: ''
-      parameters: []
+      parameters:
+        -
+          in: query
+          name: sort
+          description: 'by category name'
+          example: tenetur
+          required: false
+          schema:
+            type: string
+            description: 'by category name'
+            example: tenetur
+        -
+          in: query
+          name: 'filter[title]'
+          description: 'Filter by name. Wildcards are supported.'
+          example: '*fix*'
+          required: false
+          schema:
+            type: string
+            description: 'Filter by name. Wildcards are supported.'
+            example: '*fix*'
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
+                  data:
+                    -
+                      type: category
+                      id: 1
+                      attributes:
+                        name: 'Automated secondary firmware'
+                    -
+                      type: category
+                      id: 2
+                      attributes:
+                        name: 'Customizable explicit implementation'
+                    -
+                      type: category
+                      id: 3
+                      attributes:
+                        name: 'Right-sized eco-centric projection'
+                    -
+                      type: category
+                      id: 4
+                      attributes:
+                        name: 'A test category 4'
+                    -
+                      type: category
+                      id: 5
+                      attributes:
+                        name: 'A test category'
+                  links:
+                    first: 'http://api.test/api/categories?page=1'
+                    last: 'http://api.test/api/categories?page=1'
+                    prev: null
+                    next: null
+                  meta:
+                    current_page: 1
+                    from: 1
+                    last_page: 1
+                    links:
+                      -
+                        url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://api.test/api/categories?page=1'
+                        label: '1'
+                        active: true
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    path: 'http://api.test/api/categories'
+                    per_page: 15
+                    to: 5
+                    total: 5
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
+                  data:
+                    type: array
+                    example:
+                      -
+                        type: category
+                        id: 1
+                        attributes:
+                          name: 'Automated secondary firmware'
+                      -
+                        type: category
+                        id: 2
+                        attributes:
+                          name: 'Customizable explicit implementation'
+                      -
+                        type: category
+                        id: 3
+                        attributes:
+                          name: 'Right-sized eco-centric projection'
+                      -
+                        type: category
+                        id: 4
+                        attributes:
+                          name: 'A test category 4'
+                      -
+                        type: category
+                        id: 5
+                        attributes:
+                          name: 'A test category'
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: category
+                        id:
+                          type: integer
+                          example: 1
+                        attributes:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              example: 'Automated secondary firmware'
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type: string
+                        example: 'http://api.test/api/categories?page=1'
+                      last:
+                        type: string
+                        example: 'http://api.test/api/categories?page=1'
+                      prev:
+                        type: string
+                        example: null
+                      next:
+                        type: string
+                        example: null
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      from:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      links:
+                        type: array
+                        example:
+                          -
+                            url: null
+                            label: '&laquo; Previous'
+                            active: false
+                          -
+                            url: 'http://api.test/api/categories?page=1'
+                            label: '1'
+                            active: true
+                          -
+                            url: null
+                            label: 'Next &raquo;'
+                            active: false
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type: string
+                              example: null
+                            label:
+                              type: string
+                              example: '&laquo; Previous'
+                            active:
+                              type: boolean
+                              example: false
+                      path:
+                        type: string
+                        example: 'http://api.test/api/categories'
+                      per_page:
+                        type: integer
+                        example: 15
+                      to:
+                        type: integer
+                        example: 5
+                      total:
+                        type: integer
+                        example: 5
       tags:
-        - Endpoints
+        - 'Category API Resource'
       security: []
-  /api/products:
-    get:
-      summary: ''
-      operationId: getApiProducts
+    post:
+      summary: 'Create a new category'
+      operationId: createANewCategory
       description: ''
       parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{ {\n\"data\": {\n\"type\": \"category\",\n\"id\": 5,\n\"attributes\": {\n\"name\": \"A test category\"\n}\n}\n}}"
+      tags:
+        - 'Category API Resource'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: jrf
+              required:
+                - name
+      security: []
+  '/api/categories/{id}':
+    get:
+      summary: 'View a category'
+      operationId: viewACategory
+      description: 'Display a individual category data.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    type: category
+                    id: 1
+                    attributes:
+                      name: 'Automated secondary firmware'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: category
+                      id:
+                        type: integer
+                        example: 1
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'Automated secondary firmware'
+      tags:
+        - 'Category API Resource'
+      security: []
+    put:
+      summary: 'Update a category'
+      operationId: updateACategory
+      description: 'Update the specified category'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Category API Resource'
+      security: []
+    delete:
+      summary: 'Delete a category.'
+      operationId: deleteACategory
+      description: 'Remove the category resource'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Category API Resource'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the category.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/products:
+    get:
+      summary: 'List all products'
+      operationId: listAllProducts
+      description: ''
+      parameters:
+        -
+          in: query
+          name: sort
+          description: 'by product name, status, published date, created date and updated date'
+          example: sed
+          required: false
+          schema:
+            type: string
+            description: 'by product name, status, published date, created date and updated date'
+            example: sed
+        -
+          in: query
+          name: 'filter[status]'
+          description: 'Filter by status: A,P,X'
+          example: nesciunt
+          required: false
+          schema:
+            type: string
+            description: 'Filter by status: A,P,X'
+            example: nesciunt
+        -
+          in: query
+          name: 'filter[title]'
+          description: 'Filter by name. Wildcards are supported.'
+          example: '*fix*'
+          required: false
+          schema:
+            type: string
+            description: 'Filter by name. Wildcards are supported.'
+            example: '*fix*'
       responses:
         200:
           description: ''
@@ -601,16 +902,16 @@ paths:
                         type: integer
                         example: 10
       tags:
-        - Endpoints
+        - 'Product API Resource'
       security: []
     post:
-      summary: 'Store a newly created resource in storage.'
-      operationId: storeANewlyCreatedResourceInStorage
+      summary: 'Create a new product'
+      operationId: createANewProduct
       description: ''
       parameters: []
       responses: {  }
       tags:
-        - Endpoints
+        - 'Product API Resource'
       requestBody:
         required: true
         content:
@@ -621,23 +922,23 @@ paths:
                 name:
                   type: string
                   description: 'Must not be greater than 255 characters.'
-                  example: cqghuaxiiqnzgnvulto
+                  example: nnukftbrfdxjpjachkhc
                 sku:
                   type: string
                   description: 'Must not be greater than 25 characters.'
-                  example: cqkgsckblmtlkmvvohjbh
+                  example: fuocsigiiinznwlybm
                 barcode:
                   type: string
                   description: 'Must not be greater than 25 characters.'
-                  example: sd
+                  example: uydyyfgfaqvqcpkz
                 publishedAt:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-05-15T20:55:10'
+                  example: '2024-05-16T21:26:22'
                 status:
                   type: string
                   description: ''
-                  example: P
+                  example: A
                   enum:
                     - A
                     - P
@@ -645,11 +946,11 @@ paths:
                 quantity:
                   type: integer
                   description: ''
-                  example: 7
+                  example: 3
                 price:
                   type: number
                   description: ''
-                  example: 417.6
+                  example: 4763.4279
               required:
                 - name
                 - sku
@@ -659,9 +960,9 @@ paths:
       security: []
   '/api/products/{id}':
     get:
-      summary: ''
-      operationId: getApiProductsId
-      description: ''
+      summary: 'View a product'
+      operationId: viewAProduct
+      description: 'Display a individual product data.'
       parameters: []
       responses:
         200:
@@ -753,25 +1054,25 @@ paths:
                             type: string
                             example: 'http://api.test/api/products/1'
       tags:
-        - Endpoints
+        - 'Product API Resource'
       security: []
     put:
-      summary: 'Update the specified resource in storage.'
-      operationId: updateTheSpecifiedResourceInStorage
-      description: ''
+      summary: 'Update a product'
+      operationId: updateAProduct
+      description: 'Update the specified product'
       parameters: []
       responses: {  }
       tags:
-        - Endpoints
+        - 'Product API Resource'
       security: []
     delete:
-      summary: 'Remove the specified resource from storage.'
-      operationId: removeTheSpecifiedResourceFromStorage
-      description: ''
+      summary: 'Delete a product.'
+      operationId: deleteAProduct
+      description: 'Remove the product resource'
       parameters: []
       responses: {  }
       tags:
-        - Endpoints
+        - 'Product API Resource'
       security: []
     parameters:
       -
@@ -782,270 +1083,10 @@ paths:
         required: true
         schema:
           type: integer
-  /api/categories:
-    get:
-      summary: ''
-      operationId: getApiCategories
-      description: ''
-      parameters: []
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data:
-                    -
-                      type: category
-                      id: 1
-                      attributes:
-                        name: 'Automated secondary firmware'
-                    -
-                      type: category
-                      id: 2
-                      attributes:
-                        name: 'Customizable explicit implementation'
-                    -
-                      type: category
-                      id: 3
-                      attributes:
-                        name: 'Right-sized eco-centric projection'
-                    -
-                      type: category
-                      id: 4
-                      attributes:
-                        name: 'A test category 4'
-                  links:
-                    first: 'http://api.test/api/categories?page=1'
-                    last: 'http://api.test/api/categories?page=1'
-                    prev: null
-                    next: null
-                  meta:
-                    current_page: 1
-                    from: 1
-                    last_page: 1
-                    links:
-                      -
-                        url: null
-                        label: '&laquo; Previous'
-                        active: false
-                      -
-                        url: 'http://api.test/api/categories?page=1'
-                        label: '1'
-                        active: true
-                      -
-                        url: null
-                        label: 'Next &raquo;'
-                        active: false
-                    path: 'http://api.test/api/categories'
-                    per_page: 15
-                    to: 4
-                    total: 4
-                properties:
-                  data:
-                    type: array
-                    example:
-                      -
-                        type: category
-                        id: 1
-                        attributes:
-                          name: 'Automated secondary firmware'
-                      -
-                        type: category
-                        id: 2
-                        attributes:
-                          name: 'Customizable explicit implementation'
-                      -
-                        type: category
-                        id: 3
-                        attributes:
-                          name: 'Right-sized eco-centric projection'
-                      -
-                        type: category
-                        id: 4
-                        attributes:
-                          name: 'A test category 4'
-                    items:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          example: category
-                        id:
-                          type: integer
-                          example: 1
-                        attributes:
-                          type: object
-                          properties:
-                            name:
-                              type: string
-                              example: 'Automated secondary firmware'
-                  links:
-                    type: object
-                    properties:
-                      first:
-                        type: string
-                        example: 'http://api.test/api/categories?page=1'
-                      last:
-                        type: string
-                        example: 'http://api.test/api/categories?page=1'
-                      prev:
-                        type: string
-                        example: null
-                      next:
-                        type: string
-                        example: null
-                  meta:
-                    type: object
-                    properties:
-                      current_page:
-                        type: integer
-                        example: 1
-                      from:
-                        type: integer
-                        example: 1
-                      last_page:
-                        type: integer
-                        example: 1
-                      links:
-                        type: array
-                        example:
-                          -
-                            url: null
-                            label: '&laquo; Previous'
-                            active: false
-                          -
-                            url: 'http://api.test/api/categories?page=1'
-                            label: '1'
-                            active: true
-                          -
-                            url: null
-                            label: 'Next &raquo;'
-                            active: false
-                        items:
-                          type: object
-                          properties:
-                            url:
-                              type: string
-                              example: null
-                            label:
-                              type: string
-                              example: '&laquo; Previous'
-                            active:
-                              type: boolean
-                              example: false
-                      path:
-                        type: string
-                        example: 'http://api.test/api/categories'
-                      per_page:
-                        type: integer
-                        example: 15
-                      to:
-                        type: integer
-                        example: 4
-                      total:
-                        type: integer
-                        example: 4
-      tags:
-        - Endpoints
-      security: []
-    post:
-      summary: 'Store a newly created resource in storage.'
-      operationId: storeANewlyCreatedResourceInStorage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  '/api/categories/{id}':
-    get:
-      summary: ''
-      operationId: getApiCategoriesId
-      description: ''
-      parameters: []
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  data:
-                    type: category
-                    id: 1
-                    attributes:
-                      name: 'Automated secondary firmware'
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      type:
-                        type: string
-                        example: category
-                      id:
-                        type: integer
-                        example: 1
-                      attributes:
-                        type: object
-                        properties:
-                          name:
-                            type: string
-                            example: 'Automated secondary firmware'
-      tags:
-        - Endpoints
-      security: []
-    put:
-      summary: 'Update the specified resource in storage.'
-      operationId: updateTheSpecifiedResourceInStorage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-    delete:
-      summary: 'Remove the specified resource from storage.'
-      operationId: removeTheSpecifiedResourceFromStorage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-    parameters:
-      -
-        in: path
-        name: id
-        description: 'The ID of the category.'
-        example: 1
-        required: true
-        schema:
-          type: integer
-  /api/register:
-    post:
-      summary: 'Validate and create a newly registered user.'
-      operationId: validateAndCreateANewlyRegisteredUser
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/token:
-    post:
-      summary: ''
-      operationId: postApiToken
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
 tags:
   -
-    name: Endpoints
+    name: 'Category API Resource'
+    description: ''
+  -
+    name: 'Product API Resource'
     description: ''

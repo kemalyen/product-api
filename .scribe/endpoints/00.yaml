@@ -1,55 +1,16 @@
-name: Endpoints
+name: 'Product API Resource'
 description: ''
 endpoints:
   -
     httpMethods:
       - GET
-    uri: api/user
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
     uri: api/products
     metadata:
-      groupName: Endpoints
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'List all products'
       description: ''
       authenticated: false
       custom: []
@@ -58,8 +19,38 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      sort:
+        name: sort
+        description: 'by product name, status, published date, created date and updated date'
+        required: false
+        example: sed
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      'filter[status]':
+        name: 'filter[status]'
+        description: 'Filter by status: A,P,X'
+        required: false
+        example: nesciunt
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      'filter[title]':
+        name: 'filter[title]'
+        description: 'Filter by name. Wildcards are supported.'
+        required: false
+        example: '*fix*'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+    cleanQueryParameters:
+      sort: sed
+      'filter[status]': nesciunt
+      'filter[title]': '*fix*'
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -86,11 +77,11 @@ endpoints:
       - POST
     uri: api/products
     metadata:
-      groupName: Endpoints
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Store a newly created resource in storage.'
+      title: 'Create a new product'
       description: ''
       authenticated: false
       custom: []
@@ -106,7 +97,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: cqghuaxiiqnzgnvulto
+        example: nnukftbrfdxjpjachkhc
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -115,7 +106,7 @@ endpoints:
         name: sku
         description: 'Must not be greater than 25 characters.'
         required: true
-        example: cqkgsckblmtlkmvvohjbh
+        example: fuocsigiiinznwlybm
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -124,7 +115,7 @@ endpoints:
         name: barcode
         description: 'Must not be greater than 25 characters.'
         required: true
-        example: sd
+        example: uydyyfgfaqvqcpkz
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -133,7 +124,7 @@ endpoints:
         name: publishedAt
         description: 'Must be a valid date.'
         required: true
-        example: '2024-05-15T20:55:10'
+        example: '2024-05-16T21:26:22'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -142,7 +133,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: P
+        example: A
         type: string
         enumValues:
           - A
@@ -154,7 +145,7 @@ endpoints:
         name: quantity
         description: ''
         required: false
-        example: 7
+        example: 3
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -163,19 +154,19 @@ endpoints:
         name: price
         description: ''
         required: false
-        example: 417.6
+        example: 4763.4279
         type: number
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      name: cqghuaxiiqnzgnvulto
-      sku: cqkgsckblmtlkmvvohjbh
-      barcode: sd
-      publishedAt: '2024-05-15T20:55:10'
-      status: P
-      quantity: 7
-      price: 417.6
+      name: nnukftbrfdxjpjachkhc
+      sku: fuocsigiiinznwlybm
+      barcode: uydyyfgfaqvqcpkz
+      publishedAt: '2024-05-16T21:26:22'
+      status: A
+      quantity: 3
+      price: 4763.4279
     fileParameters: []
     responses: []
     responseFields: []
@@ -189,12 +180,12 @@ endpoints:
       - GET
     uri: 'api/products/{id}'
     metadata:
-      groupName: Endpoints
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
-      description: ''
+      title: 'View a product'
+      description: 'Display a individual product data.'
       authenticated: false
       custom: []
     headers:
@@ -241,12 +232,12 @@ endpoints:
       - PATCH
     uri: 'api/products/{id}'
     metadata:
-      groupName: Endpoints
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update the specified resource in storage.'
-      description: ''
+      title: 'Update a product'
+      description: 'Update the specified product'
       authenticated: false
       custom: []
     headers:
@@ -281,12 +272,12 @@ endpoints:
       - DELETE
     uri: 'api/products/{id}'
     metadata:
-      groupName: Endpoints
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Remove the specified resource from storage.'
-      description: ''
+      title: 'Delete a product.'
+      description: 'Remove the product resource'
       authenticated: false
       custom: []
     headers:
@@ -304,269 +295,6 @@ endpoints:
         custom: []
     cleanUrlParameters:
       id: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
-    uri: api/categories
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 200
-        content: '{"data":[{"type":"category","id":1,"attributes":{"name":"Automated secondary firmware"}},{"type":"category","id":2,"attributes":{"name":"Customizable explicit implementation"}},{"type":"category","id":3,"attributes":{"name":"Right-sized eco-centric projection"}},{"type":"category","id":4,"attributes":{"name":"A test category 4"}}],"links":{"first":"http:\/\/api.test\/api\/categories?page=1","last":"http:\/\/api.test\/api\/categories?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/api.test\/api\/categories?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"http:\/\/api.test\/api\/categories","per_page":15,"to":4,"total":4}}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '57'
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/categories
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Store a newly created resource in storage.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - GET
-    uri: 'api/categories/{id}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the category.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        custom: []
-    cleanUrlParameters:
-      id: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 200
-        content: '{"data":{"type":"category","id":1,"attributes":{"name":"Automated secondary firmware"}}}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '56'
-          access-control-allow-origin: '*'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - PUT
-      - PATCH
-    uri: 'api/categories/{id}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Update the specified resource in storage.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the category.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        custom: []
-    cleanUrlParameters:
-      id: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - DELETE
-    uri: 'api/categories/{id}'
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Remove the specified resource from storage.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the category.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        custom: []
-    cleanUrlParameters:
-      id: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/register
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Validate and create a newly registered user.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/token
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
