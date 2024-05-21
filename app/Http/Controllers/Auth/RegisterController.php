@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -12,12 +13,13 @@ use Illuminate\Validation\Rule;
 class RegisterController extends Controller
 {
     /**
-     * @hideFromAPIDocumentation
-     * Validate and create a newly registered user.
-     *
-     * @param  array<string, string>  $input
+     * Register a user
+     * 
+     * @group Authentication
+     * 
+     * @response 201  "message": "The account is created"
      */
-    public function create(Request $request): User
+    public function register(Request $request): JsonResponse
     {
         $input = $request->only('name', 'email', 'password');
         Validator::make($input, [
@@ -32,15 +34,17 @@ class RegisterController extends Controller
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
+        User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        return response()->json(["message" => "The account is created"],201);
     }
 
-        /**
-         * @hideFromAPIDocumentation
+    /**
+     * @hideFromAPIDocumentation
      * Get the validation rules used to validate passwords.
      *
      * @return array<int, \Illuminate\Contracts\Validation\Rule|array|string>

@@ -10,11 +10,87 @@
     ],
     "info": {
         "name": "ProductApi",
-        "_postman_id": "0a6d00a0-14fe-4f1a-9bc1-2e62552d8fa1",
+        "_postman_id": "df51567b-bc1e-4123-82de-5bd4e859c6bd",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
+        {
+            "name": "Authentication",
+            "description": "",
+            "item": [
+                {
+                    "name": "Register a user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "\"message\": \"The account is created\"",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get access token for a user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/token",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/token"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n{\n\"success\": {\n\"token\": \"{YOUR_AUTH_KEY}\"\n}\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
         {
             "name": "Category API Resource",
             "description": "",
@@ -28,7 +104,7 @@
                             "query": [
                                 {
                                     "key": "sort",
-                                    "value": "tenetur",
+                                    "value": "deleniti",
                                     "description": "by category name",
                                     "disabled": false
                                 },
@@ -39,7 +115,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/categories?sort=tenetur&filter%5Btitle%5D=%2Afix%2A"
+                            "raw": "{{baseUrl}}\/api\/categories?sort=deleniti&filter%5Btitle%5D=%2Afix%2A"
                         },
                         "method": "GET",
                         "header": [
@@ -70,20 +146,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "60"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "57"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"data\":[{\"type\":\"category\",\"id\":1,\"attributes\":{\"name\":\"Automated secondary firmware\"}},{\"type\":\"category\",\"id\":2,\"attributes\":{\"name\":\"Customizable explicit implementation\"}},{\"type\":\"category\",\"id\":3,\"attributes\":{\"name\":\"Right-sized eco-centric projection\"}},{\"type\":\"category\",\"id\":4,\"attributes\":{\"name\":\"A test category 4\"}},{\"type\":\"category\",\"id\":5,\"attributes\":{\"name\":\"A test category\"}}],\"links\":{\"first\":\"http:\\\/\\\/api.test\\\/api\\\/categories?page=1\",\"last\":\"http:\\\/\\\/api.test\\\/api\\\/categories?page=1\",\"prev\":null,\"next\":null},\"meta\":{\"current_page\":1,\"from\":1,\"last_page\":1,\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"active\":false},{\"url\":\"http:\\\/\\\/api.test\\\/api\\\/categories?page=1\",\"label\":\"1\",\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"active\":false}],\"path\":\"http:\\\/\\\/api.test\\\/api\\\/categories\",\"per_page\":15,\"to\":5,\"total\":5}}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -110,7 +178,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"jrf\"}"
+                            "raw": "{\"name\":\"pvoxqhdbkieut\"}"
                         },
                         "description": "",
                         "auth": {
@@ -172,20 +240,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "60"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "56"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"data\":{\"type\":\"category\",\"id\":1,\"attributes\":{\"name\":\"Automated secondary firmware\"}}}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -277,13 +337,13 @@
                             "query": [
                                 {
                                     "key": "sort",
-                                    "value": "sed",
+                                    "value": "doloribus",
                                     "description": "by product name, status, published date, created date and updated date",
                                     "disabled": false
                                 },
                                 {
                                     "key": "filter%5Bstatus%5D",
-                                    "value": "nesciunt",
+                                    "value": "quibusdam",
                                     "description": "Filter by status: A,P,X",
                                     "disabled": false
                                 },
@@ -294,7 +354,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/products?sort=sed&filter%5Bstatus%5D=nesciunt&filter%5Btitle%5D=%2Afix%2A"
+                            "raw": "{{baseUrl}}\/api\/products?sort=doloribus&filter%5Bstatus%5D=quibusdam&filter%5Btitle%5D=%2Afix%2A"
                         },
                         "method": "GET",
                         "header": [
@@ -325,20 +385,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "60"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "59"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"data\":[{\"type\":\"product\",\"id\":1,\"attributes\":{\"name\":\"Phased fault-tolerant complexity\",\"sku\":\"54285514\",\"barcode\":\"0940720668312\",\"publishedAt\":\"2024-04-14T01:29:30.000000Z\",\"status\":\"P\",\"quantity\":99,\"price\":469.23},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":2},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/2\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/1\"}},{\"type\":\"product\",\"id\":2,\"attributes\":{\"name\":\"Multi-lateral cohesive neural-net\",\"sku\":\"37776749\",\"barcode\":\"1237043996673\",\"publishedAt\":\"2024-12-04T04:23:05.000000Z\",\"status\":\"X\",\"quantity\":32,\"price\":465.09},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":3},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/3\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/2\"}},{\"type\":\"product\",\"id\":3,\"attributes\":{\"name\":\"Phased impactful customerloyalty\",\"sku\":\"95026114\",\"barcode\":\"0954481791493\",\"publishedAt\":\"2023-10-07T15:12:28.000000Z\",\"status\":\"X\",\"quantity\":33,\"price\":70.06},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":3},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/3\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/3\"}},{\"type\":\"product\",\"id\":4,\"attributes\":{\"name\":\"Re-engineered tangible task-force\",\"sku\":\"08509178\",\"barcode\":\"7065175733354\",\"publishedAt\":\"2024-11-28T17:29:41.000000Z\",\"status\":\"A\",\"quantity\":20,\"price\":984.64},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":2},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/2\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/4\"}},{\"type\":\"product\",\"id\":5,\"attributes\":{\"name\":\"Diverse multi-tasking functionalities\",\"sku\":\"80773535\",\"barcode\":\"8508229750758\",\"publishedAt\":\"2024-03-04T15:48:31.000000Z\",\"status\":\"P\",\"quantity\":29,\"price\":947.84},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":2},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/2\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/5\"}},{\"type\":\"product\",\"id\":6,\"attributes\":{\"name\":\"Synchronised systemic middleware\",\"sku\":\"39331380\",\"barcode\":\"9232689401828\",\"publishedAt\":\"2024-08-17T20:56:02.000000Z\",\"status\":\"X\",\"quantity\":75,\"price\":557.01},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":3},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/3\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/6\"}},{\"type\":\"product\",\"id\":7,\"attributes\":{\"name\":\"Persevering human-resource project\",\"sku\":\"06245481\",\"barcode\":\"4893168245644\",\"publishedAt\":\"2025-01-12T07:11:27.000000Z\",\"status\":\"P\",\"quantity\":94,\"price\":543},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":1},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/1\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/7\"}},{\"type\":\"product\",\"id\":8,\"attributes\":{\"name\":\"Open-source coherent product\",\"sku\":\"82886172\",\"barcode\":\"0113822420090\",\"publishedAt\":\"2024-05-26T01:17:17.000000Z\",\"status\":\"P\",\"quantity\":10,\"price\":931.05},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":1},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/1\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/8\"}},{\"type\":\"product\",\"id\":9,\"attributes\":{\"name\":\"Upgradable reciprocal complexity\",\"sku\":\"17884310\",\"barcode\":\"3870402721233\",\"publishedAt\":\"2025-02-16T13:20:59.000000Z\",\"status\":\"A\",\"quantity\":33,\"price\":783.51},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":1},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/1\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/9\"}},{\"type\":\"product\",\"id\":10,\"attributes\":{\"name\":\"Virtual web-enabled archive\",\"sku\":\"49931655\",\"barcode\":\"4946978158427\",\"publishedAt\":\"2024-02-13T00:37:29.000000Z\",\"status\":\"A\",\"quantity\":48,\"price\":953.31},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":3},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/3\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/10\"}}],\"links\":{\"first\":\"http:\\\/\\\/api.test\\\/api\\\/products?page=1\",\"last\":\"http:\\\/\\\/api.test\\\/api\\\/products?page=1\",\"prev\":null,\"next\":null},\"meta\":{\"current_page\":1,\"from\":1,\"last_page\":1,\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"active\":false},{\"url\":\"http:\\\/\\\/api.test\\\/api\\\/products?page=1\",\"label\":\"1\",\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"active\":false}],\"path\":\"http:\\\/\\\/api.test\\\/api\\\/products\",\"per_page\":15,\"to\":10,\"total\":10}}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -365,7 +417,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"nnukftbrfdxjpjachkhc\",\"sku\":\"fuocsigiiinznwlybm\",\"barcode\":\"uydyyfgfaqvqcpkz\",\"publishedAt\":\"2024-05-16T21:26:22\",\"status\":\"A\",\"quantity\":3,\"price\":4763.4279}"
+                            "raw": "{\"name\":\"ohltw\",\"sku\":\"ytjlsuiuitdge\",\"barcode\":\"eufosscfbwp\",\"publishedAt\":\"2024-05-21T20:35:16\",\"status\":\"A\",\"quantity\":15,\"price\":22064.919}"
                         },
                         "description": "",
                         "auth": {
@@ -420,20 +472,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "60"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "58"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"data\":{\"type\":\"product\",\"id\":1,\"attributes\":{\"name\":\"Phased fault-tolerant complexity\",\"sku\":\"54285514\",\"barcode\":\"0940720668312\",\"publishedAt\":\"2024-04-14T01:29:30.000000Z\",\"status\":\"P\",\"quantity\":99,\"price\":469.23},\"relationships\":{\"category\":{\"data\":{\"type\":\"category\",\"id\":2},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/categories\\\/2\"}}},\"links\":{\"self\":\"http:\\\/\\\/api.test\\\/api\\\/products\\\/1\"}}}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]

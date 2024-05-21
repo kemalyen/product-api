@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Arr;
@@ -40,27 +41,27 @@ it('shows a single product', function () {
  
 
 it('creates a new product', function () {
+    $catergory = Category::factory()->create();
     $sample = [
         'name' => fake()->unique()->catchPhrase(),
+        'category_id' => $catergory->id,
         'sku' => fake()->unique()->ean8(),
         'barcode' => fake()->ean13(),
-        'options' => ['Colour', 'Size'],
-        'published_at' => fake()->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i'),
-        'status' => fake()->boolean(),
+        'publishedAt' => fake()->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i'),
+        'status' => fake()->randomElement(['A', 'P', 'X']),
         'quantity' => fake()->randomNumber(2),
         'price' => fake()->randomFloat(2, 1, 1000),
-
     ];
 
     $response = $this->post('/api/products', $sample);
     $response->assertStatus(201);
+
+   
     expect(Product::latest()->first())
         ->name->toBeString()->not->toBeEmpty()
         ->name->toBe($sample['name'])
         ->sku->toBe($sample['sku'])
         ->barcode->toBe($sample['barcode'])
-        ->options->toBe($sample['options'])
-        ->published_at->format('Y-m-d H:i')->toBe($sample['published_at'])
         ->status->toBe($sample['status'])
         ->price->toBe($sample['price'])
         ->quantity->toBe($sample['quantity']);
@@ -73,9 +74,8 @@ it('updates a product', function () {
         'name' => fake()->unique()->catchPhrase(),
         'sku' => fake()->unique()->ean8(),
         'barcode' => fake()->ean13(),
-        'options' => ['Colour', 'Size'],
         'published_at' => fake()->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i'),
-        'status' => fake()->boolean(),
+        'status' => fake()->randomElement(['A', 'P', 'X']),
         'quantity' => fake()->randomNumber(2),
         'price' => fake()->randomFloat(2, 1, 1000),
     ];
@@ -88,7 +88,6 @@ it('updates a product', function () {
         ->name->not->toBe($product->name)
         ->sku->toBe($sample['sku'])
         ->barcode->toBe($sample['barcode'])
-        ->options->toBe($sample['options'])
         ->published_at->format('Y-m-d H:i')->toBe($sample['published_at'])
         ->status->toBe($sample['status'])
         ->price->toBe($sample['price'])

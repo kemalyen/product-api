@@ -22,19 +22,18 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 }); */
 
-Route::apiResources([
-    'products' => ProductController::class,
-]);
 
-Route::apiResources([
-    'categories' => CategoryController::class,
-]);
 
-/* Route::middleware(['auth:sanctum'])->group(function () {
+
+ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResources([
         'products' => ProductController::class,
     ]);
-}); */
+    
+    Route::apiResources([
+        'categories' => CategoryController::class,
+    ]);
+});  
 
-Route::post('/register', [RegisterController::class, 'create'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('/token', [TokenController::class, 'create'])->name('token');

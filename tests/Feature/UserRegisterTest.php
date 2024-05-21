@@ -22,7 +22,7 @@ it('registers a user', function () {
 it('creates a new token', function () {
     $user = User::factory()->create();
     $token = $user->createToken('api-token')->plainTextToken;
-
+ 
     $this->getJson('/api/products', ['Authorization' => 'Bearer ' . $token])
         ->assertStatus(200);
 });

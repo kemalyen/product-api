@@ -12,10 +12,19 @@ use Illuminate\Support\Facades\Auth;
 class TokenController extends Controller
 {
     public $successStatus = 200;
-    /**
-     * @hideFromAPIDocumentation
-     */
 
+    /**
+     * Get access token for a user
+     * 
+     * @group Authentication
+     * 
+     * @response 200  {
+{
+	"success": {
+		"token": "{YOUR_AUTH_KEY}"
+	}
+}
+     */
     public function create(Request $request)
     {
         $input = $request->only('email', 'password');
@@ -31,7 +40,7 @@ class TokenController extends Controller
 
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            $success['token'] = $user->createToken('api-token')->accessToken;
+            $success['token'] = $user->createToken('api-token')->plainTextToken;
             return response()->json(['success' => $success], $this->successStatus);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);

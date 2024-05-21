@@ -24,7 +24,7 @@ endpoints:
         name: sort
         description: 'by category name'
         required: false
-        example: tenetur
+        example: deleniti
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -39,20 +39,18 @@ endpoints:
         exampleWasSpecified: true
         custom: []
     cleanQueryParameters:
-      sort: tenetur
+      sort: deleniti
       'filter[title]': '*fix*'
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
     responses:
       -
-        status: 200
-        content: '{"data":[{"type":"category","id":1,"attributes":{"name":"Automated secondary firmware"}},{"type":"category","id":2,"attributes":{"name":"Customizable explicit implementation"}},{"type":"category","id":3,"attributes":{"name":"Right-sized eco-centric projection"}},{"type":"category","id":4,"attributes":{"name":"A test category 4"}},{"type":"category","id":5,"attributes":{"name":"A test category"}}],"links":{"first":"http:\/\/api.test\/api\/categories?page=1","last":"http:\/\/api.test\/api\/categories?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/api.test\/api\/categories?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"http:\/\/api.test\/api\/categories","per_page":15,"to":5,"total":5}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '57'
           access-control-allow-origin: '*'
         description: null
         custom: []
@@ -87,13 +85,13 @@ endpoints:
         name: name
         description: 'Must not be greater than 50 characters.'
         required: true
-        example: jrf
+        example: pvoxqhdbkieut
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      name: jrf
+      name: pvoxqhdbkieut
     fileParameters: []
     responses:
       -
@@ -152,13 +150,11 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 200
-        content: '{"data":{"type":"category","id":1,"attributes":{"name":"Automated secondary firmware"}}}'
+        status: 401
+        content: '{"message":"Unauthenticated."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '56'
           access-control-allow-origin: '*'
         description: null
         custom: []
