@@ -22,12 +22,26 @@ php artisan serve
 
 
 ### Running test
-You may run the test using the following command. THe tests are written using PEST.
+You may run the test using the following command. The tests are written using PEST.
 
 ```
 php artisan test
 ``` 
 
+### API Documentation
+![api-docs](https://github.com/kemalyen/product-api/assets/1696570/3c3f1e06-34e5-4f12-9a6d-9be9cc9ff6f1)
+
+Postman Collection (https://github.com/kemalyen/product-api/blob/main/public/docs/collection.json)
+
+Open API (https://github.com/kemalyen/product-api/blob/main/public/docs/openapi.yaml)
+
+Web-based documents are located at HTTP://localhost/docs/index.html
+
+If you want to re-generate your API, simple just run following command:
+
+```
+php artisan scribe:generate
+```
 
 ## License
 
