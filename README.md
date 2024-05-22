@@ -2,7 +2,7 @@
 
 This repository is under heavy development. Please, visit the repository later.
 
-After cloning the repository, you should run compose to download and install the packages.  
+After cloning the repository, you should run composer to download and install the packages.  
 
 ```
 composer install
