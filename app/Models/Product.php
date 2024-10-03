@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Filters\QueryFilter;
@@ -17,24 +18,31 @@ class Product extends Model
         'sku',
         'barcode',
         'description',
-        'published_at',       
+        'published_at',
         'status',
         'price',
         'quantity',
         'category_id'
     ];
-    
+
     protected $casts = [
         'published_at' => 'date:Y-m-d H:i'
     ];
 
     protected $dates = ['published_at'];
 
-    public function scopeFilter(Builder $builder, QueryFilter $filters) {
+    public function getCategoryNameAttribute()
+    {
+        return $this->category?->name;
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters)
+    {
         return $filters->apply($builder);
     }
- 
-    public function category(): BelongsTo {
+
+    public function category(): BelongsTo
+    {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
