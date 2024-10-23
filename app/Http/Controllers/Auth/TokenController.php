@@ -19,11 +19,11 @@ class TokenController extends Controller
      * @group Authentication
      * 
      * @response 200  {
-{
-	"success": {
-		"token": "{YOUR_AUTH_KEY}"
-	}
-}
+     * {
+     *   "success": {
+     *      "token": "{YOUR_AUTH_KEY}"
+     * }
+     *}
      */
     public function create(Request $request)
     {
@@ -40,8 +40,7 @@ class TokenController extends Controller
 
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-
-            if ($user->hasRole('Account Api User')){
+            if ($user->hasRole('Account Api User')) {
                 $success['token'] = $user->createToken('api-token')->plainTextToken;
                 return response()->json(['success' => $success], $this->successStatus);
             }

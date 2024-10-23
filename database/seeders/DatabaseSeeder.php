@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
         Category::truncate();
 
         Role::create(['name' => 'Admin']);
-        Role::create(['name' => 'Account Manager']);
         Role::create(['name' => 'Account Admin']);
         Role::create(['name' => 'Account User']);
         Role::create(['name' => 'Account Api User']);

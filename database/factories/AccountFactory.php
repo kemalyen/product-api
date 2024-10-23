@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\AccountStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class AccountFactory extends Factory
     {
         return [
             'name' => fake()->company(),
+            'status' => fake()->randomElement(AccountStatus::cases())->value,
             'account_number' => fake()->randomNumber(5, true)
         ];
     }
