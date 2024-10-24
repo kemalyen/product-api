@@ -5,30 +5,30 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/api.test"
+            "value": "http:\/\/localhost"
         }
     ],
     "info": {
-        "name": "ProductApi",
-        "_postman_id": "df51567b-bc1e-4123-82de-5bd4e859c6bd",
+        "name": "ProductAPI",
+        "_postman_id": "3428d1b0-c08a-4278-8637-85d8d2e6f7f4",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
         {
-            "name": "Authentication",
+            "name": "Account API Resource",
             "description": "",
             "item": [
                 {
-                    "name": "Register a user",
+                    "name": "List all accounts",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/register",
+                            "path": "api\/accounts",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/register"
+                            "raw": "{{baseUrl}}\/api\/accounts"
                         },
-                        "method": "POST",
+                        "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
@@ -47,13 +47,194 @@
                     },
                     "response": [
                         {
-                            "header": [],
-                            "code": 201,
-                            "body": "\"message\": \"The account is created\"",
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
                 },
+                {
+                    "name": "Create a new account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"ges\",\"account_number\":\"3796\",\"status\":\"active\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "View a account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the account."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Display a individual account data.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update a account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the account."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"quibusdam\",\"account_number\":\"nostrum\"}"
+                        },
+                        "description": "Update the specified account",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete a account.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the account."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Remove the account resource",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Authentication",
+            "description": "",
+            "item": [
                 {
                     "name": "Get access token for a user",
                     "request": {
@@ -84,7 +265,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n{\n\"success\": {\n\"token\": \"{YOUR_AUTH_KEY}\"\n}\n}",
+                            "body": "{\n{\n  \"success\": {\n     \"token\": \"{YOUR_AUTH_KEY}\"\n}\n}",
                             "name": ""
                         }
                     ]
@@ -104,7 +285,7 @@
                             "query": [
                                 {
                                     "key": "sort",
-                                    "value": "deleniti",
+                                    "value": "non",
                                     "description": "by category name",
                                     "disabled": false
                                 },
@@ -115,7 +296,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/categories?sort=deleniti&filter%5Btitle%5D=%2Afix%2A"
+                            "raw": "{{baseUrl}}\/api\/categories?sort=non&filter%5Btitle%5D=%2Afix%2A"
                         },
                         "method": "GET",
                         "header": [
@@ -178,7 +359,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"pvoxqhdbkieut\"}"
+                            "raw": "{\"name\":\"zpkohkgrpvxysaock\"}"
                         },
                         "description": "",
                         "auth": {
@@ -337,13 +518,13 @@
                             "query": [
                                 {
                                     "key": "sort",
-                                    "value": "doloribus",
+                                    "value": "perferendis",
                                     "description": "by product name, status, published date, created date and updated date",
                                     "disabled": false
                                 },
                                 {
                                     "key": "filter%5Bstatus%5D",
-                                    "value": "quibusdam",
+                                    "value": "et",
                                     "description": "Filter by status: A,P,X",
                                     "disabled": false
                                 },
@@ -354,7 +535,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/products?sort=doloribus&filter%5Bstatus%5D=quibusdam&filter%5Btitle%5D=%2Afix%2A"
+                            "raw": "{{baseUrl}}\/api\/products?sort=perferendis&filter%5Bstatus%5D=et&filter%5Btitle%5D=%2Afix%2A"
                         },
                         "method": "GET",
                         "header": [
@@ -417,7 +598,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"ohltw\",\"sku\":\"ytjlsuiuitdge\",\"barcode\":\"eufosscfbwp\",\"publishedAt\":\"2024-05-21T20:35:16\",\"status\":\"A\",\"quantity\":15,\"price\":22064.919}"
+                            "raw": "{\"name\":\"nbphareewcbbqowlkphudpna\",\"sku\":\"pjqpbs\",\"barcode\":\"ndlhdzhkjlbmdi\",\"publishedAt\":\"2024-10-24T15:57:45\",\"status\":\"P\",\"quantity\":13,\"price\":64540822.7}"
                         },
                         "description": "",
                         "auth": {
@@ -548,6 +729,247 @@
                         ],
                         "body": null,
                         "description": "Remove the product resource",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "User API Resource",
+            "description": "",
+            "item": [
+                {
+                    "name": "List all users",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users",
+                            "query": [
+                                {
+                                    "key": "sort",
+                                    "value": "officiis",
+                                    "description": "by user name and email",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bname%5D",
+                                    "value": "%2Afix%2A",
+                                    "description": "Filter by name. Wildcards are supported.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bemail%5D",
+                                    "value": "%2Afix%2A",
+                                    "description": "Filter by email. Wildcards are supported.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Brole%5D",
+                                    "value": "",
+                                    "description": "Filter by role. Wildcards are NOT supported.",
+                                    "disabled": true
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users?sort=officiis&filter%5Bname%5D=%2Afix%2A&filter%5Bemail%5D=%2Afix%2A&filter%5Brole%5D="
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create a new user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"rbadvtzz\",\"email\":\"joseph16@example.org\",\"password\":\"v+rUF2P`3'YrFvEVf<\",\"role\":\"Account User\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "View an user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Display an user with relational data.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update a user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"uhvkeflcyeflpan\",\"email\":\"roderick95@example.org\",\"password\":\"-nZEwt%59m0-\",\"role\":\"Account User\"}"
+                        },
+                        "description": "Update the specified user",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete a user.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Remove the user resource",
                         "auth": {
                             "type": "noauth"
                         }

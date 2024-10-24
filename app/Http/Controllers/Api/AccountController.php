@@ -6,12 +6,13 @@ use App\Http\Requests\AccountRequest;
 use App\Http\Requests\AccountUpdateRequest;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
-use Illuminate\Http\Request;
 
 class AccountController extends ApiController
 {
     /**
-     * Display a listing of the resource.
+     * List all accounts
+     * 
+     * @group Account API Resource
      */
     public function index()
     {
@@ -22,7 +23,10 @@ class AccountController extends ApiController
  
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new account
+     * 
+     * @group Account API Resource
+     *
      */
     public function store(AccountRequest $request) 
     {
@@ -31,7 +35,12 @@ class AccountController extends ApiController
     }
 
     /**
-     * Display the specified resource.
+     * View a account
+     * 
+     * Display a individual account data.
+     * 
+     * @group Account API Resource
+     * 
      */
     public function show(Account $account)
     {
@@ -40,7 +49,12 @@ class AccountController extends ApiController
  
 
     /**
-     * Update the specified resource in storage.
+     * Update a account
+     * 
+     * Update the specified account
+     * 
+     * @group Account API Resource
+     * 
      */
     public function update(AccountUpdateRequest $request, Account $account)
     {
@@ -49,7 +63,12 @@ class AccountController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a account.
+     * 
+     * Remove the account resource
+     * 
+     * @group Account API Resource
+     * 
      */
     public function destroy(Account $account)
     {

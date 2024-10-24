@@ -38,7 +38,10 @@ class UserController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new user
+     * 
+     * @group User API Resource
+     *
      */
     public function store(UserRequest $request)
     {
@@ -60,7 +63,24 @@ class UserController extends ApiController
         return new UserResource($user);
     }
 
-        /**
+    /**
+     * View an user
+     * 
+     * Display an user with relational data.
+     * 
+     * @group User API Resource
+     * 
+     */
+    public function show(User $user)
+    {
+        if ($this->include('account')) {
+            return new UserResource($user->load('account'));
+        }
+
+        return new UserResource($user);
+    }
+
+    /**
      * Delete a user.
      * 
      * Remove the user resource
