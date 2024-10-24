@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return ['time' => Carbon::now()];
-});
+}); */
  
