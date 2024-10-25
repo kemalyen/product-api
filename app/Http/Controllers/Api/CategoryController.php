@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends ApiController
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Category::class);
+    }
+    
     /**
      * List all categories
      * 
