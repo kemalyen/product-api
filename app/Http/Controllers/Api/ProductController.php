@@ -19,6 +19,7 @@ class ProductController extends ApiController
     public function __construct(ProductRepository $product_repository)
     {
         $this->product_repository = $product_repository;
+        $this->authorizeResource(Product::class);
     }
 
     /**
@@ -44,7 +45,7 @@ class ProductController extends ApiController
      */
     public function store(ProductStoreRequest $request)
     {
-        $product = $this->product_repository->save($request->all(), ProductFactory::create());
+        $product = $this->product_repository->save($request->validated(), ProductFactory::create());
         return new ProductResource($product);
     }
 

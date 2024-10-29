@@ -22,14 +22,16 @@ class ProductStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' =>  'required|max:255',
+            'name' => ['required', 'string', 'max:255'],
             'sku' =>  'required|unique:products|max:25',
             'barcode' => 'required|unique:products|max:25',
             'publishedAt' => 'required|date',
             'status' =>  'required|string|in:A,P,X',
             'quantity' => 'integer',
-            'price' => 'numeric'
+            'price' => 'numeric',
+            'category_id' => 'required|exists:categories,id'
         ];
     }
  
 }
+

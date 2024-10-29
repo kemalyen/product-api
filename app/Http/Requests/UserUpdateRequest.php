@@ -33,8 +33,8 @@ class UserUpdateRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user),
             ],
             'password' => ['required', 'string'],
-            'role' => ['required', Rule::in(array_column(Role::cases(), 'value'))]
-
+            'role' => ['required', Rule::in(array_column(Role::cases(), 'value'))],
+            'account_id' => ['exists:accounts,id']
         ];
     }
 }

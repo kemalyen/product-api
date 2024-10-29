@@ -9,6 +9,11 @@ use App\Models\Account;
 
 class AccountController extends ApiController
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Account::class);
+    }
+    
     /**
      * List all accounts
      * 

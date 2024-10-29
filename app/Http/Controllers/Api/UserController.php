@@ -19,6 +19,7 @@ class UserController extends ApiController
     public function __construct(UserRepository $user_repository)
     {
         $this->user_repository = $user_repository;
+        $this->authorizeResource(User::class);
     }
 
     /**
@@ -45,7 +46,7 @@ class UserController extends ApiController
      */
     public function store(UserRequest $request)
     {
-        $user = $this->user_repository->save($request->all(), UserFactory::create());
+        $user = $this->user_repository->save($request->validated(), UserFactory::create());
         return new UserResource($user);
     }
 
@@ -59,7 +60,7 @@ class UserController extends ApiController
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $user = $this->user_repository->update($request->all(), $user);
+        $user = $this->user_repository->update($request->validated(), $user);
         return new UserResource($user);
     }
 
