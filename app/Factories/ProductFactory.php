@@ -17,6 +17,7 @@ class ProductFactory
         $product->status = '';
         $product->quantity = '';
         $product->price = '';
+        $product->category_id = '';
         return $product;
     }
  

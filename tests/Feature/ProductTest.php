@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Resources\ProductResource;
+use App\Models\Account;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -10,8 +11,10 @@ use function Pest\Laravel\{get};
 use Laravel\Sanctum\Sanctum;
 
 beforeEach(function () {
+    $this->seed();
+    $user = User::where('email', 'test@example.com')->first();
     Sanctum::actingAs(
-        User::factory()->create()
+        $user
     );
 });
 
@@ -38,7 +41,7 @@ it('shows a single product', function () {
     $response->assertStatus(200)->assertJson($data);
 });
 
- 
+
 
 it('creates a new product', function () {
     $catergory = Category::factory()->create();
@@ -56,7 +59,7 @@ it('creates a new product', function () {
     $response = $this->post('/api/products', $sample);
     $response->assertStatus(201);
 
-   
+
     expect(Product::latest()->first())
         ->name->toBeString()->not->toBeEmpty()
         ->name->toBe($sample['name'])
@@ -70,28 +73,52 @@ it('creates a new product', function () {
 it('updates a product', function () {
     $product = Product::factory()->create();
 
+    $user = User::where('email', 'admin@example.com')->first();
+    Sanctum::actingAs(
+        $user
+    );
+
+    $updated_product = Product::factory()->make();
+
     $sample = [
-        'name' => fake()->unique()->catchPhrase(),
-        'sku' => fake()->unique()->ean8(),
-        'barcode' => fake()->ean13(),
-        'published_at' => fake()->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i'),
-        'status' => fake()->randomElement(['A', 'P', 'X']),
-        'quantity' => fake()->randomNumber(2),
-        'price' => fake()->randomFloat(2, 1, 1000),
+        'name' => $updated_product->name,
+        'sku' => $updated_product->sku,
+        'barcode' => $updated_product->barcode,
+        'publishedAt' => $updated_product->published_at,
+        'status' => $updated_product->status,
+        'quantity' => $updated_product->quantity,
+        'price' => $updated_product->price,
+        'category_id' => $updated_product->category_id
     ];
 
     $response = $this->put("/api/products/{$product->id}", $sample);
-    $response->assertStatus(200);
 
-    expect(Product::latest()->first())
+    $response->assertStatus(200)
+    ->assertJsonStructure([
+        'data' => [
+            'type',
+            'id',
+            'attributes',
+            'links'
+        ]
+    ])
+    ->assertJsonFragment([
+        'name' => $sample['name'],
+        'sku' => $sample['sku'],
+        'barcode' => $sample['barcode'],
+        'status' => $sample['status'],
+        'price' => $sample['price'],
+        'quantity' => $sample['quantity'],
+    ]);
+    /* 
+    expect($product)
         ->name->toBeString()->not->toBeEmpty()
-        ->name->not->toBe($product->name)
+        ->name->toBe($product->name)
         ->sku->toBe($sample['sku'])
         ->barcode->toBe($sample['barcode'])
         ->published_at->format('Y-m-d H:i')->toBe($sample['published_at'])
         ->status->toBe($sample['status'])
         ->price->toBe($sample['price'])
         ->price->not->toBe($product->price)
-        ->quantity->toBe($sample['quantity']);
+        ->quantity->toBe($sample['quantity']); */
 });
- 

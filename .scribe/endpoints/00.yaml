@@ -24,19 +24,21 @@ endpoints:
         name: sort
         description: 'by product name, status, published date, created date and updated date'
         required: false
-        example: doloribus
+        example: perferendis
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       'filter[status]':
         name: 'filter[status]'
         description: 'Filter by status: A,P,X'
         required: false
-        example: quibusdam
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       'filter[title]':
         name: 'filter[title]'
@@ -46,10 +48,11 @@ endpoints:
         type: string
         enumValues: []
         exampleWasSpecified: true
+        nullable: false
         custom: []
     cleanQueryParameters:
-      sort: doloribus
-      'filter[status]': quibusdam
+      sort: perferendis
+      'filter[status]': et
       'filter[title]': '*fix*'
     bodyParameters: []
     cleanBodyParameters: []
@@ -95,76 +98,83 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: ohltw
+        example: nbphareewcbbqowlkphudpna
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       sku:
         name: sku
         description: 'Must not be greater than 25 characters.'
         required: true
-        example: ytjlsuiuitdge
+        example: pjqpbs
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       barcode:
         name: barcode
         description: 'Must not be greater than 25 characters.'
         required: true
-        example: eufosscfbwp
+        example: ndlhdzhkjlbmdi
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       publishedAt:
         name: publishedAt
         description: 'Must be a valid date.'
         required: true
-        example: '2024-05-21T20:35:16'
+        example: '2024-10-24T15:57:45'
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       status:
         name: status
         description: ''
         required: true
-        example: A
+        example: P
         type: string
         enumValues:
           - A
           - P
           - X
         exampleWasSpecified: false
+        nullable: false
         custom: []
       quantity:
         name: quantity
         description: ''
         required: false
-        example: 15
+        example: 13
         type: integer
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       price:
         name: price
         description: ''
         required: false
-        example: 22064.919
+        example: 64540822.7
         type: number
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanBodyParameters:
-      name: ohltw
-      sku: ytjlsuiuitdge
-      barcode: eufosscfbwp
-      publishedAt: '2024-05-21T20:35:16'
-      status: A
-      quantity: 15
-      price: 22064.919
+      name: nbphareewcbbqowlkphudpna
+      sku: pjqpbs
+      barcode: ndlhdzhkjlbmdi
+      publishedAt: '2024-10-24T15:57:45'
+      status: P
+      quantity: 13
+      price: 64540822.7
     fileParameters: []
     responses: []
     responseFields: []
@@ -198,6 +208,7 @@ endpoints:
         type: integer
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanUrlParameters:
       id: 1
@@ -248,6 +259,7 @@ endpoints:
         type: integer
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanUrlParameters:
       id: 1
@@ -288,6 +300,7 @@ endpoints:
         type: integer
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanUrlParameters:
       id: 1

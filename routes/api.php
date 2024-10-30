@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\TokenController;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,22 +20,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-}); */
+Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
+    $user = $request->user();
+    return new UserResource($user->load('account'));
+}); 
+ 
 
-
-
-
- Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResources([
         'products' => ProductController::class,
     ]);
-    
+
     Route::apiResources([
         'categories' => CategoryController::class,
     ]);
-});  
 
-Route::post('/register', [RegisterController::class, 'register'])->name('register');
+
+    Route::apiResources([
+        'accounts' => AccountController::class,
+    ]);
+
+    Route::apiResources([
+        'users' => UserController::class,
+    ]);
+});
+
+ 
 Route::post('/token', [TokenController::class, 'create'])->name('token');

@@ -24,10 +24,11 @@ endpoints:
         name: sort
         description: 'by category name'
         required: false
-        example: deleniti
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
       'filter[title]':
         name: 'filter[title]'
@@ -37,9 +38,10 @@ endpoints:
         type: string
         enumValues: []
         exampleWasSpecified: true
+        nullable: false
         custom: []
     cleanQueryParameters:
-      sort: deleniti
+      sort: non
       'filter[title]': '*fix*'
     bodyParameters: []
     cleanBodyParameters: []
@@ -85,13 +87,14 @@ endpoints:
         name: name
         description: 'Must not be greater than 50 characters.'
         required: true
-        example: pvoxqhdbkieut
+        example: zpkohkgrpvxysaock
         type: string
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanBodyParameters:
-      name: pvoxqhdbkieut
+      name: zpkohkgrpvxysaock
     fileParameters: []
     responses:
       -
@@ -140,6 +143,7 @@ endpoints:
         type: integer
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanUrlParameters:
       id: 1
@@ -190,6 +194,7 @@ endpoints:
         type: integer
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanUrlParameters:
       id: 1
@@ -230,6 +235,7 @@ endpoints:
         type: integer
         enumValues: []
         exampleWasSpecified: false
+        nullable: false
         custom: []
     cleanUrlParameters:
       id: 1

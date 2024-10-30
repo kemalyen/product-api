@@ -6,6 +6,7 @@ use App\Factories\ProductFactory;
 use App\Http\Controllers\ApiController;
 use App\Http\Filters\ProductFilter;
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
@@ -19,6 +20,7 @@ class ProductController extends ApiController
     public function __construct(ProductRepository $product_repository)
     {
         $this->product_repository = $product_repository;
+        $this->authorizeResource(Product::class);
     }
 
     /**
@@ -44,7 +46,7 @@ class ProductController extends ApiController
      */
     public function store(ProductStoreRequest $request)
     {
-        $product = $this->product_repository->save($request->all(), ProductFactory::create());
+        $product = $this->product_repository->save($request->validated(), ProductFactory::create());
         return new ProductResource($product);
     }
 
@@ -73,7 +75,7 @@ class ProductController extends ApiController
      * @group Product API Resource
      * 
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductUpdateRequest $request, Product $product)
     {
         $product = $this->product_repository->update($request->all(), $product);
         return new ProductResource($product);

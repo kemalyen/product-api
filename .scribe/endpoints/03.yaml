@@ -1,16 +1,16 @@
-name: 'Account API Resource'
+name: 'User API Resource'
 description: ''
 endpoints:
   -
     httpMethods:
       - GET
-    uri: api/accounts
+    uri: api/users
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'User API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all accounts'
+      title: 'List all users'
       description: ''
       authenticated: false
       custom: []
@@ -19,8 +19,52 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      sort:
+        name: sort
+        description: 'by user name and email'
+        required: false
+        example: officiis
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'filter[name]':
+        name: 'filter[name]'
+        description: 'Filter by name. Wildcards are supported.'
+        required: false
+        example: '*fix*'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      'filter[email]':
+        name: 'filter[email]'
+        description: 'Filter by email. Wildcards are supported.'
+        required: false
+        example: '*fix*'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      'filter[role]':
+        name: 'filter[role]'
+        description: 'Filter by role. Wildcards are NOT supported.'
+        required: false
+        example: 0
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanQueryParameters:
+      sort: officiis
+      'filter[name]': '*fix*'
+      'filter[email]': '*fix*'
+      'filter[role]': 0
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -43,13 +87,13 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/accounts
+    uri: api/users
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'User API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a new account'
+      title: 'Create a new user'
       description: ''
       authenticated: false
       custom: []
@@ -63,41 +107,53 @@ endpoints:
     bodyParameters:
       name:
         name: name
-        description: 'Must not be greater than 50 characters.'
+        description: 'Must not be greater than 255 characters.'
         required: true
-        example: ges
+        example: rbadvtzz
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
-      account_number:
-        name: account_number
-        description: 'Must be between 2 and 10 digits.'
+      email:
+        name: email
+        description: 'Must be a valid email address. Must not be greater than 255 characters.'
         required: true
-        example: '3796'
+        example: joseph16@example.org
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
-      status:
-        name: status
+      password:
+        name: password
         description: ''
         required: true
-        example: active
+        example: "v+rUF2P`3'YrFvEVf<"
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      role:
+        name: role
+        description: ''
+        required: true
+        example: 'Account User'
         type: string
         enumValues:
-          - active
-          - pending
-          - disabled
+          - Admin
+          - 'Account Admin'
+          - 'Account User'
+          - 'Account Api User'
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: ges
-      account_number: '3796'
-      status: active
+      name: rbadvtzz
+      email: joseph16@example.org
+      password: "v+rUF2P`3'YrFvEVf<"
+      role: 'Account User'
     fileParameters: []
     responses: []
     responseFields: []
@@ -109,14 +165,14 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/accounts/{id}'
+    uri: 'api/users/{id}'
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'User API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'View a account'
-      description: 'Display a individual account data.'
+      title: 'View an user'
+      description: 'Display an user with relational data.'
       authenticated: false
       custom: []
     headers:
@@ -125,7 +181,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the account.'
+        description: 'The ID of the user.'
         required: true
         example: 1
         type: integer
@@ -160,14 +216,14 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/accounts/{id}'
+    uri: 'api/users/{id}'
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'User API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a account'
-      description: 'Update the specified account'
+      title: 'Update a user'
+      description: 'Update the specified user'
       authenticated: false
       custom: []
     headers:
@@ -176,7 +232,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the account.'
+        description: 'The ID of the user.'
         required: true
         example: 1
         type: integer
@@ -191,27 +247,53 @@ endpoints:
     bodyParameters:
       name:
         name: name
-        description: ''
+        description: 'Must not be greater than 255 characters.'
         required: true
-        example: quibusdam
+        example: uhvkeflcyeflpan
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
-      account_number:
-        name: account_number
-        description: ''
+      email:
+        name: email
+        description: 'Must be a valid email address. Must not be greater than 255 characters.'
         required: true
-        example: nostrum
+        example: roderick95@example.org
         type: string
         enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: ''
+        required: true
+        example: '-nZEwt%59m0-'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      role:
+        name: role
+        description: ''
+        required: true
+        example: 'Account User'
+        type: string
+        enumValues:
+          - Admin
+          - 'Account Admin'
+          - 'Account User'
+          - 'Account Api User'
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: quibusdam
-      account_number: nostrum
+      name: uhvkeflcyeflpan
+      email: roderick95@example.org
+      password: '-nZEwt%59m0-'
+      role: 'Account User'
     fileParameters: []
     responses: []
     responseFields: []
@@ -223,14 +305,14 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'api/accounts/{id}'
+    uri: 'api/users/{id}'
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'User API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a account.'
-      description: 'Remove the account resource'
+      title: 'Delete a user.'
+      description: 'Remove the user resource'
       authenticated: false
       custom: []
     headers:
@@ -239,7 +321,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the account.'
+        description: 'The ID of the user.'
         required: true
         example: 1
         type: integer

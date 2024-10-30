@@ -27,17 +27,18 @@ class ProductResource extends JsonResource
                 'quantity' => $this->quantity,
                 'price' => $this->price
             ],
-            'relationships' => [
+            /* 'relationships' => [
                 'category' => [
                     'data' => [
                         'type' => 'category',
-                        'id' => $this->category_id
+                        'id' => $this->category_id,
+                        'name' => $this->category_name
                     ],
                     'links' => [
                         'self' => route('categories.show', ['category' => $this->category_id])
                     ]
                 ]
-            ],
+            ], */
             'includes' => new CategoryResource($this->whenLoaded('category')),
             'links' => [
                 'self' => route('products.show', ['product' => $this->id])
