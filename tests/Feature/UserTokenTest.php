@@ -1,17 +1,19 @@
 <?php
 
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 use function Pest\Laravel\{get};
 
 it('logins as a user', function () {
+    Role::create(['name' => 'Account Api User']);
     $user = User::factory()->create(
         [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'password' => 'password',
         ]
-    );
+    )->assignRole('Account Api User');
 
     $response = $this->postJson('/api/token', ['email' => $user->email, 'password' => 'password']);
     $response->assertStatus(200);
@@ -21,9 +23,7 @@ it('logins as a user', function () {
             'token'
         ],
     ]);
-
 });
-
 
 it('tries to login with invalid email', function () {
     $user = User::factory()->create(
@@ -37,7 +37,7 @@ it('tries to login with invalid email', function () {
     $response = $this->postJson('/api/token', ['email' => 'john@example.org', 'password' => 'password']);
     $response->assertStatus(401)
         ->assertJson([
-            'error' => 'Unauthorised',
+            'error' => 'Your credentials are wrong!',
         ]);
 });
 
@@ -55,6 +55,6 @@ it('tries to login with invalid password', function () {
     $response = $this->postJson('/api/token', ['email' => $user->email, 'password' => 'password**']);
     $response->assertStatus(401)
         ->assertJson([
-            'error' => 'Unauthorised'
+            'error' => 'Your credentials are wrong!'
         ]);
 });

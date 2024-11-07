@@ -1,5 +1,9 @@
 <?php
 
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -10,6 +14,9 @@
 | need to change it using the "uses()" function to bind a different classes or traits.
 |
 */
+
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 uses(
     Tests\TestCase::class,
@@ -42,7 +49,45 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+  
+
+function getAccoutApiUser()
 {
-    // ..
+    $accountApiUserRole = Role::create(['name' => 'Account Api User']);
+    $user = User::factory()->create([
+        'name' => fake()->name(),
+        'email' => fake()->unique()->safeEmail(),
+        'password' => 'password',
+    ]);
+
+    $user->assignRole($accountApiUserRole);
+    return $user;
+}
+
+
+function getAdmin()
+{
+    $accountApiUserRole = Role::create(['name' => 'Admin']);
+    $user = User::factory()->create([
+        'name' => fake()->name(),
+        'email' => fake()->unique()->safeEmail(),
+        'password' => 'password',
+    ]);
+
+    $user->assignRole($accountApiUserRole);
+    return $user;
+}
+
+function getToken(User $user)
+{
+    return $user->createToken('api-token')->plainTextToken;
+}
+ 
+
+function loginAsUser(User $user = null): User
+{
+    $user = $user ?? User::factory()->create();
+    test()->actingAs($user);
+
+    return $user;
 }
