@@ -40,11 +40,7 @@ class TokenController extends Controller
 
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-<<<<<<< HEAD
             if ($user->hasRole('Account Api User') || $user->hasRole('Admin')) {
-=======
-            if ($user->hasRole('Account Api User')) {
->>>>>>> a104ec760aa1fcb589b73ca9016cc8ab20ad3664
                 $success['token'] = $user->createToken('api-token')->plainTextToken;
                 return response()->json(['success' => $success], $this->successStatus);
             }
