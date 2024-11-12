@@ -20,6 +20,7 @@ class AccountController extends ApiController
         $this->authorizeResource(Account::class);
     }
 
+    
     /**
      * List all accounts
      * 
@@ -32,6 +33,7 @@ class AccountController extends ApiController
         );
     }
 
+ 
 
     /**
      * Create a new account
@@ -58,6 +60,7 @@ class AccountController extends ApiController
         return new AccountResource($account);
     }
 
+ 
 
     /**
      * Update a account

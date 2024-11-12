@@ -32,13 +32,7 @@ class Product extends Model
 
     protected $dates = ['published_at'];
 
-
-/*     public function account_price(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->product_prices->where('account_id', auth()->user()->account_id)->first()->price ?? $this->price,
-        );
-    }    */
+    protected $appends = ['account_price'];
 
     public function getAccountPriceAttribute(): float
     {
