@@ -43,6 +43,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResources([
         'users' => UserController::class,
     ]);
+
+    Route::patch('/accounts/{account}/price/{product}', [AccountController::class, 'price'])->name('account.price'); 
 });
 
  

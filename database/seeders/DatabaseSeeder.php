@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductPrice;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
         User::truncate();
         Account::truncate();
         Product::truncate();
+        ProductPrice::truncate();
         Category::truncate();
 
         Role::create(['name' => 'Admin']);
@@ -55,6 +57,7 @@ class DatabaseSeeder extends Seeder
         $categories = Category::factory(3)->create();
         Product::factory(10)
             ->recycle($categories)
+            ->addingProductPrices($accounts)
             ->create();
 
 

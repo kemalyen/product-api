@@ -4,6 +4,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductPrice;
 use App\Models\User;
 use Illuminate\Support\Arr;
 
@@ -24,10 +25,27 @@ it('has product page', function () {
 });
 
 it('gets the list of the products', function () {
-    Product::factory()->create();
-    $count = Product::count();
+    $product = Product::first();
+
     $response = get('/api/products');
-    $response->assertJsonCount($count, 'data');
+    $response->assertStatus(200)
+        ->assertJsonStructure([
+            'data' => [
+                [
+                    'type',
+                    'id',
+                    'attributes',
+                    'links'
+                ]
+            ]
+        ])
+        ->assertJsonFragment([
+            'name' => $product->name,
+            'sku' => $product->sku,
+            'barcode' => $product->barcode,
+            'status' => $product->status,
+            'quantity' => $product->quantity,
+        ]);
 });
 
 
@@ -115,15 +133,70 @@ it('updates a product', function () {
             'price' => $sample['price'],
             'quantity' => $sample['quantity'],
         ]);
-    /* 
-    expect($product)
-        ->name->toBeString()->not->toBeEmpty()
-        ->name->toBe($product->name)
-        ->sku->toBe($sample['sku'])
-        ->barcode->toBe($sample['barcode'])
-        ->published_at->format('Y-m-d H:i')->toBe($sample['published_at'])
-        ->status->toBe($sample['status'])
-        ->price->toBe($sample['price'])
-        ->price->not->toBe($product->price)
-        ->quantity->toBe($sample['quantity']); */
+});
+
+
+// a product price will assigned to an account
+
+it('can update a product price for an account and status will 201', function () {
+    $product = Product::factory()->create();
+
+    $user = User::where('email', 'admin@example.com')->first();
+    Sanctum::actingAs(
+        $user
+    );
+ 
+    $account = Account::factory()->create();
+
+    $sample = [
+       'price' => fake()->randomFloat(2, 1, 1000),
+    ];
+
+    $response = $this->patch("/api/accounts/{$account->id}/price/{$product->id}", $sample);
+    $response->assertStatus(201)
+        ->assertJsonStructure([
+            'data' => [
+                'type',
+                'id',
+                'attributes',
+                'links'
+            ]
+        ])
+        ->assertJsonFragment([
+            'account_id' => $account->id,
+            'product_id' => $product->id,
+            'price' => $sample['price'],
+        ]);
+});
+
+
+// a product price will update 
+
+it('can update a product price for an account and status will 200', function () {
+    $product = ProductPrice::factory()->create();
+
+    $user = User::where('email', 'admin@example.com')->first();
+    Sanctum::actingAs(
+        $user
+    );
+ 
+    $sample = [
+       'price' => fake()->randomFloat(2, 1, 1000),
+    ];
+
+    $response = $this->patch("/api/accounts/{$product->account_id}/price/{$product->product_id}", $sample);
+    $response->assertStatus(200)
+        ->assertJsonStructure([
+            'data' => [
+                'type',
+                'id',
+                'attributes',
+                'links'
+            ]
+        ])
+        ->assertJsonFragment([
+            'account_id' => $product->account_id,
+            'product_id' => $product->product_id,
+            'price' => $sample['price'],
+        ]);
 });

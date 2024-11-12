@@ -1,11 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\AccountRequest;
 use App\Http\Requests\AccountUpdateRequest;
+use App\Http\Requests\PriceUpdateRequest;
 use App\Http\Resources\AccountResource;
+use App\Http\Resources\ProductPriceResource;
 use App\Models\Account;
+use App\Models\Product;
+use App\Models\ProductPrice;
+use GuzzleHttp\Psr7\Request;
 
 class AccountController extends ApiController
 {
@@ -13,7 +19,7 @@ class AccountController extends ApiController
     {
         $this->authorizeResource(Account::class);
     }
-    
+
     /**
      * List all accounts
      * 
@@ -25,7 +31,7 @@ class AccountController extends ApiController
             Account::paginate()
         );
     }
- 
+
 
     /**
      * Create a new account
@@ -33,7 +39,7 @@ class AccountController extends ApiController
      * @group Account API Resource
      *
      */
-    public function store(AccountRequest $request) 
+    public function store(AccountRequest $request)
     {
         $account = Account::create($request->validated());
         return new AccountResource($account);
@@ -51,7 +57,7 @@ class AccountController extends ApiController
     {
         return new AccountResource($account);
     }
- 
+
 
     /**
      * Update a account
@@ -78,5 +84,19 @@ class AccountController extends ApiController
     public function destroy(Account $account)
     {
         $account->deleteOrFail();
+    }
+
+    public function price(Account $account, Product $product, PriceUpdateRequest $request)
+    {
+        $user = auth()->user();
+        if($user->hasRole('Admin')) {
+            $product = ProductPrice::updateOrCreate(
+                ['account_id' => $account->id, 'product_id' => $product->id],
+                ['price' => $request->price]
+            );
+
+            return new ProductPriceResource($product);
+        }
+        abort(403, 'This action is unauthorized.');
     }
 }

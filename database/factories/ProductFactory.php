@@ -35,4 +35,16 @@ class ProductFactory extends Factory
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),
         ];
     }
+
+    public function addingProductPrices($accounts)
+    {
+        return $this->afterCreating(function ($product) use ($accounts){
+             
+            $prices = $accounts->map(function ($account) use ($product) {
+                return ProductPriceFactory::new(['account_id' => $account->id])->count(1)->make();
+            });
+
+            $product->product_prices()->saveMany($prices->flatten());
+        });
+    }
 }

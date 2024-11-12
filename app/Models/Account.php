@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Enums\AccountStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Account extends Model
 {
@@ -20,4 +22,14 @@ class Account extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function product_prices(): HasMany
+    {
+        return $this->hasMany(ProductPrice::class);
+    }
+/* 
+    public function products(): HasManyThrough
+    {
+        return $this->hasManyThrough(Product::class, ProductPrice::class);
+    } */
 }

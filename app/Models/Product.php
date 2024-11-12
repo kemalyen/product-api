@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Filters\QueryFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -31,6 +32,20 @@ class Product extends Model
 
     protected $dates = ['published_at'];
 
+
+/*     public function account_price(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->product_prices->where('account_id', auth()->user()->account_id)->first()->price ?? $this->price,
+        );
+    }    */
+
+    public function getAccountPriceAttribute(): float
+    {
+        $price =  $this->product_prices->where('account_id', auth()->user()->account_id)->first()->price ?? $this->price;
+        return $price;
+    }
+
     public function getCategoryNameAttribute()
     {
         return $this->category?->name;
@@ -46,4 +61,8 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function product_prices(): HasMany
+    {
+        return $this->hasMany(ProductPrice::class);
+    }
 }
