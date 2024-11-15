@@ -5,12 +5,12 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/localhost"
+            "value": "http:\/\/api.test"
         }
     ],
     "info": {
-        "name": "ProductAPI",
-        "_postman_id": "3428d1b0-c08a-4278-8637-85d8d2e6f7f4",
+        "name": "ProductApi",
+        "_postman_id": "b0c2f79a-cce2-4b13-871c-3dea5415295a",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -89,7 +89,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"ges\",\"account_number\":\"3796\",\"status\":\"active\"}"
+                            "raw": "{\"name\":\"ayfmeeefrzovayzb\",\"account_number\":\"131\",\"status\":\"active\"}"
                         },
                         "description": "",
                         "auth": {
@@ -184,7 +184,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"quibusdam\",\"account_number\":\"nostrum\"}"
+                            "raw": "{\"name\":\"reiciendis\",\"account_number\":\"eum\"}"
                         },
                         "description": "Update the specified account",
                         "auth": {
@@ -285,7 +285,7 @@
                             "query": [
                                 {
                                     "key": "sort",
-                                    "value": "non",
+                                    "value": "pariatur",
                                     "description": "by category name",
                                     "disabled": false
                                 },
@@ -296,7 +296,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/categories?sort=non&filter%5Btitle%5D=%2Afix%2A"
+                            "raw": "{{baseUrl}}\/api\/categories?sort=pariatur&filter%5Btitle%5D=%2Afix%2A"
                         },
                         "method": "GET",
                         "header": [
@@ -359,7 +359,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"zpkohkgrpvxysaock\"}"
+                            "raw": "{\"name\":\"xhxilzhulre\"}"
                         },
                         "description": "",
                         "auth": {
@@ -506,6 +506,105 @@
             ]
         },
         {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "GET api\/me",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/me"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "PATCH api\/accounts\/{account_id}\/price\/{product_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts\/:account_id\/price\/:product_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts\/:account_id\/price\/:product_id",
+                            "variable": [
+                                {
+                                    "id": "account_id",
+                                    "key": "account_id",
+                                    "value": "1",
+                                    "description": "The ID of the account."
+                                },
+                                {
+                                    "id": "product_id",
+                                    "key": "product_id",
+                                    "value": "1",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"price\":44463026.54362133}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
             "name": "Product API Resource",
             "description": "",
             "item": [
@@ -518,13 +617,13 @@
                             "query": [
                                 {
                                     "key": "sort",
-                                    "value": "perferendis",
+                                    "value": "cum",
                                     "description": "by product name, status, published date, created date and updated date",
                                     "disabled": false
                                 },
                                 {
                                     "key": "filter%5Bstatus%5D",
-                                    "value": "et",
+                                    "value": "ut",
                                     "description": "Filter by status: A,P,X",
                                     "disabled": false
                                 },
@@ -535,7 +634,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/products?sort=perferendis&filter%5Bstatus%5D=et&filter%5Btitle%5D=%2Afix%2A"
+                            "raw": "{{baseUrl}}\/api\/products?sort=cum&filter%5Bstatus%5D=ut&filter%5Btitle%5D=%2Afix%2A"
                         },
                         "method": "GET",
                         "header": [
@@ -598,7 +697,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"nbphareewcbbqowlkphudpna\",\"sku\":\"pjqpbs\",\"barcode\":\"ndlhdzhkjlbmdi\",\"publishedAt\":\"2024-10-24T15:57:45\",\"status\":\"P\",\"quantity\":13,\"price\":64540822.7}"
+                            "raw": "{\"name\":\"rqer\",\"sku\":\"wwoqaqwmkefww\",\"barcode\":\"mkoownjrmvkcy\",\"publishedAt\":\"2024-11-15T20:20:16\",\"status\":\"A\",\"quantity\":4,\"price\":425.98042,\"category_id\":\"eos\"}"
                         },
                         "description": "",
                         "auth": {
@@ -691,7 +790,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"ionwbieyvlybglvw\",\"sku\":\"et\",\"barcode\":\"et\",\"publishedAt\":\"2024-11-15T20:20:16\",\"status\":\"P\",\"quantity\":9,\"price\":3824376.9,\"category_id\":\"voluptatem\"}"
+                        },
                         "description": "Update the specified product",
                         "auth": {
                             "type": "noauth"
@@ -750,7 +852,7 @@
                             "query": [
                                 {
                                     "key": "sort",
-                                    "value": "officiis",
+                                    "value": "nulla",
                                     "description": "by user name and email",
                                     "disabled": false
                                 },
@@ -773,7 +875,7 @@
                                     "disabled": true
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/users?sort=officiis&filter%5Bname%5D=%2Afix%2A&filter%5Bemail%5D=%2Afix%2A&filter%5Brole%5D="
+                            "raw": "{{baseUrl}}\/api\/users?sort=nulla&filter%5Bname%5D=%2Afix%2A&filter%5Bemail%5D=%2Afix%2A&filter%5Brole%5D="
                         },
                         "method": "GET",
                         "header": [
@@ -836,7 +938,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"rbadvtzz\",\"email\":\"joseph16@example.org\",\"password\":\"v+rUF2P`3'YrFvEVf<\",\"role\":\"Account User\"}"
+                            "raw": "{\"name\":\"oxpnsqfxtzztixjogbcqpa\",\"email\":\"christine.auer@example.net\",\"password\":\"z{L@SW6\\\\,wo]W\",\"role\":\"Account Admin\"}"
                         },
                         "description": "",
                         "auth": {
@@ -931,7 +1033,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"uhvkeflcyeflpan\",\"email\":\"roderick95@example.org\",\"password\":\"-nZEwt%59m0-\",\"role\":\"Account User\"}"
+                            "raw": "{\"name\":\"jqwsivgrp\",\"email\":\"ylittel@example.net\",\"password\":\"l$q-'8ha<O;h)\",\"role\":\"Account Api User\"}"
                         },
                         "description": "Update the specified user",
                         "auth": {

@@ -1,16 +1,16 @@
-name: 'Category API Resource'
+name: 'Product API Resource'
 description: ''
 endpoints:
   -
     httpMethods:
       - GET
-    uri: api/categories
+    uri: api/products
     metadata:
-      groupName: 'Category API Resource'
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all categories'
+      title: 'List all products'
       description: ''
       authenticated: false
       custom: []
@@ -22,9 +22,19 @@ endpoints:
     queryParameters:
       sort:
         name: sort
-        description: 'by category name'
+        description: 'by product name, status, published date, created date and updated date'
         required: false
-        example: non
+        example: cum
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'filter[status]':
+        name: 'filter[status]'
+        description: 'Filter by status: A,P,X'
+        required: false
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -41,7 +51,8 @@ endpoints:
         nullable: false
         custom: []
     cleanQueryParameters:
-      sort: non
+      sort: cum
+      'filter[status]': ut
       'filter[title]': '*fix*'
     bodyParameters: []
     cleanBodyParameters: []
@@ -65,13 +76,13 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/categories
+    uri: api/products
     metadata:
-      groupName: 'Category API Resource'
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a new category'
+      title: 'Create a new product'
       description: ''
       authenticated: false
       custom: []
@@ -85,33 +96,98 @@ endpoints:
     bodyParameters:
       name:
         name: name
-        description: 'Must not be greater than 50 characters.'
+        description: 'Must not be greater than 255 characters.'
         required: true
-        example: zpkohkgrpvxysaock
+        example: rqer
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      sku:
+        name: sku
+        description: 'Must not be greater than 25 characters.'
+        required: true
+        example: wwoqaqwmkefww
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      barcode:
+        name: barcode
+        description: 'Must not be greater than 25 characters.'
+        required: true
+        example: mkoownjrmvkcy
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      publishedAt:
+        name: publishedAt
+        description: 'Must be a valid date.'
+        required: true
+        example: '2024-11-15T20:20:16'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      status:
+        name: status
+        description: ''
+        required: true
+        example: A
+        type: string
+        enumValues:
+          - A
+          - P
+          - X
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      quantity:
+        name: quantity
+        description: ''
+        required: false
+        example: 4
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      price:
+        name: price
+        description: ''
+        required: false
+        example: 425.98042
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      category_id:
+        name: category_id
+        description: 'The <code>id</code> of an existing record in the categories table.'
+        required: true
+        example: eos
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: zpkohkgrpvxysaock
+      name: rqer
+      sku: wwoqaqwmkefww
+      barcode: mkoownjrmvkcy
+      publishedAt: '2024-11-15T20:20:16'
+      status: A
+      quantity: 4
+      price: 425.98042
+      category_id: eos
     fileParameters: []
-    responses:
-      -
-        status: 201
-        content: |-
-          { {
-          "data": {
-          "type": "category",
-          "id": 5,
-          "attributes": {
-          "name": "A test category"
-          }
-          }
-          }}
-        headers: []
-        description: ''
-        custom: []
+    responses: []
     responseFields: []
     auth: []
     controller: null
@@ -121,14 +197,14 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/categories/{id}'
+    uri: 'api/products/{id}'
     metadata:
-      groupName: 'Category API Resource'
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'View a category'
-      description: 'Display a individual category data.'
+      title: 'View a product'
+      description: 'Display a individual product data.'
       authenticated: false
       custom: []
     headers:
@@ -137,7 +213,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the category.'
+        description: 'The ID of the product.'
         required: true
         example: 1
         type: integer
@@ -172,14 +248,14 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/categories/{id}'
+    uri: 'api/products/{id}'
     metadata:
-      groupName: 'Category API Resource'
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a category'
-      description: 'Update the specified category'
+      title: 'Update a product'
+      description: 'Update the specified product'
       authenticated: false
       custom: []
     headers:
@@ -188,7 +264,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the category.'
+        description: 'The ID of the product.'
         required: true
         example: 1
         type: integer
@@ -200,8 +276,99 @@ endpoints:
       id: 1
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: ionwbieyvlybglvw
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      sku:
+        name: sku
+        description: ''
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      barcode:
+        name: barcode
+        description: ''
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      publishedAt:
+        name: publishedAt
+        description: 'Must be a valid date.'
+        required: true
+        example: '2024-11-15T20:20:16'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      status:
+        name: status
+        description: ''
+        required: true
+        example: P
+        type: string
+        enumValues:
+          - A
+          - P
+          - X
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      quantity:
+        name: quantity
+        description: ''
+        required: false
+        example: 9
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      price:
+        name: price
+        description: ''
+        required: false
+        example: 3824376.9
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      category_id:
+        name: category_id
+        description: 'The <code>id</code> of an existing record in the categories table.'
+        required: true
+        example: voluptatem
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: ionwbieyvlybglvw
+      sku: et
+      barcode: et
+      publishedAt: '2024-11-15T20:20:16'
+      status: P
+      quantity: 9
+      price: 3824376.9
+      category_id: voluptatem
     fileParameters: []
     responses: []
     responseFields: []
@@ -213,14 +380,14 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'api/categories/{id}'
+    uri: 'api/products/{id}'
     metadata:
-      groupName: 'Category API Resource'
+      groupName: 'Product API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a category.'
-      description: 'Remove the category resource'
+      title: 'Delete a product.'
+      description: 'Remove the product resource'
       authenticated: false
       custom: []
     headers:
@@ -229,7 +396,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the category.'
+        description: 'The ID of the product.'
         required: true
         example: 1
         type: integer

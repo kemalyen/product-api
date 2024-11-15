@@ -1,11 +1,11 @@
 openapi: 3.0.3
 info:
-  title: ProductAPI
+  title: ProductApi
   description: ''
   version: 1.0.0
 servers:
   -
-    url: 'http://localhost'
+    url: 'http://api.test'
 paths:
   /api/accounts:
     get:
@@ -47,12 +47,12 @@ paths:
                 name:
                   type: string
                   description: 'Must not be greater than 50 characters.'
-                  example: ges
+                  example: ayfmeeefrzovayzb
                   nullable: false
                 account_number:
                   type: string
                   description: 'Must be between 2 and 10 digits.'
-                  example: '3796'
+                  example: '131'
                   nullable: false
                 status:
                   type: string
@@ -108,12 +108,12 @@ paths:
                 name:
                   type: string
                   description: ''
-                  example: quibusdam
+                  example: reiciendis
                   nullable: false
                 account_number:
                   type: string
                   description: ''
-                  example: nostrum
+                  example: eum
                   nullable: false
               required:
                 - name
@@ -164,12 +164,12 @@ paths:
           in: query
           name: sort
           description: 'by category name'
-          example: non
+          example: pariatur
           required: false
           schema:
             type: string
             description: 'by category name'
-            example: non
+            example: pariatur
             nullable: false
         -
           in: query
@@ -223,7 +223,7 @@ paths:
                 name:
                   type: string
                   description: 'Must not be greater than 50 characters.'
-                  example: zpkohkgrpvxysaock
+                  example: xhxilzhulre
                   nullable: false
               required:
                 - name
@@ -277,6 +277,69 @@ paths:
         required: true
         schema:
           type: integer
+  /api/me:
+    get:
+      summary: ''
+      operationId: getApiMe
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/api/accounts/{account_id}/price/{product_id}':
+    patch:
+      summary: ''
+      operationId: patchApiAccountsAccount_idPriceProduct_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                price:
+                  type: number
+                  description: ''
+                  example: 44463026.543621
+                  nullable: false
+              required:
+                - price
+      security: []
+    parameters:
+      -
+        in: path
+        name: account_id
+        description: 'The ID of the account.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: product_id
+        description: 'The ID of the product.'
+        example: 1
+        required: true
+        schema:
+          type: integer
   /api/products:
     get:
       summary: 'List all products'
@@ -287,23 +350,23 @@ paths:
           in: query
           name: sort
           description: 'by product name, status, published date, created date and updated date'
-          example: perferendis
+          example: cum
           required: false
           schema:
             type: string
             description: 'by product name, status, published date, created date and updated date'
-            example: perferendis
+            example: cum
             nullable: false
         -
           in: query
           name: 'filter[status]'
           description: 'Filter by status: A,P,X'
-          example: et
+          example: ut
           required: false
           schema:
             type: string
             description: 'Filter by status: A,P,X'
-            example: et
+            example: ut
             nullable: false
         -
           in: query
@@ -350,27 +413,27 @@ paths:
                 name:
                   type: string
                   description: 'Must not be greater than 255 characters.'
-                  example: nbphareewcbbqowlkphudpna
+                  example: rqer
                   nullable: false
                 sku:
                   type: string
                   description: 'Must not be greater than 25 characters.'
-                  example: pjqpbs
+                  example: wwoqaqwmkefww
                   nullable: false
                 barcode:
                   type: string
                   description: 'Must not be greater than 25 characters.'
-                  example: ndlhdzhkjlbmdi
+                  example: mkoownjrmvkcy
                   nullable: false
                 publishedAt:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2024-10-24T15:57:45'
+                  example: '2024-11-15T20:20:16'
                   nullable: false
                 status:
                   type: string
                   description: ''
-                  example: P
+                  example: A
                   nullable: false
                   enum:
                     - A
@@ -379,12 +442,17 @@ paths:
                 quantity:
                   type: integer
                   description: ''
-                  example: 13
+                  example: 4
                   nullable: false
                 price:
                   type: number
                   description: ''
-                  example: 64540822.7
+                  example: 425.98042
+                  nullable: false
+                category_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the categories table.'
+                  example: eos
                   nullable: false
               required:
                 - name
@@ -392,6 +460,7 @@ paths:
                 - barcode
                 - publishedAt
                 - status
+                - category_id
       security: []
   '/api/products/{id}':
     get:
@@ -423,6 +492,64 @@ paths:
       responses: {  }
       tags:
         - 'Product API Resource'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: ionwbieyvlybglvw
+                  nullable: false
+                sku:
+                  type: string
+                  description: ''
+                  example: et
+                  nullable: false
+                barcode:
+                  type: string
+                  description: ''
+                  example: et
+                  nullable: false
+                publishedAt:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2024-11-15T20:20:16'
+                  nullable: false
+                status:
+                  type: string
+                  description: ''
+                  example: P
+                  nullable: false
+                  enum:
+                    - A
+                    - P
+                    - X
+                quantity:
+                  type: integer
+                  description: ''
+                  example: 9
+                  nullable: false
+                price:
+                  type: number
+                  description: ''
+                  example: 3824376.9
+                  nullable: false
+                category_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the categories table.'
+                  example: voluptatem
+                  nullable: false
+              required:
+                - name
+                - sku
+                - barcode
+                - publishedAt
+                - status
+                - category_id
       security: []
     delete:
       summary: 'Delete a product.'
@@ -452,12 +579,12 @@ paths:
           in: query
           name: sort
           description: 'by user name and email'
-          example: officiis
+          example: nulla
           required: false
           schema:
             type: string
             description: 'by user name and email'
-            example: officiis
+            example: nulla
             nullable: false
         -
           in: query
@@ -526,28 +653,33 @@ paths:
                 name:
                   type: string
                   description: 'Must not be greater than 255 characters.'
-                  example: rbadvtzz
+                  example: oxpnsqfxtzztixjogbcqpa
                   nullable: false
                 email:
                   type: string
                   description: 'Must be a valid email address. Must not be greater than 255 characters.'
-                  example: joseph16@example.org
+                  example: christine.auer@example.net
                   nullable: false
                 password:
                   type: string
                   description: ''
-                  example: "v+rUF2P`3'YrFvEVf<"
+                  example: 'z{L@SW6\,wo]W'
                   nullable: false
                 role:
                   type: string
                   description: ''
-                  example: 'Account User'
+                  example: 'Account Admin'
                   nullable: false
                   enum:
                     - Admin
                     - 'Account Admin'
                     - 'Account User'
                     - 'Account Api User'
+                account_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the accounts table.'
+                  example: null
+                  nullable: false
               required:
                 - name
                 - email
@@ -594,28 +726,33 @@ paths:
                 name:
                   type: string
                   description: 'Must not be greater than 255 characters.'
-                  example: uhvkeflcyeflpan
+                  example: jqwsivgrp
                   nullable: false
                 email:
                   type: string
                   description: 'Must be a valid email address. Must not be greater than 255 characters.'
-                  example: roderick95@example.org
+                  example: ylittel@example.net
                   nullable: false
                 password:
                   type: string
                   description: ''
-                  example: '-nZEwt%59m0-'
+                  example: "l$q-'8ha<O;h)"
                   nullable: false
                 role:
                   type: string
                   description: ''
-                  example: 'Account User'
+                  example: 'Account Api User'
                   nullable: false
                   enum:
                     - Admin
                     - 'Account Admin'
                     - 'Account User'
                     - 'Account Api User'
+                account_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the accounts table.'
+                  example: null
+                  nullable: false
               required:
                 - name
                 - email
@@ -649,6 +786,9 @@ tags:
     description: ''
   -
     name: 'Category API Resource'
+    description: ''
+  -
+    name: Endpoints
     description: ''
   -
     name: 'Product API Resource'

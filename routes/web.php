@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
-/* Route::get('/', function () {
+Route::get('/', function () {
     return ['time' => Carbon::now()];
-}); */
- 
+});
+
+Route::get('/login', function () {
+    abort(403);
+})->name('login');

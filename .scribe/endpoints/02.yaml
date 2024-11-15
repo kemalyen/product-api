@@ -1,16 +1,16 @@
-name: 'Account API Resource'
+name: 'Category API Resource'
 description: ''
 endpoints:
   -
     httpMethods:
       - GET
-    uri: api/accounts
+    uri: api/categories
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'Category API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List all accounts'
+      title: 'List all categories'
       description: ''
       authenticated: false
       custom: []
@@ -19,8 +19,30 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      sort:
+        name: sort
+        description: 'by category name'
+        required: false
+        example: pariatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'filter[title]':
+        name: 'filter[title]'
+        description: 'Filter by name. Wildcards are supported.'
+        required: false
+        example: '*fix*'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanQueryParameters:
+      sort: pariatur
+      'filter[title]': '*fix*'
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -43,13 +65,13 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/accounts
+    uri: api/categories
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'Category API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create a new account'
+      title: 'Create a new category'
       description: ''
       authenticated: false
       custom: []
@@ -65,41 +87,31 @@ endpoints:
         name: name
         description: 'Must not be greater than 50 characters.'
         required: true
-        example: ges
+        example: xhxilzhulre
         type: string
         enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-      account_number:
-        name: account_number
-        description: 'Must be between 2 and 10 digits.'
-        required: true
-        example: '3796'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-      status:
-        name: status
-        description: ''
-        required: true
-        example: active
-        type: string
-        enumValues:
-          - active
-          - pending
-          - disabled
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: ges
-      account_number: '3796'
-      status: active
+      name: xhxilzhulre
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 201
+        content: |-
+          { {
+          "data": {
+          "type": "category",
+          "id": 5,
+          "attributes": {
+          "name": "A test category"
+          }
+          }
+          }}
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -109,14 +121,14 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/accounts/{id}'
+    uri: 'api/categories/{id}'
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'Category API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'View a account'
-      description: 'Display a individual account data.'
+      title: 'View a category'
+      description: 'Display a individual category data.'
       authenticated: false
       custom: []
     headers:
@@ -125,7 +137,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the account.'
+        description: 'The ID of the category.'
         required: true
         example: 1
         type: integer
@@ -160,14 +172,14 @@ endpoints:
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/accounts/{id}'
+    uri: 'api/categories/{id}'
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'Category API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update a account'
-      description: 'Update the specified account'
+      title: 'Update a category'
+      description: 'Update the specified category'
       authenticated: false
       custom: []
     headers:
@@ -176,7 +188,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the account.'
+        description: 'The ID of the category.'
         required: true
         example: 1
         type: integer
@@ -188,30 +200,8 @@ endpoints:
       id: 1
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      name:
-        name: name
-        description: ''
-        required: true
-        example: quibusdam
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-      account_number:
-        name: account_number
-        description: ''
-        required: true
-        example: nostrum
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-    cleanBodyParameters:
-      name: quibusdam
-      account_number: nostrum
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
     responseFields: []
@@ -223,14 +213,14 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'api/accounts/{id}'
+    uri: 'api/categories/{id}'
     metadata:
-      groupName: 'Account API Resource'
+      groupName: 'Category API Resource'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete a account.'
-      description: 'Remove the account resource'
+      title: 'Delete a category.'
+      description: 'Remove the category resource'
       authenticated: false
       custom: []
     headers:
@@ -239,7 +229,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the account.'
+        description: 'The ID of the category.'
         required: true
         example: 1
         type: integer
