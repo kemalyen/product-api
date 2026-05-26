@@ -10,7 +10,6 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
-use Illuminate\Http\Request;
 
 
 class ProductController extends ApiController
@@ -34,7 +33,7 @@ class ProductController extends ApiController
     public function index(ProductFilter $filter)
     {
         return ProductResource::collection(
-            Product::filter($filter)->paginate()
+            Product::with('product_prices')->filter($filter)->paginate()
         );
     }
 

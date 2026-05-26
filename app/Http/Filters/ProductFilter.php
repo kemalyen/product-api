@@ -2,7 +2,8 @@
 
 namespace App\Http\Filters;
 
-class ProductFilter extends QueryFilter {
+class ProductFilter extends QueryFilter
+{
 
     protected $sortable = [
         'name',
@@ -12,7 +13,8 @@ class ProductFilter extends QueryFilter {
         'updatedAt' => 'updated_at'
     ];
 
-    public function createdAt($value) {
+    public function createdAt($value)
+    {
         $dates = explode(',', $value);
 
         if (count($dates) > 1) {
@@ -22,24 +24,29 @@ class ProductFilter extends QueryFilter {
         return $this->builder->whereDate('created_at', $value);
     }
 
-    public function include($value) {
+    public function include($value)
+    {
         return $this->builder->with($value);
     }
 
-    public function status($value) {
+    public function status($value)
+    {
         return $this->builder->whereIn('status', explode(',', $value));
     }
 
-    public function name($value) {
+    public function name($value)
+    {
         $likeStr = str_replace('*', '%', $value);
         return $this->builder->where('name', 'like', $likeStr);
     }
 
-    public function category($value) {
+    public function category($value)
+    {
         return $this->builder->where('category_id', $value);
     }
 
-    public function updatedAt($value) {
+    public function updatedAt($value)
+    {
         $dates = explode(',', $value);
 
         if (count($dates) > 1) {
@@ -48,6 +55,4 @@ class ProductFilter extends QueryFilter {
 
         return $this->builder->whereDate('updated_at', $value);
     }
-
-    
 }
