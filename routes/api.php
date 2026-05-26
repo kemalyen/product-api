@@ -23,32 +23,28 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
     $user = $request->user();
     return new UserResource($user->load('account'));
-}); 
- 
-
-
-
-
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::apiResources([
-        'products' => ProductController::class,
-    ]);
-
-    Route::apiResources([
-        'categories' => CategoryController::class,
-    ]);
-
-
-    Route::apiResources([
-        'accounts' => AccountController::class,
-    ]);
-
-    Route::apiResources([
-        'users' => UserController::class,
-    ]);
-
-    Route::patch('/accounts/{account}/price/{product}', [AccountController::class, 'price'])->name('account.price'); 
 });
 
- 
+Route::prefix(config('api.version'))->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::apiResources([
+            'products' => ProductController::class,
+        ]);
+
+        Route::apiResources([
+            'categories' => CategoryController::class,
+        ]);
+
+        Route::apiResources([
+            'accounts' => AccountController::class,
+        ]);
+
+        Route::apiResources([
+            'users' => UserController::class,
+        ]);
+
+        Route::patch('/accounts/{account}/price/{product}', [AccountController::class, 'price'])->name('account.price');
+    });
+});
+
 Route::post('/token', [TokenController::class, 'create'])->name('token');
