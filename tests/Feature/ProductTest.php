@@ -20,14 +20,14 @@ beforeEach(function () {
 });
 
 it('has product page', function () {
-    $response = get('/api/products');
+    $response = get('/api/' . config('api.version') . '/products');
     $response->assertStatus(200);
 });
 
 it('gets the list of the products', function () {
     $product = Product::first();
 
-    $response = get('/api/products');
+    $response = get('/api/' . config('api.version') . '/products');
     $response->assertStatus(200)
         ->assertJsonStructure([
             'data' => [
@@ -55,7 +55,7 @@ it('shows a single product', function () {
         $product
     );
     $data = $resource->response()->getData(true);
-    $response = get("/api/products/{$product->id}");
+    $response = get("/api/" . config('api.version') . "/products/{$product->id}");
     $response->assertStatus(200)->assertJson($data);
 });
 
@@ -79,7 +79,7 @@ it('creates a new product', function () {
         'price' => fake()->randomFloat(2, 1, 1000),
     ];
 
-    $response = $this->postJson('/api/products', $sample);
+    $response = $this->postJson('/api/' . config('api.version') . '/products', $sample);
     $response->assertStatus(201);
 
 
@@ -114,7 +114,7 @@ it('updates a product', function () {
         'category_id' => $updated_product->category_id
     ];
 
-    $response = $this->put("/api/products/{$product->id}", $sample);
+    $response = $this->put("/api/" . config('api.version') . "/products/{$product->id}", $sample);
 
     $response->assertStatus(200)
         ->assertJsonStructure([
@@ -145,14 +145,14 @@ it('can update a product price for an account and status will 201', function () 
     Sanctum::actingAs(
         $user
     );
- 
+
     $account = Account::factory()->create();
 
     $sample = [
-       'price' => fake()->randomFloat(2, 1, 1000),
+        'price' => fake()->randomFloat(2, 1, 1000),
     ];
 
-    $response = $this->patch("/api/accounts/{$account->id}/price/{$product->id}", $sample);
+    $response = $this->patch("/api/" . config('api.version') . "/accounts/{$account->id}/price/{$product->id}", $sample);
     $response->assertStatus(201)
         ->assertJsonStructure([
             'data' => [
@@ -179,12 +179,12 @@ it('can update a product price for an account and status will 200', function () 
     Sanctum::actingAs(
         $user
     );
- 
+
     $sample = [
-       'price' => fake()->randomFloat(2, 1, 1000),
+        'price' => fake()->randomFloat(2, 1, 1000),
     ];
 
-    $response = $this->patch("/api/accounts/{$product->account_id}/price/{$product->product_id}", $sample);
+    $response = $this->patch("/api/" . config('api.version') . "/accounts/{$product->account_id}/price/{$product->product_id}", $sample);
     $response->assertStatus(200)
         ->assertJsonStructure([
             'data' => [

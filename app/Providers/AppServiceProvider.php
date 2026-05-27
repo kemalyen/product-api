@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,31 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (app()->environment('local', 'staging') && !$this->isMigrationOrSeederCommand()) {
+            Model::preventLazyLoading(
+                fn($query) => $this->app->environment('local')
+                    ? logger()->warning('Lazy loading detected: ' . $query->toSql())
+                    : null
+            );
+
+            Model::handleLazyLoadingViolationUsing(function (Model $model, string $relation) {
+                $class = $model::class;
+
+                info("Attempted to lazy load [{$relation}] on model [{$class}].");
+            });
+
+            DB::listen(function ($query) {
+                File::append(
+                    storage_path('/logs/query.log'),
+                    $query->sql . ' [' . implode(', ', $query->bindings) . ']' . PHP_EOL
+                );
+            });
+        }
+    }
+
+    private function isMigrationOrSeederCommand(): bool
+    {
+        $command = request()->server('argv')[1] ?? '';
+        return in_array($command, ['migrate', 'migrate:fresh', 'migrate:reset', 'db:seed']);
     }
 }

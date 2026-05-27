@@ -36,8 +36,7 @@ class Product extends Model
 
     public function getAccountPriceAttribute(): float
     {
-        $price =  $this->product_prices->where('account_id', auth()->user()->account_id)->first()->price ?? $this->price;
-        return $price;
+        return $this->product_prices->where('account_id', auth()->user()->account_id)->first()->price ?? $this->price;
     }
 
     public function getCategoryNameAttribute()
