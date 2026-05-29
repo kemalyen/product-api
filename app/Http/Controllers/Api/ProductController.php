@@ -11,7 +11,6 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 
-
 class ProductController extends ApiController
 {
     protected ProductRepository $product_repository;
@@ -28,13 +27,19 @@ class ProductController extends ApiController
      * @group Product API Resource
      * @queryParam sort by product name, status, published date, created date and updated date
      * @queryParam filter[status] Filter by status: A,P,X
-     * @queryParam filter[title] Filter by name. Wildcards are supported. Example: *fix*
+     * @queryParam filter[name] Filter by name. Wildcards are supported. Example: *fix*
      */
     public function index(ProductFilter $filter)
     {
-        return ProductResource::collection(
-            Product::with('product_prices')->filter($filter)->paginate()
-        );
+        $cacheKey = 'product-filtering:' . md5(request()->fullUrl());
+
+        $products = cache()->remember($cacheKey, now()->addMinutes(10), function () use ($filter) {
+            return ProductResource::collection(
+                Product::with('product_prices')->filter($filter)->paginate()
+            )->response()->getData(true);
+        });
+
+        return response()->json($products);
     }
 
     /**
@@ -59,11 +64,15 @@ class ProductController extends ApiController
      */
     public function show(Product $product)
     {
+        $cacheKey = 'product-filtering:' . md5(request()->fullUrl());
         if ($this->include('category')) {
-            return new ProductResource($product->load('category'));
+            $cacheKey .= ':with-category';
+        }
+        if ($this->include('category')) {
+            cache()->remember($cacheKey, now()->addMinutes(10), fn() => new ProductResource($product->load('category')));
         }
 
-        return new ProductResource($product);
+        return cache()->remember($cacheKey, now()->addMinutes(10), fn() => new ProductResource($product));;
     }
 
     /**
