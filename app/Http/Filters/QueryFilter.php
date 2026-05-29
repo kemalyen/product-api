@@ -5,7 +5,8 @@ namespace App\Http\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-abstract class QueryFilter {
+abstract class QueryFilter
+{
     protected $builder;
     protected $request;
     protected $sortable = [];
@@ -15,10 +16,11 @@ abstract class QueryFilter {
         $this->request = $request;
     }
 
-    public function apply(Builder $builder) {
+    public function apply(Builder $builder)
+    {
         $this->builder = $builder;
 
-        foreach($this->request->all() as $key => $value) {
+        foreach ($this->request->all() as $key => $value) {
             if (method_exists($this, $key)) {
                 $this->$key($value);
             }
@@ -27,8 +29,9 @@ abstract class QueryFilter {
         return $builder;
     }
 
-    protected function filter($arr) {
-        foreach($arr as $key => $value) {
+    protected function filter(array $arr = [])
+    {
+        foreach ($arr as $key => $value) {
             if (method_exists($this, $key)) {
                 $this->$key($value);
             }
@@ -37,10 +40,11 @@ abstract class QueryFilter {
         return $this->builder;
     }
 
-    protected function sort($value) {
+    protected function sort($value)
+    {
         $sortAttributes = explode(',', $value);
 
-        foreach($sortAttributes as $sortAttribute) {
+        foreach ($sortAttributes as $sortAttribute) {
             $direction = 'asc';
 
             if (strpos($sortAttribute, '-') === 0) {

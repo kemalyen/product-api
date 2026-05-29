@@ -29,18 +29,18 @@ class ProductFilter extends QueryFilter
         return $this->builder->with($value);
     }
 
-    public function status($value)
+    public function status(string $value)
     {
         return $this->builder->whereIn('status', explode(',', $value));
     }
 
-    public function name($value)
+    public function name(string $value)
     {
         $likeStr = str_replace('*', '%', $value);
         return $this->builder->where('name', 'like', $likeStr);
     }
 
-    public function category($value)
+    public function category(string $value)
     {
         return $this->builder->where('category_id', $value);
     }

@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductPrice;
 use App\Models\User;
-use Illuminate\Support\Arr;
 
 use function Pest\Laravel\{get};
 use Laravel\Sanctum\Sanctum;
