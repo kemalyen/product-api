@@ -23,16 +23,14 @@ class ProductUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'sku' => ['required', Rule::unique('products', 'sku')->ignore($this->product)],
-            'barcode' => ['required', Rule::unique('products', 'barcode')->ignore($this->product)],
-            'publishedAt' => 'required|date',
-            'status' =>  'required|string|in:A,P,X',
+            'name' => ['string', 'max:255'],
+            'sku' => [Rule::unique('products', 'sku')->ignore($this->product)],
+            'barcode' => [Rule::unique('products', 'barcode')->ignore($this->product)],
+            'publishedAt' => 'date',
+            'status' =>  'string|in:A,P,X',
             'quantity' => 'integer',
             'price' => 'numeric',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'exists:categories,id'
         ];
     }
- 
 }
-
