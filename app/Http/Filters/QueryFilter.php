@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 abstract class QueryFilter
 {
-    protected $builder;
-    protected $request;
+    protected Builder $builder;
+    protected Request $request;
     protected $sortable = [];
 
     public function __construct(Request $request)
@@ -40,7 +40,7 @@ abstract class QueryFilter
         return $this->builder;
     }
 
-    protected function sort($value)
+    protected function sort(string $value)
     {
         $sortAttributes = explode(',', $value);
 

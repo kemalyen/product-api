@@ -9,7 +9,6 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
 use App\Models\User;
 
 class UserController extends ApiController
@@ -30,11 +29,12 @@ class UserController extends ApiController
      * @queryParam filter[name] Filter by name. Wildcards are supported. Example: *fix*
      * @queryParam filter[email] Filter by email. Wildcards are supported. Example: *fix*
      * @queryParam filter[role] Filter by role. Wildcards are NOT supported. Example: Account Manager
+     * @queryParam filter[account] Filter by account. Wildcards are NOT supported. Example: 1
      */
     public function index(UserFilter $filter)
     {
         return UserResource::collection(
-            User::filter($filter)->with('roles')->paginate()
+            User::filter($filter)->account()->with('roles')->paginate()
         );
     }
 
