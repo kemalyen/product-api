@@ -95,7 +95,7 @@ class AccountController extends ApiController
                 ['price' => $request->validated()['price']]
             );
 
-            return response()->json(['message' => 'Price updated successfully']);
+            return response()->json(['message' => 'Price updated successfully'], 204);
         }
 
         abort(403, 'This action is unauthorized.');
