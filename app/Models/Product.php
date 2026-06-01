@@ -9,10 +9,13 @@ use App\Http\Filters\QueryFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Product extends Model
+class Product extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
+    protected $auditStrict = true;
 
     protected $fillable = [
         'name',
@@ -33,6 +36,18 @@ class Product extends Model
     protected $dates = ['published_at'];
 
     protected $appends = ['account_price'];
+
+    protected $auditInclude = [
+        'name',
+        'sku',
+        'barcode',
+        'description',
+        'published_at',
+        'status',
+        'price',
+        'quantity',
+        'category_id'
+    ];
 
     public function getAccountPriceAttribute(): float
     {
