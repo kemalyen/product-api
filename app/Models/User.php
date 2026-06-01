@@ -56,4 +56,19 @@ class User extends Authenticatable
     {
         return $filters->apply($builder);
     }
+
+    public function scopeRole($query, $role)
+    {
+        return $query->whereHas('roles', function ($q) use ($role) {
+            $q->where('name', $role);
+        });
+    }
+
+    public function scopeAccount($query)
+    {
+        if (auth()->user()->hasRole('Admin')) {
+            return $query;
+        }
+        return $query->where('account_id', auth()->user()->account_id);
+    }
 }

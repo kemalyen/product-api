@@ -19,14 +19,14 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'attributes' => [
                 'name' => $this->name,
-                'email' => $this->email,
+                'email' => $this->email
             ],
             'relationships' => [
                 'roles' => [
                     'data' => [
                         'type' => 'roles',
                         'name' => (isset($this->roles[0]) ? $this->roles[0]->name : null)
-                    ], 
+                    ],
                 ]
             ],
             'includes' => new AccountResource($this->whenLoaded('account')),
