@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Data\Common\PaginatedDto;
+use App\Data\Product\ProductDto;
 use App\Factories\ProductFactory;
 use App\Http\Controllers\ApiController;
 use App\Http\Filters\ProductFilter;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
-use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends ApiController
 {
@@ -29,17 +31,17 @@ class ProductController extends ApiController
      * @queryParam filter[status] Filter by status: A,P,X
      * @queryParam filter[name] Filter by name. Wildcards are supported. Example: *fix*
      */
-    public function index(ProductFilter $filter)
+    public function index(ProductFilter $filter): JsonResponse
     {
         $cacheKey = 'product-filtering:' . md5(request()->fullUrl());
 
         $products = cache()->remember($cacheKey, now()->addMinutes(10), function () use ($filter) {
-            return ProductResource::collection(
-                Product::with('product_prices')->filter($filter)->paginate()
-            )->response()->getData(true);
+            return Product::with('product_prices')->filter($filter)->paginate();
         });
 
-        return response()->json($products);
+        return response()->json(
+            PaginatedDto::from($products, fn($p) => ProductDto::from($p))
+        );
     }
 
     /**
@@ -48,10 +50,10 @@ class ProductController extends ApiController
      * @group Product API Resource
      *
      */
-    public function store(ProductStoreRequest $request)
+    public function store(ProductStoreRequest $request): JsonResponse
     {
         $product = $this->product_repository->save($request->validated(), ProductFactory::create());
-        return new ProductResource($product);
+        return response()->json(ProductDto::from($product), 201);
     }
 
     /**
@@ -62,17 +64,16 @@ class ProductController extends ApiController
      * @group Product API Resource
      * 
      */
-    public function show(Product $product)
+    public function show(Product $product): JsonResponse
     {
-        $cacheKey = 'product-filtering:' . md5(request()->fullUrl());
+        $cacheKey = 'product-view:' . $product->id;
         if ($this->include('category')) {
             $cacheKey .= ':with-category';
-        }
-        if ($this->include('category')) {
-            cache()->remember($cacheKey, now()->addMinutes(10), fn() => new ProductResource($product->load('category')));
+            $product = cache()->remember($cacheKey, now()->addMinutes(10), fn() => $product->load('category'));
         }
 
-        return cache()->remember($cacheKey, now()->addMinutes(10), fn() => new ProductResource($product));;
+        $product = cache()->remember($cacheKey, now()->addMinutes(10), fn() => $product);
+        return response()->json(ProductDto::from($product));
     }
 
     /**
@@ -83,10 +84,10 @@ class ProductController extends ApiController
      * @group Product API Resource
      * 
      */
-    public function update(ProductUpdateRequest $request, Product $product)
+    public function update(ProductUpdateRequest $request, Product $product): JsonResponse
     {
-        $product = $this->product_repository->update($request->all(), $product);
-        return new ProductResource($product);
+        $product = $this->product_repository->update($request->validated(), $product);
+        return response()->json(ProductDto::from($product));
     }
 
     /**
@@ -97,8 +98,9 @@ class ProductController extends ApiController
      * @group Product API Resource
      * 
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): JsonResponse
     {
         $product->deleteOrFail();
+        return response()->json([], 204);
     }
 }

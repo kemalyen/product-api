@@ -2,36 +2,41 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ValidProductPrice;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductStoreRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return true;
+        return $this->user() && $this->user()->account_id !== null;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
-     */
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'sku' =>  'required|unique:products|max:25',
-            'barcode' => 'required|unique:products|max:25',
-            'publishedAt' => 'required|date',
-            'status' =>  'required|string|in:A,P,X',
-            'quantity' => 'integer',
-            'price' => 'numeric',
-            'category_id' => 'required|exists:categories,id'
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'description' => ['required', 'string', 'min:10', 'max:1000'],
+            'price' => ['required', 'numeric', new ValidProductPrice()],
+            'category_id' => ['nullable', 'integer'],
+            'sku' => ['required', 'string', 'regex:/^[A-Z0-9]{4,25}$/'],
+            'barcode' => ['required', 'string', 'max:50'],
+            'quantity' => ['sometimes', 'integer', 'min:0'],
+            'status' => ['sometimes', 'string', 'in:A,P,X'],
+            'published_at' => ['sometimes', 'date'],
         ];
     }
- 
-}
 
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Product name is required',
+            'name.min' => 'Product name must be at least 3 characters',
+            'description.required' => 'Product description is required',
+            'description.min' => 'Product description must be at least 10 characters',
+            'price.required' => 'Product price is required',
+            'sku.regex' => 'SKU must be 4-25 uppercase alphanumeric characters',
+            'barcode.required' => 'Product barcode is required',
+        ];
+    }
+}

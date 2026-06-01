@@ -12,7 +12,7 @@ class Account extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'account_number', 'status'];
+    protected $fillable = ['name', 'account_number', 'status', 'plan_tier'];
 
     protected $casts = [
         'role' => AccountStatus::class,

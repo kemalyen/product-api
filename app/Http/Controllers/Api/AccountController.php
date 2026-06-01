@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Data\Account\AccountDto;
+use App\Data\Common\PaginatedDto;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\AccountRequest;
 use App\Http\Requests\AccountUpdateRequest;
 use App\Http\Requests\PriceUpdateRequest;
-use App\Http\Resources\AccountResource;
-use App\Http\Resources\ProductPriceResource;
 use App\Models\Account;
 use App\Models\Product;
 use App\Models\ProductPrice;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\JsonResponse;
 
 class AccountController extends ApiController
 {
@@ -20,20 +20,18 @@ class AccountController extends ApiController
         $this->authorizeResource(Account::class);
     }
 
-    
     /**
      * List all accounts
      * 
      * @group Account API Resource
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        return AccountResource::collection(
-            Account::paginate()
+        $accounts = Account::paginate();
+        return response()->json(
+            PaginatedDto::from($accounts, fn($a) => AccountDto::from($a))
         );
     }
-
- 
 
     /**
      * Create a new account
@@ -41,10 +39,10 @@ class AccountController extends ApiController
      * @group Account API Resource
      *
      */
-    public function store(AccountRequest $request)
+    public function store(AccountRequest $request): JsonResponse
     {
         $account = Account::create($request->validated());
-        return new AccountResource($account);
+        return response()->json(AccountDto::from($account), 201);
     }
 
     /**
@@ -55,12 +53,10 @@ class AccountController extends ApiController
      * @group Account API Resource
      * 
      */
-    public function show(Account $account)
+    public function show(Account $account): JsonResponse
     {
-        return new AccountResource($account);
+        return response()->json(AccountDto::from($account));
     }
-
- 
 
     /**
      * Update a account
@@ -70,10 +66,10 @@ class AccountController extends ApiController
      * @group Account API Resource
      * 
      */
-    public function update(AccountUpdateRequest $request, Account $account)
+    public function update(AccountUpdateRequest $request, Account $account): JsonResponse
     {
         $account->update($request->validated());
-        return new AccountResource($account);
+        return response()->json(AccountDto::from($account));
     }
 
     /**
@@ -84,22 +80,24 @@ class AccountController extends ApiController
      * @group Account API Resource
      * 
      */
-    public function destroy(Account $account)
+    public function destroy(Account $account): JsonResponse
     {
         $account->deleteOrFail();
+        return response()->json([], 204);
     }
 
-    public function price(Account $account, Product $product, PriceUpdateRequest $request)
+    public function price(Account $account, Product $product, PriceUpdateRequest $request): JsonResponse
     {
         $user = auth()->user();
-        if($user->hasRole('Admin')) {
-            $product = ProductPrice::updateOrCreate(
+        if ($user->hasRole('Admin')) {
+            ProductPrice::updateOrCreate(
                 ['account_id' => $account->id, 'product_id' => $product->id],
-                ['price' => $request->price]
+                ['price' => $request->validated()['price']]
             );
 
-            return new ProductPriceResource($product);
+            return response()->json(['message' => 'Price updated successfully']);
         }
+
         abort(403, 'This action is unauthorized.');
     }
 }

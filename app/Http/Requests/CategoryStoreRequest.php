@@ -6,23 +6,24 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CategoryStoreRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return true;
+        return $this->user() && $this->user()->account_id !== null;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            'name' =>  'required|max:50',
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'description' => ['sometimes', 'string', 'max:1000'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Category name is required',
+            'name.min' => 'Category name must be at least 2 characters',
         ];
     }
 }
