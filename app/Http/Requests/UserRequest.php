@@ -2,29 +2,22 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Role;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\User;
-use App\Enums\Role;
+
 class UserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-    return true;
+        return $this->user() && $this->user()->account_id !== null;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -32,9 +25,21 @@ class UserRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class),
             ],
-            'password' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:8'],
             'role' => ['required', Rule::in(array_column(Role::cases(), 'value'))],
-            'account_id' => ['exists:accounts,id']
+            'account_id' => ['required', 'exists:accounts,id'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'User name is required',
+            'name.min' => 'User name must be at least 2 characters',
+            'email.required' => 'Email is required',
+            'email.email' => 'Email must be a valid email address',
+            'password.required' => 'Password is required',
+            'password.min' => 'Password must be at least 8 characters',
         ];
     }
 }

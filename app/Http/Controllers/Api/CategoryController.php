@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Data\Category\CategoryDto;
+use App\Data\Common\PaginatedDto;
 use App\Http\Controllers\ApiController;
 use App\Http\Filters\CategoryFilter;
 use App\Http\Requests\CategoryStoreRequest;
-use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CategoryController extends ApiController
 {
-
     public function __construct()
     {
         $this->authorizeResource(Category::class);
     }
-    
+
     /**
      * List all categories
      * 
@@ -24,10 +25,11 @@ class CategoryController extends ApiController
      * @queryParam sort by category name
      * @queryParam filter[title] Filter by name. Wildcards are supported. Example: *fix*
      */
-    public function index(CategoryFilter $filter)
+    public function index(CategoryFilter $filter): JsonResponse
     {
-        return CategoryResource::collection(
-            Category::filter($filter)->paginate()
+        $categories = Category::filter($filter)->paginate();
+        return response()->json(
+            PaginatedDto::from($categories, fn($c) => CategoryDto::from($c))
         );
     }
 
@@ -35,22 +37,12 @@ class CategoryController extends ApiController
      * Create a new category
      * 
      * @group Category API Resource
-     * 
-     * @response 201 { {
-    "data": {
-        "type": "category",
-        "id": 5,
-        "attributes": {
-            "name": "A test category"
-        }
-    }
-}}
      *
      */
-    public function store(CategoryStoreRequest $request)
+    public function store(CategoryStoreRequest $request): JsonResponse
     {
-        $category = Category::create($request->all());
-        return new CategoryResource($category);
+        $category = Category::create($request->validated());
+        return response()->json(CategoryDto::from($category), 201);
     }
 
     /**
@@ -61,9 +53,9 @@ class CategoryController extends ApiController
      * @group Category API Resource
      * 
      */
-    public function show(Category $category)
+    public function show(Category $category): JsonResponse
     {
-        return new CategoryResource($category);
+        return response()->json(CategoryDto::from($category));
     }
 
     /**
@@ -74,10 +66,10 @@ class CategoryController extends ApiController
      * @group Category API Resource
      * 
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Category $category): JsonResponse
     {
         $category->update($request->all());
-        return new CategoryResource($category);
+        return response()->json(CategoryDto::from($category));
     }
 
     /**
@@ -88,8 +80,9 @@ class CategoryController extends ApiController
      * @group Category API Resource
      * 
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
         $category->deleteOrFail();
+        return response()->json([], 204);
     }
 }

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Data\Common\PaginatedDto;
+use App\Data\User\UserDto;
 use App\Factories\UserFactory;
 use App\Http\Controllers\ApiController;
 use App\Http\Filters\UserFilter;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
-use App\Http\Resources\UserResource;
-use App\Repositories\UserRepository;
 use App\Models\User;
+use App\Repositories\UserRepository;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends ApiController
 {
@@ -31,10 +33,11 @@ class UserController extends ApiController
      * @queryParam filter[role] Filter by role. Wildcards are NOT supported. Example: Account Manager
      * @queryParam filter[account] Filter by account. Wildcards are NOT supported. Example: 1
      */
-    public function index(UserFilter $filter)
+    public function index(UserFilter $filter): JsonResponse
     {
-        return UserResource::collection(
-            User::filter($filter)->account()->with('roles')->paginate()
+        $users = User::filter($filter)->account()->with('roles')->paginate();
+        return response()->json(
+            PaginatedDto::from($users, fn($u) => UserDto::from($u))
         );
     }
 
@@ -44,10 +47,10 @@ class UserController extends ApiController
      * @group User API Resource
      *
      */
-    public function store(UserRequest $request)
+    public function store(UserRequest $request): JsonResponse
     {
         $user = $this->user_repository->save($request->validated(), UserFactory::create());
-        return new UserResource($user);
+        return response()->json(UserDto::from($user), 201);
     }
 
     /**
@@ -58,10 +61,10 @@ class UserController extends ApiController
      * @group User API Resource
      * 
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(UserUpdateRequest $request, User $user): JsonResponse
     {
         $user = $this->user_repository->update($request->validated(), $user);
-        return new UserResource($user);
+        return response()->json(UserDto::from($user));
     }
 
     /**
@@ -72,13 +75,13 @@ class UserController extends ApiController
      * @group User API Resource
      * 
      */
-    public function show(User $user)
+    public function show(User $user): JsonResponse
     {
         if ($this->include('account')) {
-            return new UserResource($user->load('account'));
+            $user = $user->load('account');
         }
 
-        return new UserResource($user);
+        return response()->json(UserDto::from($user));
     }
 
     /**
@@ -89,8 +92,9 @@ class UserController extends ApiController
      * @group User API Resource
      * 
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $user->deleteOrFail();
+        return response()->json([], 204);
     }
 }

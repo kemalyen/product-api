@@ -8,26 +8,29 @@ use Illuminate\Validation\Rule;
 
 class AccountRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return true;
+        return $this->user() !== null;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            'name' =>  'required|unique:accounts|max:50',
+            'name' => ['required', 'string', 'min:2', 'max:255', 'unique:accounts'],
             'account_number' => ['required', 'digits_between:2,10', 'unique:accounts'],
-            'status' => ['required', Rule::in(array_column(AccountStatus::cases(), 'value'))
-            ]
+            'status' => ['required', Rule::in(array_column(AccountStatus::cases(), 'value'))],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Account name is required',
+            'name.min' => 'Account name must be at least 2 characters',
+            'account_number.required' => 'Account number is required',
+            'account_number.digits_between' => 'Account number must be between 2 and 10 digits',
+            'status.required' => 'Account status is required',
+            'status.in' => 'Account status must be one of: ' . implode(', ', array_column(AccountStatus::cases(), 'value')),
         ];
     }
 }
