@@ -13,7 +13,7 @@ class ProductFilter extends QueryFilter
         'updatedAt' => 'updated_at'
     ];
 
-    public function createdAt($value)
+    public function createdAt(string $value)
     {
         $dates = explode(',', $value);
 
@@ -24,7 +24,7 @@ class ProductFilter extends QueryFilter
         return $this->builder->whereDate('created_at', $value);
     }
 
-    public function include($value)
+    public function include(string $value)
     {
         return $this->builder->with($value);
     }

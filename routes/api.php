@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
 });
 
 Route::prefix(config('api.version'))->group(function () {
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
         Route::apiResources([
             'products' => ProductController::class,
         ]);
