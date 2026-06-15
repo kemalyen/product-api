@@ -98,6 +98,6 @@ class AccountController extends ApiController
             return response()->json(['message' => 'Price updated successfully'], 204);
         }
 
-        abort(403, 'This action is unauthorized.');
+        return response()->json(['message' => 'Unauthorized'], 403);
     }
 }
