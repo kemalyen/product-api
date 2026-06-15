@@ -49,7 +49,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-  
+
 
 function getAccoutApiUser()
 {
@@ -82,9 +82,9 @@ function getToken(User $user)
 {
     return $user->createToken('api-token')->plainTextToken;
 }
- 
 
-function loginAsUser(User $user = null): User
+
+function loginAsUser(?User $user = null): User
 {
     $user = $user ?? User::factory()->create();
     test()->actingAs($user);
