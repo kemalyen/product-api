@@ -32,7 +32,8 @@ class ProductController extends ApiController
      */
     public function index(ProductFilter $filter): JsonResponse
     {
-        $cacheKey = 'product-filtering:' . md5(request()->fullUrl());
+ 
+        $cacheKey = 'product-filtering:' . md5(request()->fullUrl()) . ':user-id:' . request()->user()->id;
 
         $products = cache()->remember($cacheKey, now()->addMinutes(10), function () use ($filter) {
             return ProductResource::collection(

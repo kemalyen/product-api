@@ -23,7 +23,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->nullOnDelete();
             $table->double('price')->default(0);
-            $table->unique(['product_id', 'account_id']);
+            $table->primary(['product_id', 'account_id']);
             $table->timestamps();
         });
     }
