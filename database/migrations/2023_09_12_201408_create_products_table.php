@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('parent_id')->default(0);
             $table->foreignId('category_id')->constrained();
             $table->string('name');
-            $table->string('sku')->unique()->nullable();
+            $table->string('sku')->unique()->index();
             $table->string('barcode')->unique()->nullable();
             $table->longText('description')->nullable();
             $table->date('published_at')->nullable();       

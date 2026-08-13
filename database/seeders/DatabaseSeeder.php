@@ -22,19 +22,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        Role::truncate();
-        User::truncate();
-        Account::truncate();
-        Product::truncate();
-        ProductPrice::truncate();
-        Category::truncate();
-
         Role::create(['name' => 'Admin']);
         Role::create(['name' => 'Account Admin']);
         Role::create(['name' => 'Account User']);
         Role::create(['name' => 'Account Api User']);
-
 
         $accounts = Account::factory(5)
             ->has(
@@ -53,18 +44,16 @@ class DatabaseSeeder extends Seeder
                 $user->assignRole('Account User');
             });
 
-
         $categories = Category::factory(3)->create();
         Product::factory(10)
             ->recycle($categories)
             ->addingProductPrices($accounts)
             ->create();
 
-
         User::factory()
             ->recycle($accounts)
             ->create([
-                'name' => 'Test User',
+                'name' => 'Test Api User',
                 'email' => 'test@example.com',
             ])
             ->assignRole('Account Api User');

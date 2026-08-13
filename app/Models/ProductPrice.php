@@ -13,6 +13,9 @@ class ProductPrice extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     protected $auditStrict = true;
 
+    public $incrementing = false;
+
+    protected $primaryKey = ['product_id', 'account_id'];
 
     protected $table = 'product_prices';
 
