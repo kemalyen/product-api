@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
- 
+
 class ProductResource extends JsonResource
 {
     /**
@@ -20,15 +20,15 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'attributes' => [
                 'name' => $this->name,
+                'description' => $this->description,
                 'sku' => $this->sku,
                 'barcode' => $this->barcode,
                 'publishedAt' => $this->published_at,
                 'status' => $this->status,
-                'quantity' => $this->quantity,
+                'stock' => $this->stock,
                 'price' => $this->account_price
             ],
-            'includes' => new CategoryResource($this->whenLoaded('category')),
-            
+
             'links' => [
                 'self' => route('products.show', ['product' => $this->id])
             ]
