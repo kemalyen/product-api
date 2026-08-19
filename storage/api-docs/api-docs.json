@@ -93,100 +93,98 @@
                 }
             }
         },
-        
-    "components": {
-        "schemas": {
-            "ProductResource": {
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Product"
+        "components": {
+            "schemas": {
+                "ProductResource": {
+                    "properties": {
+                        "data": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/Product"
+                            }
                         }
+                    },
+                    "type": "object",
+                    "xml": {
+                        "name": "ProductResource"
                     }
                 },
-                "type": "object",
-                "xml": {
-                    "name": "ProductResource"
-                }
-            },
-            "Product": {
-                "properties": {
-                    "id": {
-                        "title": "ID",
-                        "description": "ID",
-                        "format": "int64",
-                        "default": 1
+                "Product": {
+                    "properties": {
+                        "id": {
+                            "title": "ID",
+                            "description": "ID",
+                            "format": "int64",
+                            "default": 1
+                        },
+                        "name": {
+                            "title": "name",
+                            "description": "Name",
+                            "format": "string",
+                            "default": "Js Originals relaxed t-shirt with globe back"
+                        },
+                        "sku": {
+                            "title": "sku",
+                            "description": "Sku",
+                            "format": "string",
+                            "default": "204645590"
+                        },
+                        "barcode": {
+                            "title": "barcode",
+                            "description": "",
+                            "format": "string",
+                            "default": "00123456789012"
+                        },
+                        "options": {
+                            "title": "options",
+                            "description": "",
+                            "format": "json",
+                            "default": "['Size']"
+                        },
+                        "option_values": {
+                            "title": "option_values",
+                            "description": "",
+                            "format": "json",
+                            "default": ""
+                        },
+                        "description": {
+                            "title": "description",
+                            "description": "Product description",
+                            "format": "string",
+                            "default": "Js Originals relaxed t-shirt with globe back, 2023 new style!"
+                        },
+                        "stock": {
+                            "title": "stock",
+                            "description": "stock",
+                            "format": "int",
+                            "default": "48"
+                        },
+                        "price": {
+                            "title": "price",
+                            "description": "Product price",
+                            "format": "float",
+                            "default": "13.50"
+                        }
                     },
-                    "name": {
-                        "title": "name",
-                        "description": "Name",
-                        "format": "string",
-                        "default": "Js Originals relaxed t-shirt with globe back"
-                    },
-                    "sku": {
-                        "title": "sku",
-                        "description": "Sku",
-                        "format": "string",
-                        "default": "204645590"
-                    },
-                    "barcode": {
-                        "title": "barcode",
-                        "description": "",
-                        "format": "string",
-                        "default": "00123456789012"
-                    },
-                    "options": {
-                        "title": "options",
-                        "description": "",
-                        "format": "json",
-                        "default": "['Size']"
-                    },
-                    "option_values": {
-                        "title": "option_values",
-                        "description": "",
-                        "format": "json",
-                        "default": ""
-                    },
-                    "description": {
-                        "title": "description",
-                        "description": "Product description",
-                        "format": "string",
-                        "default": "Js Originals relaxed t-shirt with globe back, 2023 new style!"
-                    },
-                    "quantity": {
-                        "title": "quantity",
-                        "description": "quantity",
-                        "format": "int",
-                        "default": "48"
-                    },
-                    "price": {
-                        "title": "price",
-                        "description": "Product price",
-                        "format": "float",
-                        "default": "13.50"
+                    "type": "object",
+                    "xml": {
+                        "name": "Product"
                     }
                 },
-                "type": "object",
-                "xml": {
-                    "name": "Product"
+                "securitySchemes": {
+                    "bearerAuth": {
+                        "type": "http",
+                        "name": "bearerAuth",
+                        "in": "header",
+                        "bearerFormat": "JWT",
+                        "scheme": "bearer"
+                    }
                 }
             },
-             
-        "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "name": "bearerAuth",
-                "in": "header",
-                "bearerFormat": "JWT",
-                "scheme": "bearer"
-            }
+            "tags": [
+                {
+                    "name": "Projects",
+                    "description": "API Endpoints of Projects"
+                }
+            ]
         }
-    },
-    "tags": [
-        {
-            "name": "Projects",
-            "description": "API Endpoints of Projects"
-        }
-    ]
-}

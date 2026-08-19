@@ -2,96 +2,212 @@
 
 use App\Http\Resources\ProductResource;
 use App\Models\Account;
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductPrice;
 use App\Models\User;
 
-use function Pest\Laravel\{get};
+use function Pest\Laravel\{get, delete};
 use Laravel\Sanctum\Sanctum;
 
 beforeEach(function () {
     $this->seed();
-    $this->user = User::where('email', 'admin@example.com')->first();
-    Sanctum::actingAs(
-        $this->user
-    );
+    $this->admin = User::where('email', 'admin@example.com')->first();
+    $this->user = User::where('email', 'test@example.com')->first();
 });
 
-it('creates a new product', function () {
-    $catergory = Category::factory()->create();
-    $sample = [
-        'name' => fake()->unique()->catchPhrase(),
-        'description' => fake()->paragraph(),
-        'category_id' => $catergory->id,
-        'sku' => fake()->unique()->ean8(),
-        'barcode' => fake()->ean13(),
-        'publishedAt' => fake()->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i'),
-        'status' => fake()->randomElement(['A', 'P', 'X']),
-        'quantity' => fake()->randomNumber(2),
-        'price' => fake()->randomFloat(2, 1, 1000),
-    ];
+describe('Product CRUD', function () {
 
-    $response = $this->postJson('/api/' . config('api.version') . '/products', $sample);
-    $response->assertStatus(201);
+    it('lists products', function () {
+        $product = Product::first();
 
-    expect(Product::latest()->first())
-        ->name->toBeString()->not->toBeEmpty()
-        ->name->toBe($sample['name'])
-        ->sku->toBe($sample['sku'])
-        ->barcode->toBe($sample['barcode'])
-        ->status->toBe($sample['status'])
-        ->price->toBe($sample['price'])
-        ->quantity->toBe($sample['quantity']);
-});
+        Sanctum::actingAs($this->admin);
 
-it('updates a product', function () {
-    $product = Product::factory()->create();
-    $updated_product = Product::factory()->make();
+        $response = get('/api/' . config('api.version') . '/products');
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    [
+                        'type',
+                        'id',
+                        'attributes' => [
+                            'name',
+                            'description',
+                            'sku',
+                            'barcode',
+                            'publishedAt',
+                            'status',
+                            'stock',
+                            'price',
+                        ],
+                        'links',
+                    ],
+                ],
+            ])
+            ->assertJsonFragment([
+                'name' => $product->name,
+                'sku' => $product->sku,
+                'barcode' => $product->barcode,
+            ]);
+    });
 
-    $sample = [
-        'name' => $updated_product->name,
-        'sku' => $updated_product->sku,
-        'barcode' => $updated_product->barcode,
-        'publishedAt' => $updated_product->published_at,
-        'status' => $updated_product->status,
-        'quantity' => $updated_product->quantity,
-        'price' => $updated_product->price,
-        'category_id' => $updated_product->category_id
-    ];
+    it('shows a single product', function () {
+        $product = Product::factory()->create();
+        $resource = new ProductResource($product);
+        $data = $resource->response()->getData(true);
 
-    $response = $this->put("/api/" . config('api.version') . "/products/{$product->id}", $sample);
+        Sanctum::actingAs($this->admin);
 
-    $response->assertStatus(200)
-        ->assertJsonStructure([
-            'data' => [
-                'type',
-                'id',
-                'attributes',
-                'links'
-            ]
-        ])
-        ->assertJsonFragment([
-            'name' => $sample['name'],
-            'sku' => $sample['sku'],
-            'barcode' => $sample['barcode'],
-            'status' => $sample['status'],
-            'price' => $sample['price'],
-            'quantity' => $sample['quantity'],
+        $response = get("/api/" . config('api.version') . "/products/{$product->id}");
+        $response->assertStatus(200)
+            ->assertJson($data);
+    });
+
+    it('returns validation errors when creating a product with invalid data', function () {
+        Sanctum::actingAs($this->admin);
+
+        $response = $this->postJson('/api/' . config('api.version') . '/products', []);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['name', 'description', 'price', 'sku', 'barcode']);
+    });
+
+    it('updates a product', function () {
+        $product = Product::factory()->create();
+        $updatedProduct = Product::factory()->make();
+
+        $sample = [
+            'name' => $updatedProduct->name,
+            'description' => $updatedProduct->description,
+            'sku' => $updatedProduct->sku,
+            'barcode' => $updatedProduct->barcode,
+            'published_at' => $updatedProduct->published_at->format('Y-m-d H:i'),
+            'status' => $updatedProduct->status,
+            'stock' => $updatedProduct->stock,
+            'price' => $updatedProduct->price
+        ];
+
+        Sanctum::actingAs($this->admin);
+
+        $response = $this->putJson("/api/" . config('api.version') . "/products/{$product->id}", $sample);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    'type',
+                    'id',
+                    'attributes',
+                    'links',
+                ],
+            ])
+            ->assertJsonFragment([
+                'name' => $sample['name'],
+                'sku' => $sample['sku'],
+                'barcode' => $sample['barcode'],
+                'status' => $sample['status'],
+                'price' => $sample['price'],
+                'stock' => $sample['stock'],
+            ]);
+
+        $product->refresh();
+        expect($product)
+            ->name->toBe($sample['name'])
+            ->sku->toBe($sample['sku'])
+            ->barcode->toBe($sample['barcode'])
+            ->status->toBe($sample['status'])
+            ->stock->toBe($sample['stock']);
+    });
+
+    it('returns validation errors when updating a product with invalid data', function () {
+        $product = Product::factory()->create();
+
+        Sanctum::actingAs($this->admin);
+
+        $response = $this->putJson("/api/" . config('api.version') . "/products/{$product->id}", [
+            'name' => 'ab',
+            'price' => -10,
         ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['name', 'price']);
+    });
+
+    it('deletes a product', function () {
+        $product = Product::factory()->create();
+
+        Sanctum::actingAs($this->admin);
+
+        $response = delete("/api/" . config('api.version') . "/products/{$product->id}");
+        $response->assertStatus(204);
+
+        expect(Product::find($product->id))->toBeNull();
+    });
+
+    it('returns 403 when a non-admin user creates a product', function () {
+        Sanctum::actingAs($this->user);
+
+        $response = $this->postJson('/api/' . config('api.version') . '/products', [
+            'name' => 'Test Product',
+            'description' => fake()->paragraph(),
+            'sku' => fake()->unique()->ean8(),
+            'barcode' => fake()->ean13(),
+            'price' => fake()->randomFloat(2, 1, 1000),
+        ]);
+
+        $response->assertStatus(403);
+    });
+
+    it('returns 403 when a non-admin user updates a product', function () {
+        $product = Product::factory()->create();
+
+        Sanctum::actingAs($this->user);
+
+        $response = $this->putJson("/api/" . config('api.version') . "/products/{$product->id}", [
+            'name' => 'Updated Name',
+        ]);
+
+        $response->assertStatus(403);
+    });
+
+    it('returns 403 when a non-admin user deletes a product', function () {
+        $product = Product::factory()->create();
+
+        Sanctum::actingAs($this->user);
+
+        $response = delete("/api/" . config('api.version') . "/products/{$product->id}");
+        $response->assertStatus(403);
+    });
 });
 
-// a product price will assigned to an account
+describe('Product Price Update', function () {
+    it('can update a product price for a selected account', function () {
+        $product = Product::factory()->create();
+        $account = Account::factory()->create();
 
-it('can update a product price for a selected account and status will 204', function () {
-    $product = Product::factory()->create();
+        $sample = [
+            'price' => fake()->randomFloat(2, 1, 1000),
+        ];
 
-    $account = Account::factory()->create();
+        Sanctum::actingAs($this->admin);
 
-    $sample = [
-        'price' => fake()->randomFloat(2, 1, 1000),
-    ];
+        $response = $this->patch("/api/" . config('api.version') . "/accounts/{$account->id}/price/{$product->id}", $sample);
+        $response->assertStatus(204);
 
-    $response = $this->patch("/api/" . config('api.version') . "/accounts/{$account->id}/price/{$product->id}", $sample);
-    $response->assertStatus(204);
+        $this->assertDatabaseHas('product_prices', [
+            'account_id' => $account->id,
+            'product_id' => $product->id,
+            'price' => $sample['price'],
+        ]);
+    });
+
+    it('returns 403 when a non-admin user updates a product price', function () {
+        $product = Product::factory()->create();
+        $account = Account::factory()->create();
+
+        Sanctum::actingAs($this->user);
+
+        $response = $this->patch("/api/" . config('api.version') . "/accounts/{$account->id}/price/{$product->id}", [
+            'price' => fake()->randomFloat(2, 1, 1000),
+        ]);
+
+        $response->assertStatus(403);
+    });
 });

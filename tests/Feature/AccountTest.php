@@ -1,10 +1,7 @@
 <?php
 
 use App\Http\Resources\ProductResource;
-use App\Models\Account;
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductPrice;
 use App\Models\User;
 use Database\Factories\ProductPriceFactory;
 use Illuminate\Support\Facades\Log;

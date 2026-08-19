@@ -1,10 +1,7 @@
 <?php
 
 use App\Http\Resources\ProductResource;
-use App\Models\Account;
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductPrice;
 use App\Models\User;
 
 use function Pest\Laravel\{get};
@@ -44,7 +41,7 @@ it('gets the list of the products', function () {
             'sku' => $product->sku,
             'barcode' => $product->barcode,
             'status' => $product->status,
-            'quantity' => $product->quantity,
+            'stock' => $product->stock,
         ]);
 });
 
