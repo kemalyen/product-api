@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Policies;
 
@@ -53,7 +53,7 @@ class AccountPolicy
      */
     public function update(User $user, Account $account): Response
     {
-        return ($user->hasRole('Admin') || ($user->hasRole('Account Api User') && $user->account_id === $account->account_id))
+        return ($user->hasRole('Admin') || ($user->hasRole('Account Api User') && $user->account_id === $account->id))
             ? Response::allow()
             : Response::deny('You do not have access to update this account.');
     }
