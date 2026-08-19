@@ -44,8 +44,7 @@ class Product extends Model implements Auditable
         'published_at',
         'status',
         'price',
-        'quantity',
-        'category_id'
+        'stock'
     ];
 
     public function getAccountPriceAttribute(): float
