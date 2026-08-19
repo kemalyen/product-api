@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ProductStatus;
 use App\Rules\ValidProductPrice;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProductStoreRequest extends FormRequest
 {
@@ -21,8 +23,8 @@ class ProductStoreRequest extends FormRequest
             'category_id' => ['nullable', 'integer'],
             'sku' => ['required', 'string', 'regex:/^[A-Z0-9]{4,25}$/'],
             'barcode' => ['required', 'string', 'max:50'],
-            'quantity' => ['sometimes', 'integer', 'min:0'],
-            'status' => ['sometimes', 'string', 'in:A,P,X'],
+            'stock' => ['sometimes', 'integer', 'min:0'],
+            'status' => ['sometimes', Rule::enum(ProductStatus::class)],
             'published_at' => ['sometimes', 'date'],
         ];
     }

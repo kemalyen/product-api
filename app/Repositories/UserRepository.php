@@ -19,6 +19,8 @@ class UserRepository
 
     public function update(array $data, User $user): ?User
     {
+        // we can't allow update the account Id
+        $data['account_id'] = $user->account_id;
         $user->update($data);
         $user->assignRole($data['role']);
         return $user;

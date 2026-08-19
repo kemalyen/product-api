@@ -12,7 +12,7 @@ class UserUpdateRequest extends FormRequest
     public function authorize(): bool
     {
         $user = $this->route('user');
-        return $this->user() && $this->user()->account_id === $user->account_id;
+        return  $this->user()->hasRole('Admin') || ($this->user() && $this->user()->account_id === $user->account_id);
     }
 
     public function rules(): array
