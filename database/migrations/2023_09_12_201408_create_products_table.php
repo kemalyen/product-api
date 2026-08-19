@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProductStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,15 +15,14 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('parent_id')->default(0);
-            $table->foreignId('category_id')->constrained();
             $table->string('name');
             $table->string('sku')->unique()->index();
             $table->string('barcode')->unique()->nullable();
             $table->longText('description')->nullable();
-            $table->date('published_at')->nullable();       
-            $table->string('status')->default(false);  
+            $table->date('published_at')->nullable();
+            $table->enum('status', array_column(ProductStatus::cases(), 'value'))->default(ProductStatus::PENDING->value);
             $table->double('price')->default(0);
-            $table->unsignedInteger('quantity')->default(0);
+            $table->unsignedInteger('stock')->default(0);
             $table->timestamps();
         });
     }

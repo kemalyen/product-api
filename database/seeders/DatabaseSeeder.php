@@ -44,9 +44,7 @@ class DatabaseSeeder extends Seeder
                 $user->assignRole('Account User');
             });
 
-        $categories = Category::factory(3)->create();
-        Product::factory(10)
-            ->recycle($categories)
+        Product::factory(5)
             ->addingProductPrices($accounts)
             ->create();
 

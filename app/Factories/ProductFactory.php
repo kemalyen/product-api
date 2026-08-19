@@ -15,11 +15,8 @@ class ProductFactory
         $product->published_at = '';
         $product->description = '';
         $product->status = '';
-        $product->quantity = '';
+        $product->stock = '';
         $product->price = '';
-        $product->category_id = '';
         return $product;
     }
- 
 }
-

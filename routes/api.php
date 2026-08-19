@@ -32,10 +32,6 @@ Route::prefix(config('api.version'))->group(function () {
         ]);
 
         Route::apiResources([
-            'categories' => CategoryController::class,
-        ]);
-
-        Route::apiResources([
             'accounts' => AccountController::class,
         ]);
 

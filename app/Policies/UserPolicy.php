@@ -13,8 +13,8 @@ class UserPolicy
     public function viewAny(User $user): Response
     {
         return ($user->hasRole('Admin') || $user->hasRole('Account Api User'))
-        ? Response::allow()
-        : Response::deny('You do not have access');
+            ? Response::allow()
+            : Response::deny('You do not have access');
     }
 
     /**
@@ -23,8 +23,8 @@ class UserPolicy
     public function view(User $user, User $model): Response
     {
         return ($user->hasRole('Admin') || ($user->hasRole('Account Api User') && $user->account_id === $model->account_id))
-        ? Response::allow()
-        : Response::deny('You do not have access to view this user.');
+            ? Response::allow()
+            : Response::deny('You do not have access to view this user.');
     }
 
     /**
@@ -53,8 +53,8 @@ class UserPolicy
     public function delete(User $user, User $model): Response
     {
         return ($user->hasRole('Admin') || ($user->hasRole('Account Api User') && $user->account_id === $model->account_id))
-        ? Response::allow()
-        : Response::deny('You do not have access to delete this user.');
+            ? Response::allow()
+            : Response::deny('You do not have access to delete this user.');
     }
 
     /**
@@ -63,8 +63,8 @@ class UserPolicy
     public function restore(User $user, User $model): Response
     {
         return ($user->hasRole('Admin') || ($user->hasRole('Account Api User') && $user->account_id === $model->account_id))
-        ? Response::allow()
-        : Response::deny('You do not have access to delete this user.');
+            ? Response::allow()
+            : Response::deny('You do not have access to delete this user.');
     }
 
     /**
@@ -73,7 +73,7 @@ class UserPolicy
     public function forceDelete(User $user, User $model): Response
     {
         return ($user->hasRole('Admin') || ($user->hasRole('Account Api User') && $user->account_id === $model->account_id))
-        ? Response::allow()
-        : Response::deny('You do not have access to delete this user.');
+            ? Response::allow()
+            : Response::deny('You do not have access to delete this user.');
     }
 }

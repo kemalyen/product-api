@@ -25,8 +25,7 @@ class Product extends Model implements Auditable
         'published_at',
         'status',
         'price',
-        'quantity',
-        'category_id'
+        'stock'
     ];
 
     protected $casts = [
@@ -51,6 +50,9 @@ class Product extends Model implements Auditable
 
     public function getAccountPriceAttribute(): float
     {
+        if (!auth()->check()) {
+            return $this->price;
+        }
         return $this->product_prices->where('account_id', auth()->user()->account_id)->first()->price ?? $this->price;
     }
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Requests\AccountRequest;
 use App\Http\Requests\AccountUpdateRequest;
 use App\Http\Requests\PriceUpdateRequest;
+use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Models\Product;
 use App\Models\ProductPrice;
@@ -25,11 +26,10 @@ class AccountController extends ApiController
      * 
      * @group Account API Resource
      */
-    public function index(): JsonResponse
+    public function index()
     {
-        $accounts = Account::paginate();
-        return response()->json(
-            PaginatedDto::from($accounts, fn($a) => AccountDto::from($a))
+        return AccountResource::collection(
+            Account::paginate()
         );
     }
 
@@ -39,10 +39,10 @@ class AccountController extends ApiController
      * @group Account API Resource
      *
      */
-    public function store(AccountRequest $request): JsonResponse
+    public function store(AccountRequest $request)
     {
         $account = Account::create($request->validated());
-        return response()->json(AccountDto::from($account), 201);
+        return new AccountResource($account);
     }
 
     /**
@@ -53,9 +53,9 @@ class AccountController extends ApiController
      * @group Account API Resource
      * 
      */
-    public function show(Account $account): JsonResponse
+    public function show(Account $account)
     {
-        return response()->json(AccountDto::from($account));
+        return new AccountResource($account);
     }
 
     /**
@@ -66,10 +66,10 @@ class AccountController extends ApiController
      * @group Account API Resource
      * 
      */
-    public function update(AccountUpdateRequest $request, Account $account): JsonResponse
+    public function update(AccountUpdateRequest $request, Account $account)
     {
         $account->update($request->validated());
-        return response()->json(AccountDto::from($account));
+        return new AccountResource($account);
     }
 
     /**
@@ -92,7 +92,7 @@ class AccountController extends ApiController
         if ($user->hasRole('Admin')) {
             ProductPrice::updateOrCreate(
                 ['account_id' => $account->id, 'product_id' => $product->id],
-                ['price' => $request->validated()['price']]
+                ['price' => $request->price]
             );
 
             return response()->json(['message' => 'Price updated successfully'], 204);

@@ -9,6 +9,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Filters\UserFilter;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
@@ -33,11 +34,10 @@ class UserController extends ApiController
      * @queryParam filter[role] Filter by role. Wildcards are NOT supported. Example: Account Manager
      * @queryParam filter[account] Filter by account. Wildcards are NOT supported. Example: 1
      */
-    public function index(UserFilter $filter): JsonResponse
+    public function index(UserFilter $filter)
     {
-        $users = User::filter($filter)->account()->with('roles')->paginate();
-        return response()->json(
-            PaginatedDto::from($users, fn($u) => UserDto::from($u))
+        return UserResource::collection(
+            User::filter($filter)->account()->with('roles')->paginate()
         );
     }
 
@@ -47,10 +47,10 @@ class UserController extends ApiController
      * @group User API Resource
      *
      */
-    public function store(UserRequest $request): JsonResponse
+    public function store(UserRequest $request)
     {
         $user = $this->user_repository->save($request->validated(), UserFactory::create());
-        return response()->json(UserDto::from($user), 201);
+        return new UserResource($user);
     }
 
     /**
@@ -61,10 +61,10 @@ class UserController extends ApiController
      * @group User API Resource
      * 
      */
-    public function update(UserUpdateRequest $request, User $user): JsonResponse
+    public function update(UserUpdateRequest $request, User $user)
     {
         $user = $this->user_repository->update($request->validated(), $user);
-        return response()->json(UserDto::from($user));
+        return new UserResource($user);
     }
 
     /**
@@ -75,13 +75,13 @@ class UserController extends ApiController
      * @group User API Resource
      * 
      */
-    public function show(User $user): JsonResponse
+    public function show(User $user)
     {
         if ($this->include('account')) {
-            $user = $user->load('account');
+            return new UserResource($user->load('account'));
         }
 
-        return response()->json(UserDto::from($user));
+        return new UserResource($user);
     }
 
     /**

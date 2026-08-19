@@ -12,7 +12,7 @@ class Account extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'account_number', 'status', 'plan_tier'];
+    protected $fillable = ['name', 'account_number', 'status'];
 
     protected $casts = [
         'role' => AccountStatus::class,
@@ -27,7 +27,7 @@ class Account extends Model
     {
         return $this->hasMany(ProductPrice::class);
     }
-/* 
+    /* 
     public function products(): HasManyThrough
     {
         return $this->hasManyThrough(Product::class, ProductPrice::class);

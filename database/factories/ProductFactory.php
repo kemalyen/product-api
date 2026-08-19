@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ProductStatus;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -23,12 +24,11 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $name = $this->faker->unique()->catchPhrase(),
-            'category_id' => Category::factory(),
             'sku' => $this->faker->unique()->ean8(),
             'barcode' => $this->faker->ean13(),
-            'status' => fake()->randomElement(['A', 'P', 'X']),
-            'price' => $this->faker->randomFloat(2,1,1000),
-            'quantity' => $this->faker->randomNumber(2),
+            'status' => fake()->randomElement(ProductStatus::cases())->value,
+            'price' => $this->faker->randomFloat(2, 1, 1000),
+            'stock' => $this->faker->numberBetween(0, 100),
             'description' => $this->faker->realText(),
             'published_at' => $this->faker->dateTimeBetween('-1 year', '+1 year'),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
@@ -38,8 +38,8 @@ class ProductFactory extends Factory
 
     public function addingProductPrices($accounts)
     {
-        return $this->afterCreating(function ($product) use ($accounts){
-             
+        return $this->afterCreating(function ($product) use ($accounts) {
+
             $prices = $accounts->map(function ($account) use ($product) {
                 return ProductPriceFactory::new(['account_id' => $account->id])->count(1)->make();
             });
