@@ -27,12 +27,13 @@ class ProductController extends ApiController
      * 
      * @group Product API Resource
      * @queryParam sort by product name, status, published date, created date and updated date
-     * @queryParam filter[status] Filter by status: A,P,X
+     * @queryParam filter[status] Filter by status: active,inactive,pending
+     * @queryParam filter[sku] Filter by sku: 45117459,74569441
      * @queryParam filter[name] Filter by name. Wildcards are supported. Example: *fix*
      */
     public function index(ProductFilter $filter): JsonResponse
     {
- 
+
         $cacheKey = 'product-filtering:' . md5(request()->fullUrl()) . ':user-id:' . request()->user()->id;
 
         $products = cache()->remember($cacheKey, now()->addMinutes(10), function () use ($filter) {

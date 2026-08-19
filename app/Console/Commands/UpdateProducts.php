@@ -34,7 +34,7 @@ class UpdateProducts extends Command
                     $this->info("Processing line: $line[0]");
                     ProcessUpdateProducts::dispatch($line);
                 }
-                Storage::disk('internal')->move($file, str_replace('in/', 'in/processed/', $file));
+                Storage::disk('internal')->move($file, str_replace('in/', 'processed/', $file));
             }
         }
     }

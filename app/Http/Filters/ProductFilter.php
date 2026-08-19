@@ -4,7 +4,6 @@ namespace App\Http\Filters;
 
 class ProductFilter extends QueryFilter
 {
-
     protected $sortable = [
         'name',
         'status',
@@ -40,9 +39,9 @@ class ProductFilter extends QueryFilter
         return $this->builder->where('name', 'like', $likeStr);
     }
 
-    public function category(string $value)
+    public function sku(string $value)
     {
-        return $this->builder->where('category_id', $value);
+        return $this->builder->whereIn('sku', explode(',', $value));
     }
 
     public function updatedAt($value)
