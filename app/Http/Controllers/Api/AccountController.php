@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Data\Account\AccountDto;
-use App\Data\Common\PaginatedDto;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\AccountRequest;
 use App\Http\Requests\AccountUpdateRequest;
@@ -12,12 +10,16 @@ use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Models\Product;
 use App\Models\ProductPrice;
+use App\Repositories\AccountRepository;
 use Illuminate\Http\JsonResponse;
 
 class AccountController extends ApiController
 {
-    public function __construct()
+    protected AccountRepository $account_repository;
+
+    public function __construct(AccountRepository $account_repository)
     {
+        $this->account_repository = $account_repository;
         $this->authorizeResource(Account::class);
     }
 
@@ -41,7 +43,7 @@ class AccountController extends ApiController
      */
     public function store(AccountRequest $request)
     {
-        $account = Account::create($request->validated());
+        $account = $this->account_repository->create($request->validated());
         return new AccountResource($account);
     }
 
@@ -68,7 +70,7 @@ class AccountController extends ApiController
      */
     public function update(AccountUpdateRequest $request, Account $account)
     {
-        $account->update($request->validated());
+        $account = $this->account_repository->update($request->validated(), $account);
         return new AccountResource($account);
     }
 
@@ -88,16 +90,13 @@ class AccountController extends ApiController
 
     public function price(Account $account, Product $product, PriceUpdateRequest $request): JsonResponse
     {
-        $user = auth()->user();
-        if ($user->hasRole('Admin')) {
-            ProductPrice::updateOrCreate(
-                ['account_id' => $account->id, 'product_id' => $product->id],
-                ['price' => $request->price]
-            );
+        $this->authorize('price', $account);
 
-            return response()->json(['message' => 'Price updated successfully'], 204);
-        }
+        ProductPrice::updateOrCreate(
+            ['account_id' => $account->id, 'product_id' => $product->id],
+            ['price' => $request->price]
+        );
 
-        return response()->json(['message' => 'Unauthorized'], 403);
+        return response()->json(['message' => 'Price updated successfully'], 204);
     }
 }

@@ -34,9 +34,10 @@ class ProductController extends ApiController
     public function index(ProductFilter $filter): JsonResponse
     {
 
-        $cacheKey = 'product-filtering:' . md5(request()->fullUrl()) . ':user-id:' . request()->user()->id;
+        $userId = request()->user() ? request()->user()->id : 'guest';
+        $cacheKey = 'product-filtering:' . md5(request()->fullUrl()) . ':user-id:' . $userId;
 
-        $products = cache()->remember($cacheKey, now()->addMinutes(10), function () use ($filter) {
+        $products = cache()->tags(['products'])->remember($cacheKey, now()->addMinutes(10), function () use ($filter) {
             return ProductResource::collection(
                 Product::with('product_prices')->filter($filter)->paginate()
             )->response()->getData(true);
@@ -67,14 +68,18 @@ class ProductController extends ApiController
      */
     public function show(Product $product): ProductResource
     {
-        $cacheKey = 'product-filtering:' . md5(request()->fullUrl());
+        $userId = request()->user() ? request()->user()->id : 'guest';
+        $cacheKey = 'product-show:' . $product->id . ':' . md5(request()->fullUrl()) . ':user-id:' . $userId;
         if ($this->include('category')) {
             $cacheKey .= ':with-category';
         }
-        if ($this->include('category')) {
-            cache()->remember($cacheKey, now()->addMinutes(10), fn() => new ProductResource($product->load('category')));
-        }
-        return cache()->remember($cacheKey, now()->addMinutes(10), fn() => new ProductResource($product));
+
+        return cache()->tags(['products'])->remember($cacheKey, now()->addMinutes(10), function () use ($product) {
+            if ($this->include('category')) {
+                $product->load('category');
+            }
+            return new ProductResource($product);
+        });
     }
 
     /**
