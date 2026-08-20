@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 namespace App\Policies;
 
@@ -86,5 +86,14 @@ class AccountPolicy
         return ($user->hasRole('Admin'))
             ?  true 
             :  false;
+    }
+
+    /**
+     * Determine whether the user can update the price.
+     */
+    public function price(User $user, Account $account): bool
+    {
+        // Admins are already allowed via before() method
+        return false;
     }
 }
