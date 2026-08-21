@@ -26,21 +26,35 @@ Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
 });
 
 Route::prefix(config('api.version'))->group(function () {
-    Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
-        Route::apiResources([
-            'products' => ProductController::class,
-        ]);
+    Route::middleware(['auth:sanctum','throttle:api'])->group(function () {
+            // General API routes (if any)
+        });
 
-        Route::apiResources([
-            'accounts' => AccountController::class,
-        ]);
+        // User routes with user-specific rate limit
+        Route::middleware(['auth:sanctum','throttle:user'])->group(function () {
+            Route::apiResources([
+                'users' => UserController::class,
+            ]);
+        });
 
-        Route::apiResources([
-            'users' => UserController::class,
-        ]);
+        // Product routes with product-specific rate limit
+        Route::middleware(['auth:sanctum','throttle:product'])->group(function () {
+            Route::apiResources([
+                'products' => ProductController::class,
+            ]);
+        });
 
-        Route::patch('/accounts/{account}/price/{product}', [AccountController::class, 'price'])->name('account.price');
-    });
+        // Account routes with default rate limit
+        Route::middleware(['auth:sanctum','throttle:api'])->group(function () {
+            Route::apiResources([
+                'accounts' => AccountController::class,
+            ]);
+        });
+
+        // Product price update with its own limit
+        Route::middleware(['auth:sanctum','throttle:product-price'])->group(function () {
+            Route::patch('/accounts/{account}/price/{product}', [AccountController::class, 'price'])->name('account.price');
+        });
 });
 
 Route::post('/token', [TokenController::class, 'create'])->name('token');
