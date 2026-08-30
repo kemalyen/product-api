@@ -5,12 +5,12 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/api.test"
+            "value": "http:\/\/localhost"
         }
     ],
     "info": {
-        "name": "ProductApi",
-        "_postman_id": "b0c2f79a-cce2-4b13-871c-3dea5415295a",
+        "name": "ProductAPI",
+        "_postman_id": "65a09ba3-f960-41bf-9c66-049f3164ffd8",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -24,9 +24,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/accounts",
+                            "path": "api\/v1\/accounts",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/accounts"
+                            "raw": "{{baseUrl}}\/api\/v1\/accounts"
                         },
                         "method": "GET",
                         "header": [
@@ -72,9 +72,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/accounts",
+                            "path": "api\/v1\/accounts",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/accounts"
+                            "raw": "{{baseUrl}}\/api\/v1\/accounts"
                         },
                         "method": "POST",
                         "header": [
@@ -89,7 +89,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"ayfmeeefrzovayzb\",\"account_number\":\"131\",\"status\":\"active\"}"
+                            "raw": "{\"name\":\"fpcyimrlttwstgsfejhp\",\"account_number\":\"793429968\",\"status\":\"active\"}"
                         },
                         "description": "",
                         "auth": {
@@ -103,14 +103,14 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/accounts\/:id",
+                            "path": "api\/v1\/accounts\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/accounts\/:id",
+                            "raw": "{{baseUrl}}\/api\/v1\/accounts\/:id",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the account."
                                 }
                             ]
@@ -159,14 +159,14 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/accounts\/:id",
+                            "path": "api\/v1\/accounts\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/accounts\/:id",
+                            "raw": "{{baseUrl}}\/api\/v1\/accounts\/:id",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the account."
                                 }
                             ]
@@ -184,7 +184,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"reiciendis\",\"account_number\":\"eum\"}"
+                            "raw": "{\"name\":\"aulz\",\"account_number\":\"63099462\",\"status\":\"active\"}"
                         },
                         "description": "Update the specified account",
                         "auth": {
@@ -198,14 +198,14 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/accounts\/:id",
+                            "path": "api\/v1\/accounts\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/accounts\/:id",
+                            "raw": "{{baseUrl}}\/api\/v1\/accounts\/:id",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the account."
                                 }
                             ]
@@ -255,7 +255,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"gerda86@example.org\",\"password\":\"lF$yH|0\"}"
+                        },
                         "description": "",
                         "auth": {
                             "type": "noauth"
@@ -269,239 +272,6 @@
                             "name": ""
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "name": "Category API Resource",
-            "description": "",
-            "item": [
-                {
-                    "name": "List all categories",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories",
-                            "query": [
-                                {
-                                    "key": "sort",
-                                    "value": "pariatur",
-                                    "description": "by category name",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "filter%5Btitle%5D",
-                                    "value": "%2Afix%2A",
-                                    "description": "Filter by name. Wildcards are supported.",
-                                    "disabled": false
-                                }
-                            ],
-                            "raw": "{{baseUrl}}\/api\/categories?sort=pariatur&filter%5Btitle%5D=%2Afix%2A"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\"}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "Create a new category",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/categories"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"xhxilzhulre\"}"
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 201,
-                            "body": "{ {\n\"data\": {\n\"type\": \"category\",\n\"id\": 5,\n\"attributes\": {\n\"name\": \"A test category\"\n}\n}\n}}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "View a category",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/categories\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the category."
-                                }
-                            ]
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "Display a individual category data.",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\"}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "Update a category",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/categories\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the category."
-                                }
-                            ]
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "Update the specified category",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Delete a category.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/categories\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/categories\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the category."
-                                }
-                            ]
-                        },
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "Remove the category resource",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
                 }
             ]
         },
@@ -558,24 +328,24 @@
                     ]
                 },
                 {
-                    "name": "PATCH api\/accounts\/{account_id}\/price\/{product_id}",
+                    "name": "PATCH api\/v1\/accounts\/{account_id}\/price\/{product_id}",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/accounts\/:account_id\/price\/:product_id",
+                            "path": "api\/v1\/accounts\/:account_id\/price\/:product_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/accounts\/:account_id\/price\/:product_id",
+                            "raw": "{{baseUrl}}\/api\/v1\/accounts\/:account_id\/price\/:product_id",
                             "variable": [
                                 {
                                     "id": "account_id",
                                     "key": "account_id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the account."
                                 },
                                 {
                                     "id": "product_id",
                                     "key": "product_id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the product."
                                 }
                             ]
@@ -593,7 +363,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"price\":44463026.54362133}"
+                            "raw": "{\"price\":69.28}"
                         },
                         "description": "",
                         "auth": {
@@ -613,28 +383,34 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/products",
+                            "path": "api\/v1\/products",
                             "query": [
                                 {
                                     "key": "sort",
-                                    "value": "cum",
+                                    "value": "expedita",
                                     "description": "by product name, status, published date, created date and updated date",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "filter%5Bstatus%5D",
-                                    "value": "ut",
-                                    "description": "Filter by status: A,P,X",
+                                    "key": "filter[status]",
+                                    "value": "repellat",
+                                    "description": "Filter by status: active,inactive,pending",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "filter%5Btitle%5D",
-                                    "value": "%2Afix%2A",
+                                    "key": "filter[sku]",
+                                    "value": "architecto",
+                                    "description": "Filter by sku: 45117459,74569441",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter[name]",
+                                    "value": "*fix*",
                                     "description": "Filter by name. Wildcards are supported.",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/products?sort=cum&filter%5Bstatus%5D=ut&filter%5Btitle%5D=%2Afix%2A"
+                            "raw": "{{baseUrl}}\/api\/v1\/products?sort=expedita&filter%5Bstatus%5D=repellat&filter%5Bsku%5D=architecto&filter%5Bname%5D=%2Afix%2A"
                         },
                         "method": "GET",
                         "header": [
@@ -680,9 +456,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/products",
+                            "path": "api\/v1\/products",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/products"
+                            "raw": "{{baseUrl}}\/api\/v1\/products"
                         },
                         "method": "POST",
                         "header": [
@@ -697,7 +473,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"rqer\",\"sku\":\"wwoqaqwmkefww\",\"barcode\":\"mkoownjrmvkcy\",\"publishedAt\":\"2024-11-15T20:20:16\",\"status\":\"A\",\"quantity\":4,\"price\":425.98042,\"category_id\":\"eos\"}"
+                            "raw": "{\"name\":\"kyitavonoinwfnolzzqfuekxm\",\"description\":\"Dolor corrupti aut rem harum.\",\"price\":0,\"category_id\":2,\"sku\":\"NTUBY\",\"barcode\":\"spjqlfujvwzpcvvgudsoiyvj\",\"stock\":72,\"status\":\"active\",\"published_at\":\"2026-08-29T17:16:53\"}"
                         },
                         "description": "",
                         "auth": {
@@ -711,14 +487,14 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/products\/:id",
+                            "path": "api\/v1\/products\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/products\/:id",
+                            "raw": "{{baseUrl}}\/api\/v1\/products\/:id",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the product."
                                 }
                             ]
@@ -763,57 +539,18 @@
                     ]
                 },
                 {
-                    "name": "Update a product",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/products\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/products\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the product."
-                                }
-                            ]
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"ionwbieyvlybglvw\",\"sku\":\"et\",\"barcode\":\"et\",\"publishedAt\":\"2024-11-15T20:20:16\",\"status\":\"P\",\"quantity\":9,\"price\":3824376.9,\"category_id\":\"voluptatem\"}"
-                        },
-                        "description": "Update the specified product",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
                     "name": "Delete a product.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/products\/:id",
+                            "path": "api\/v1\/products\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/products\/:id",
+                            "raw": "{{baseUrl}}\/api\/v1\/products\/:id",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the product."
                                 }
                             ]
@@ -848,34 +585,40 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/users",
+                            "path": "api\/v1\/users",
                             "query": [
                                 {
                                     "key": "sort",
-                                    "value": "nulla",
+                                    "value": "excepturi",
                                     "description": "by user name and email",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "filter%5Bname%5D",
-                                    "value": "%2Afix%2A",
+                                    "key": "filter[name]",
+                                    "value": "*fix*",
                                     "description": "Filter by name. Wildcards are supported.",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "filter%5Bemail%5D",
-                                    "value": "%2Afix%2A",
+                                    "key": "filter[email]",
+                                    "value": "*fix*",
                                     "description": "Filter by email. Wildcards are supported.",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "filter%5Brole%5D",
-                                    "value": "",
+                                    "key": "filter[role]",
+                                    "value": "0",
                                     "description": "Filter by role. Wildcards are NOT supported.",
                                     "disabled": true
+                                },
+                                {
+                                    "key": "filter[account]",
+                                    "value": "1",
+                                    "description": "Filter by account. Wildcards are NOT supported.",
+                                    "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/users?sort=nulla&filter%5Bname%5D=%2Afix%2A&filter%5Bemail%5D=%2Afix%2A&filter%5Brole%5D="
+                            "raw": "{{baseUrl}}\/api\/v1\/users?sort=excepturi&filter%5Bname%5D=%2Afix%2A&filter%5Bemail%5D=%2Afix%2A&filter%5Brole%5D=0&filter%5Baccount%5D=1"
                         },
                         "method": "GET",
                         "header": [
@@ -921,9 +664,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/users",
+                            "path": "api\/v1\/users",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/users"
+                            "raw": "{{baseUrl}}\/api\/v1\/users"
                         },
                         "method": "POST",
                         "header": [
@@ -938,7 +681,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"oxpnsqfxtzztixjogbcqpa\",\"email\":\"christine.auer@example.net\",\"password\":\"z{L@SW6\\\\,wo]W\",\"role\":\"Account Admin\"}"
+                            "raw": "{\"name\":\"jimxdwmafhzlaylmcdytq\",\"email\":\"annette08@example.com\",\"password\":\"tJ}3Zld'W8dG(Q7v\",\"role\":\"Account User\",\"account_id\":\"sed\"}"
                         },
                         "description": "",
                         "auth": {
@@ -952,14 +695,14 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/users\/:id",
+                            "path": "api\/v1\/users\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "raw": "{{baseUrl}}\/api\/v1\/users\/:id",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the user."
                                 }
                             ]
@@ -1008,14 +751,14 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/users\/:id",
+                            "path": "api\/v1\/users\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "raw": "{{baseUrl}}\/api\/v1\/users\/:id",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the user."
                                 }
                             ]
@@ -1033,7 +776,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"jqwsivgrp\",\"email\":\"ylittel@example.net\",\"password\":\"l$q-'8ha<O;h)\",\"role\":\"Account Api User\"}"
+                            "raw": "{\"name\":\"bzuay\",\"email\":\"janice83@example.org\",\"password\":\"AJ&2fuM7)\",\"role\":\"Account User\"}"
                         },
                         "description": "Update the specified user",
                         "auth": {
@@ -1047,14 +790,14 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/users\/:id",
+                            "path": "api\/v1\/users\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "raw": "{{baseUrl}}\/api\/v1\/users\/:id",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": 1,
                                     "description": "The ID of the user."
                                 }
                             ]

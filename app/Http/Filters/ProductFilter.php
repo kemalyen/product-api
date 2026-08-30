@@ -44,6 +44,39 @@ class ProductFilter extends QueryFilter
         return $this->builder->whereIn('sku', explode(',', $value));
     }
 
+
+    public function barcode(string $value)
+    {
+        return $this->builder->whereIn('barcode', explode(',', $value));
+    }
+
+    public function stock(string $value)
+    {
+        $operator = '=';
+        $stock = $value;
+
+        if (preg_match('/^(<|>|>=|<=|=)(.+)$/', $value, $matches)) {
+            $operator = $matches[1];
+            $stock = $matches[2];
+        }
+
+        return $this->builder->where('stock', $operator, $stock);
+    }
+
+    public function price(string $value)
+    {
+        $operator = '=';
+        $price = $value;
+
+        if (preg_match('/^(<|>|>=|<=|=)(.+)$/', $value, $matches)) {
+            $operator = $matches[1];
+            $price = $matches[2];
+        }
+
+        return $this->builder->where('price', $operator, $price);
+    }
+
+
     public function updatedAt($value)
     {
         $dates = explode(',', $value);

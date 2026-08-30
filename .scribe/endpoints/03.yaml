@@ -2,10 +2,12 @@ name: 'Account API Resource'
 description: ''
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
-    uri: api/accounts
+    uri: api/v1/accounts
     metadata:
+      custom: []
       groupName: 'Account API Resource'
       groupDescription: ''
       subgroup: ''
@@ -13,7 +15,7 @@ endpoints:
       title: 'List all accounts'
       description: ''
       authenticated: false
-      custom: []
+      deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
@@ -26,6 +28,7 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 401
         content: '{"message":"Unauthenticated."}'
         headers:
@@ -33,18 +36,18 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: '*'
         description: null
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - POST
-    uri: api/accounts
+    uri: api/v1/accounts
     metadata:
+      custom: []
       groupName: 'Account API Resource'
       groupDescription: ''
       subgroup: ''
@@ -52,7 +55,7 @@ endpoints:
       title: 'Create a new account'
       description: ''
       authenticated: false
-      custom: []
+      deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
@@ -62,26 +65,29 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
-        description: 'Must not be greater than 50 characters.'
+        description: 'Must be at least 2 characters. Must not be greater than 255 characters.'
         required: true
-        example: ayfmeeefrzovayzb
+        example: fpcyimrlttwstgsfejhp
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       account_number:
+        custom: []
         name: account_number
         description: 'Must be between 2 and 10 digits.'
         required: true
-        example: '131'
+        example: '793429968'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       status:
+        custom: []
         name: status
         description: ''
         required: true
@@ -93,10 +99,10 @@ endpoints:
           - disabled
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanBodyParameters:
-      name: ayfmeeefrzovayzb
-      account_number: '131'
+      name: fpcyimrlttwstgsfejhp
+      account_number: '793429968'
       status: active
     fileParameters: []
     responses: []
@@ -105,12 +111,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
-    uri: 'api/accounts/{id}'
+    uri: 'api/v1/accounts/{id}'
     metadata:
+      custom: []
       groupName: 'Account API Resource'
       groupDescription: ''
       subgroup: ''
@@ -118,12 +125,13 @@ endpoints:
       title: 'View a account'
       description: 'Display a individual account data.'
       authenticated: false
-      custom: []
+      deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the account.'
         required: true
@@ -132,7 +140,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: 1
     queryParameters: []
@@ -142,6 +150,7 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 401
         content: '{"message":"Unauthenticated."}'
         headers:
@@ -149,19 +158,19 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: '*'
         description: null
-        custom: []
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - PUT
       - PATCH
-    uri: 'api/accounts/{id}'
+    uri: 'api/v1/accounts/{id}'
     metadata:
+      custom: []
       groupName: 'Account API Resource'
       groupDescription: ''
       subgroup: ''
@@ -169,12 +178,13 @@ endpoints:
       title: 'Update a account'
       description: 'Update the specified account'
       authenticated: false
-      custom: []
+      deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the account.'
         required: true
@@ -183,35 +193,52 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
+        custom: []
         name: name
-        description: ''
-        required: true
-        example: reiciendis
+        description: 'Must be at least 2 characters. Must not be greater than 255 characters.'
+        required: false
+        example: aulz
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
       account_number:
+        custom: []
         name: account_number
-        description: ''
-        required: true
-        example: eum
+        description: 'Must be between 2 and 10 digits.'
+        required: false
+        example: '63099462'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
+        deprecated: false
+      status:
         custom: []
+        name: status
+        description: ''
+        required: false
+        example: active
+        type: string
+        enumValues:
+          - active
+          - pending
+          - disabled
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      name: reiciendis
-      account_number: eum
+      name: aulz
+      account_number: '63099462'
+      status: active
     fileParameters: []
     responses: []
     responseFields: []
@@ -219,12 +246,13 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - DELETE
-    uri: 'api/accounts/{id}'
+    uri: 'api/v1/accounts/{id}'
     metadata:
+      custom: []
       groupName: 'Account API Resource'
       groupDescription: ''
       subgroup: ''
@@ -232,12 +260,13 @@ endpoints:
       title: 'Delete a account.'
       description: 'Remove the account resource'
       authenticated: false
-      custom: []
+      deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
+        custom: []
         name: id
         description: 'The ID of the account.'
         required: true
@@ -246,7 +275,7 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        custom: []
+        deprecated: false
     cleanUrlParameters:
       id: 1
     queryParameters: []
@@ -260,4 +289,3 @@ endpoints:
     controller: null
     method: null
     route: null
-    custom: []

@@ -1,13 +1,23 @@
 openapi: 3.0.3
 info:
-  title: ProductApi
+  title: ProductAPI
   description: ''
   version: 1.0.0
 servers:
-  -
-    url: 'http://api.test'
+  - url: 'http://localhost'
+tags:
+  - name: 'Account API Resource'
+    description: ''
+  - name: Authentication
+    description: ''
+  - name: Endpoints
+    description: ''
+  - name: 'Product API Resource'
+    description: ''
+  - name: 'User API Resource'
+    description: ''
 paths:
-  /api/accounts:
+  /api/v1/accounts:
     get:
       summary: 'List all accounts'
       operationId: listAllAccounts
@@ -34,7 +44,7 @@ paths:
       operationId: createANewAccount
       description: ''
       parameters: []
-      responses: {  }
+      responses: {}
       tags:
         - 'Account API Resource'
       requestBody:
@@ -46,19 +56,16 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Must not be greater than 50 characters.'
-                  example: ayfmeeefrzovayzb
-                  nullable: false
+                  description: 'Must be at least 2 characters. Must not be greater than 255 characters.'
+                  example: fpcyimrlttwstgsfejhp
                 account_number:
                   type: string
                   description: 'Must be between 2 and 10 digits.'
-                  example: '131'
-                  nullable: false
+                  example: '793429968'
                 status:
                   type: string
                   description: ''
                   example: active
-                  nullable: false
                   enum:
                     - active
                     - pending
@@ -68,7 +75,7 @@ paths:
                 - account_number
                 - status
       security: []
-  '/api/accounts/{id}':
+  '/api/v1/accounts/{id}':
     get:
       summary: 'View a account'
       operationId: viewAAccount
@@ -95,11 +102,11 @@ paths:
       operationId: updateAAccount
       description: 'Update the specified account'
       parameters: []
-      responses: {  }
+      responses: {}
       tags:
         - 'Account API Resource'
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
@@ -107,24 +114,27 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: reiciendis
-                  nullable: false
+                  description: 'Must be at least 2 characters. Must not be greater than 255 characters.'
+                  example: aulz
                 account_number:
                   type: string
+                  description: 'Must be between 2 and 10 digits.'
+                  example: '63099462'
+                status:
+                  type: string
                   description: ''
-                  example: eum
-                  nullable: false
-              required:
-                - name
-                - account_number
+                  example: active
+                  enum:
+                    - active
+                    - pending
+                    - disabled
       security: []
     delete:
       summary: 'Delete a account.'
       operationId: deleteAAccount
       description: 'Remove the account resource'
       parameters: []
-      responses: {  }
+      responses: {}
       tags:
         - 'Account API Resource'
       security: []
@@ -153,66 +163,6 @@ paths:
                 example: "{\n{\n  \"success\": {\n     \"token\": \"{YOUR_AUTH_KEY}\"\n}\n}"
       tags:
         - Authentication
-      security: []
-  /api/categories:
-    get:
-      summary: 'List all categories'
-      operationId: listAllCategories
-      description: ''
-      parameters:
-        -
-          in: query
-          name: sort
-          description: 'by category name'
-          example: pariatur
-          required: false
-          schema:
-            type: string
-            description: 'by category name'
-            example: pariatur
-            nullable: false
-        -
-          in: query
-          name: 'filter[title]'
-          description: 'Filter by name. Wildcards are supported.'
-          example: '*fix*'
-          required: false
-          schema:
-            type: string
-            description: 'Filter by name. Wildcards are supported.'
-            example: '*fix*'
-            nullable: false
-      responses:
-        401:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  message: Unauthenticated.
-                properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-      tags:
-        - 'Category API Resource'
-      security: []
-    post:
-      summary: 'Create a new category'
-      operationId: createANewCategory
-      description: ''
-      parameters: []
-      responses:
-        201:
-          description: ''
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: "{ {\n\"data\": {\n\"type\": \"category\",\n\"id\": 5,\n\"attributes\": {\n\"name\": \"A test category\"\n}\n}\n}}"
-      tags:
-        - 'Category API Resource'
       requestBody:
         required: true
         content:
@@ -220,63 +170,18 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                email:
                   type: string
-                  description: 'Must not be greater than 50 characters.'
-                  example: xhxilzhulre
-                  nullable: false
+                  description: 'Must be a valid email address. Must not be greater than 255 characters.'
+                  example: gerda86@example.org
+                password:
+                  type: string
+                  description: 'Must be at least 6 characters. Must not be greater than 255 characters.'
+                  example: lF$yH|0
               required:
-                - name
+                - email
+                - password
       security: []
-  '/api/categories/{id}':
-    get:
-      summary: 'View a category'
-      operationId: viewACategory
-      description: 'Display a individual category data.'
-      parameters: []
-      responses:
-        401:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  message: Unauthenticated.
-                properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-      tags:
-        - 'Category API Resource'
-      security: []
-    put:
-      summary: 'Update a category'
-      operationId: updateACategory
-      description: 'Update the specified category'
-      parameters: []
-      responses: {  }
-      tags:
-        - 'Category API Resource'
-      security: []
-    delete:
-      summary: 'Delete a category.'
-      operationId: deleteACategory
-      description: 'Remove the category resource'
-      parameters: []
-      responses: {  }
-      tags:
-        - 'Category API Resource'
-      security: []
-    parameters:
-      -
-        in: path
-        name: id
-        description: 'The ID of the category.'
-        example: 1
-        required: true
-        schema:
-          type: integer
   /api/me:
     get:
       summary: ''
@@ -299,13 +204,13 @@ paths:
       tags:
         - Endpoints
       security: []
-  '/api/accounts/{account_id}/price/{product_id}':
+  '/api/v1/accounts/{account_id}/price/{product_id}':
     patch:
       summary: ''
-      operationId: patchApiAccountsAccount_idPriceProduct_id
+      operationId: patchApiV1AccountsAccount_idPriceProduct_id
       description: ''
       parameters: []
-      responses: {  }
+      responses: {}
       tags:
         - Endpoints
       requestBody:
@@ -318,8 +223,7 @@ paths:
                 price:
                   type: number
                   description: ''
-                  example: 44463026.543621
-                  nullable: false
+                  example: 69.28
               required:
                 - price
       security: []
@@ -340,7 +244,7 @@ paths:
         required: true
         schema:
           type: integer
-  /api/products:
+  /api/v1/products:
     get:
       summary: 'List all products'
       operationId: listAllProducts
@@ -350,27 +254,35 @@ paths:
           in: query
           name: sort
           description: 'by product name, status, published date, created date and updated date'
-          example: cum
+          example: expedita
           required: false
           schema:
             type: string
             description: 'by product name, status, published date, created date and updated date'
-            example: cum
-            nullable: false
+            example: expedita
         -
           in: query
           name: 'filter[status]'
-          description: 'Filter by status: A,P,X'
-          example: ut
+          description: 'Filter by status: active,inactive,pending'
+          example: repellat
           required: false
           schema:
             type: string
-            description: 'Filter by status: A,P,X'
-            example: ut
-            nullable: false
+            description: 'Filter by status: active,inactive,pending'
+            example: repellat
         -
           in: query
-          name: 'filter[title]'
+          name: 'filter[sku]'
+          description: 'Filter by sku: 45117459,74569441'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by sku: 45117459,74569441'
+            example: architecto
+        -
+          in: query
+          name: 'filter[name]'
           description: 'Filter by name. Wildcards are supported.'
           example: '*fix*'
           required: false
@@ -378,7 +290,6 @@ paths:
             type: string
             description: 'Filter by name. Wildcards are supported.'
             example: '*fix*'
-            nullable: false
       responses:
         401:
           description: ''
@@ -400,7 +311,7 @@ paths:
       operationId: createANewProduct
       description: ''
       parameters: []
-      responses: {  }
+      responses: {}
       tags:
         - 'Product API Resource'
       requestBody:
@@ -412,57 +323,54 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Must not be greater than 255 characters.'
-                  example: rqer
-                  nullable: false
-                sku:
+                  description: 'Must be at least 3 characters. Must not be greater than 255 characters.'
+                  example: kyitavonoinwfnolzzqfuekxm
+                description:
                   type: string
-                  description: 'Must not be greater than 25 characters.'
-                  example: wwoqaqwmkefww
-                  nullable: false
-                barcode:
-                  type: string
-                  description: 'Must not be greater than 25 characters.'
-                  example: mkoownjrmvkcy
-                  nullable: false
-                publishedAt:
-                  type: string
-                  description: 'Must be a valid date.'
-                  example: '2024-11-15T20:20:16'
-                  nullable: false
-                status:
-                  type: string
-                  description: ''
-                  example: A
-                  nullable: false
-                  enum:
-                    - A
-                    - P
-                    - X
-                quantity:
-                  type: integer
-                  description: ''
-                  example: 4
-                  nullable: false
+                  description: 'Must be at least 10 characters. Must not be greater than 1000 characters.'
+                  example: 'Dolor corrupti aut rem harum.'
                 price:
                   type: number
                   description: ''
-                  example: 425.98042
-                  nullable: false
+                  example: 0.0
                 category_id:
+                  type: integer
+                  description: ''
+                  example: 2
+                  nullable: true
+                sku:
                   type: string
-                  description: 'The <code>id</code> of an existing record in the categories table.'
-                  example: eos
-                  nullable: false
+                  description: 'Must match the regex /^[A-Z0-9]{4,25}$/.'
+                  example: NTUBY
+                barcode:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: spjqlfujvwzpcvvgudsoiyvj
+                stock:
+                  type: integer
+                  description: 'Must be at least 0.'
+                  example: 72
+                status:
+                  type: string
+                  description: ''
+                  example: active
+                  enum:
+                    - active
+                    - inactive
+                    - pending
+                    - disabled
+                published_at:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-08-29T17:16:53'
               required:
                 - name
+                - description
+                - price
                 - sku
                 - barcode
-                - publishedAt
-                - status
-                - category_id
       security: []
-  '/api/products/{id}':
+  '/api/v1/products/{id}':
     get:
       summary: 'View a product'
       operationId: viewAProduct
@@ -484,79 +392,12 @@ paths:
       tags:
         - 'Product API Resource'
       security: []
-    put:
-      summary: 'Update a product'
-      operationId: updateAProduct
-      description: 'Update the specified product'
-      parameters: []
-      responses: {  }
-      tags:
-        - 'Product API Resource'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: 'Must not be greater than 255 characters.'
-                  example: ionwbieyvlybglvw
-                  nullable: false
-                sku:
-                  type: string
-                  description: ''
-                  example: et
-                  nullable: false
-                barcode:
-                  type: string
-                  description: ''
-                  example: et
-                  nullable: false
-                publishedAt:
-                  type: string
-                  description: 'Must be a valid date.'
-                  example: '2024-11-15T20:20:16'
-                  nullable: false
-                status:
-                  type: string
-                  description: ''
-                  example: P
-                  nullable: false
-                  enum:
-                    - A
-                    - P
-                    - X
-                quantity:
-                  type: integer
-                  description: ''
-                  example: 9
-                  nullable: false
-                price:
-                  type: number
-                  description: ''
-                  example: 3824376.9
-                  nullable: false
-                category_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the categories table.'
-                  example: voluptatem
-                  nullable: false
-              required:
-                - name
-                - sku
-                - barcode
-                - publishedAt
-                - status
-                - category_id
-      security: []
     delete:
       summary: 'Delete a product.'
       operationId: deleteAProduct
       description: 'Remove the product resource'
       parameters: []
-      responses: {  }
+      responses: {}
       tags:
         - 'Product API Resource'
       security: []
@@ -569,7 +410,7 @@ paths:
         required: true
         schema:
           type: integer
-  /api/users:
+  /api/v1/users:
     get:
       summary: 'List all users'
       operationId: listAllUsers
@@ -579,13 +420,12 @@ paths:
           in: query
           name: sort
           description: 'by user name and email'
-          example: nulla
+          example: excepturi
           required: false
           schema:
             type: string
             description: 'by user name and email'
-            example: nulla
-            nullable: false
+            example: excepturi
         -
           in: query
           name: 'filter[name]'
@@ -596,7 +436,6 @@ paths:
             type: string
             description: 'Filter by name. Wildcards are supported.'
             example: '*fix*'
-            nullable: false
         -
           in: query
           name: 'filter[email]'
@@ -607,7 +446,6 @@ paths:
             type: string
             description: 'Filter by email. Wildcards are supported.'
             example: '*fix*'
-            nullable: false
         -
           in: query
           name: 'filter[role]'
@@ -618,7 +456,16 @@ paths:
             type: integer
             description: 'Filter by role. Wildcards are NOT supported.'
             example: 0
-            nullable: false
+        -
+          in: query
+          name: 'filter[account]'
+          description: 'Filter by account. Wildcards are NOT supported.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Filter by account. Wildcards are NOT supported.'
+            example: 1
       responses:
         401:
           description: ''
@@ -640,7 +487,7 @@ paths:
       operationId: createANewUser
       description: ''
       parameters: []
-      responses: {  }
+      responses: {}
       tags:
         - 'User API Resource'
       requestBody:
@@ -652,24 +499,20 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Must not be greater than 255 characters.'
-                  example: oxpnsqfxtzztixjogbcqpa
-                  nullable: false
+                  description: 'Must be at least 2 characters. Must not be greater than 255 characters.'
+                  example: jimxdwmafhzlaylmcdytq
                 email:
                   type: string
                   description: 'Must be a valid email address. Must not be greater than 255 characters.'
-                  example: christine.auer@example.net
-                  nullable: false
+                  example: annette08@example.com
                 password:
                   type: string
-                  description: ''
-                  example: 'z{L@SW6\,wo]W'
-                  nullable: false
+                  description: 'Must be at least 8 characters.'
+                  example: "tJ}3Zld'W8dG(Q7v"
                 role:
                   type: string
                   description: ''
-                  example: 'Account Admin'
-                  nullable: false
+                  example: 'Account User'
                   enum:
                     - Admin
                     - 'Account Admin'
@@ -677,16 +520,16 @@ paths:
                     - 'Account Api User'
                 account_id:
                   type: string
-                  description: 'The <code>id</code> of an existing record in the accounts table.'
-                  example: null
-                  nullable: false
+                  description: 'Must match an existing stored value.'
+                  example: sed
               required:
                 - name
                 - email
                 - password
                 - role
+                - account_id
       security: []
-  '/api/users/{id}':
+  '/api/v1/users/{id}':
     get:
       summary: 'View an user'
       operationId: viewAnUser
@@ -713,11 +556,11 @@ paths:
       operationId: updateAUser
       description: 'Update the specified user'
       parameters: []
-      responses: {  }
+      responses: {}
       tags:
         - 'User API Resource'
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
@@ -725,46 +568,32 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Must not be greater than 255 characters.'
-                  example: jqwsivgrp
-                  nullable: false
+                  description: 'Must be at least 2 characters. Must not be greater than 255 characters.'
+                  example: bzuay
                 email:
                   type: string
                   description: 'Must be a valid email address. Must not be greater than 255 characters.'
-                  example: ylittel@example.net
-                  nullable: false
+                  example: janice83@example.org
                 password:
                   type: string
-                  description: ''
-                  example: "l$q-'8ha<O;h)"
-                  nullable: false
+                  description: 'Must be at least 8 characters.'
+                  example: 'AJ&2fuM7)'
                 role:
                   type: string
                   description: ''
-                  example: 'Account Api User'
-                  nullable: false
+                  example: 'Account User'
                   enum:
                     - Admin
                     - 'Account Admin'
                     - 'Account User'
                     - 'Account Api User'
-                account_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the accounts table.'
-                  example: null
-                  nullable: false
-              required:
-                - name
-                - email
-                - password
-                - role
       security: []
     delete:
       summary: 'Delete a user.'
       operationId: deleteAUser
       description: 'Remove the user resource'
       parameters: []
-      responses: {  }
+      responses: {}
       tags:
         - 'User API Resource'
       security: []
@@ -777,22 +606,3 @@ paths:
         required: true
         schema:
           type: integer
-tags:
-  -
-    name: 'Account API Resource'
-    description: ''
-  -
-    name: Authentication
-    description: ''
-  -
-    name: 'Category API Resource'
-    description: ''
-  -
-    name: Endpoints
-    description: ''
-  -
-    name: 'Product API Resource'
-    description: ''
-  -
-    name: 'User API Resource'
-    description: ''
